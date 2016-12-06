@@ -1,0 +1,57 @@
+.enclosure-Description {
+	width: 400px;
+	height: 400px;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	display: inline-block;
+	margin-left: 100px;
+	overflow: auto;
+}
+
+.Enclosure-Description-Title {
+	margin-top: 100px;
+	;
+}
+
+.char-block {
+	text-align: justify;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#animal {
+	text-align: center;
+}
+
+.characteristic {
+	text-decoration: underline;
+}
+
+.showPrice {
+	width: 100px;
+	height: 30px;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.elephantDiscription {
+	display: none;
+}
+
+.giraffeDiscription {
+	display: none;
+}
+
+.lionDiscription {
+	display: none;
+}
+
+.camelDiscription {
+	display: none;
+}
