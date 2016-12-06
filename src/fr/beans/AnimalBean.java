@@ -1,7 +1,6 @@
 package fr.beans;
 
 public class AnimalBean {
-	
 	private int id;
 	private String name;
 	private int hungry_gauge;
@@ -9,7 +8,6 @@ public class AnimalBean {
 	private String description;
 	private int specie_id;
 	private int enclosure_id;
-	
 	
 	public int getId() {
 		return id;

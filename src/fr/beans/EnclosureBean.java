@@ -1,7 +1,6 @@
 package fr.beans;
 
 public class EnclosureBean {
-	
 	private int id;
 	private int locate_x;
 	private int locate_y;
@@ -13,8 +12,7 @@ public class EnclosureBean {
 	private int employee_quantity;
 	private int specie;
 	
-	
-		public int getId() {
+	public int getId() {
 		return id;
 	}
 		

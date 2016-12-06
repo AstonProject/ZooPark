@@ -1,13 +1,11 @@
 package fr.beans;
 
 public class SpecieBean {
-	
 	private int id;
 	private String name;
 	private String food_factor;
 	private String food_type;
 	private String description;
-	
 	
 	public int getId() {
 		return id;
