@@ -5,7 +5,6 @@ public class EnclosureBean {
 	private int locate_x;
 	private int locate_y;
 	private int capacity;
-	private String description;
 	private int animal_quantity;
 	private int cleanliness_gauge;
 	private int employee_slot;
@@ -42,14 +41,6 @@ public class EnclosureBean {
 	
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	
 	public int getAnimal_quantity() {
