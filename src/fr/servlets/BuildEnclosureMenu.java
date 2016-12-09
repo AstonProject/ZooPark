@@ -17,23 +17,22 @@ import fr.dao.DaoHomeBuildMenu;
 public class BuildEnclosureMenu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DaoHomeBuildMenu dao;
-	private HttpSession session; 
+	
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		dao = new DaoHomeBuildMenu();
-		
+		HttpSession session = request.getSession(); 
 		// hydratation du bean local PlayerBean en fonction d'un Id spécifique et recupération de l'attribut money
-		//int idPlayer = Integer.parseInt(session.getParameter("player"));
-		//PlayerBean player = dao.getPlayerById(idPlayer);
-		//player.getMoney();
+		int idPlayer = Integer.parseInt(request.getParameter("player"));
+		PlayerBean player = dao.getPlayerById(idPlayer);
 		
 		// hydratation du bean local EnclosureBean en fonction d'un Id spécifique et recupération des attributs locate
-		int idEnclosure = Integer.parseInt(request.getParameter("id"));
-		EnclosureBean enclosure = dao.getEnclosureById(idEnclosure);
-		enclosure.getLocate_x();
-		enclosure.getLocate_y();
+		//int idEnclosure = Integer.parseInt(request.getParameter("id"));
+		//EnclosureBean enclosure = dao.getEnclosureById(idEnclosure);
+		
+		request.setAttribute("player", player);
 
 		//lien vers la vue buildEnclosure
 		this.getServletContext().getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
