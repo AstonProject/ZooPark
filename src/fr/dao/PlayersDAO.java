@@ -20,7 +20,7 @@ public class PlayersDAO {
 	}
 
 	/** Global methods **/
-	public void addStagiaire(PlayerBean player) {
+	public void addPlayer(PlayerBean player) {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("INSERT INTO player (pseudo, password, email) VALUES (?, ?, ?)");
@@ -50,7 +50,7 @@ public class PlayersDAO {
 		}
 	}
 
-	public void deleteStagiaire(int idPlayer) {
+	public void deletePlayer(int idPlayer) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM player WHERE id=?");
 			preparedStatement.setInt(1, idPlayer);
