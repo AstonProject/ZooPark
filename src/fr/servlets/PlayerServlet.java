@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.beans.PlayerBean;
-import fr.dao.DaoHomeBuildMenu;
 import fr.dao.InscriptionFormulaire;
+import fr.dao.PlayersDAO;
 import fr.validator.connexionValidator;
 
 @WebServlet("/user")
@@ -47,9 +47,6 @@ public class PlayerServlet extends HttpServlet {
 			
 		} else if (action.equals("connect")) {
 			
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-
 			String pseudo = request.getParameter("con_pseudo");
 			String password = request.getParameter("con_password");
 			request.setAttribute("pseudo", pseudo);
@@ -58,7 +55,7 @@ public class PlayerServlet extends HttpServlet {
 			
 			if (id != 0) {
 				
-				DaoHomeBuildMenu objPlayer = new DaoHomeBuildMenu();
+				PlayersDAO objPlayer = new PlayersDAO();
 				
 				PlayerBean player = objPlayer.getPlayerById(id);
 				
@@ -75,6 +72,14 @@ public class PlayerServlet extends HttpServlet {
 				rs.include(request, response);
 				
 			}
+		} else if (action.equals("disconnect")) {
+			
+			HttpSession session = request.getSession();
+			session.removeAttribute("user");
+			
+			RequestDispatcher rs = request.getRequestDispatcher( VUE );
+			rs.include(request, response);
+			
 		}
 	}
 	
