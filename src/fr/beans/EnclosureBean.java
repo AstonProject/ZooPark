@@ -9,7 +9,8 @@ public class EnclosureBean {
 	private int cleanliness_gauge;
 	private int employee_slot;
 	private int employee_quantity;
-	private int specie;
+	private int specie_id;
+	private int player_id;
 	
 	public int getId() {
 		return id;
@@ -75,12 +76,20 @@ public class EnclosureBean {
 		this.employee_quantity = employee_quantity;
 	}
 	
-	public int getSpecie() {
-		return specie;
+	public int getSpecie_id() {
+		return specie_id;
 	}
 	
-	public void setSpecie(int specie) {
-		this.specie = specie;
+	public void setSpecie_id(int specie_id) {
+		this.specie_id = specie_id;
+	}
+
+	public int getPlayer_id() {
+		return player_id;
+	}
+
+	public void setPlayer_id(int player_id) {
+		this.player_id = player_id;
 	}
 	
 	
