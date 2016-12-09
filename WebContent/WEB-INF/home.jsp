@@ -88,6 +88,7 @@
 						<h2>Connexion</h2>
 							<form method="post" id="connection_form" action="user?action=connect">
 								<ul>
+									<li> ${ id } </li>
 									<li><label for="con_pseudo">Pseudo :</label></li>
 									<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
 									<li><label for="con_password">Mot de passe :</label></li>
