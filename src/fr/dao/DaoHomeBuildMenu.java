@@ -51,7 +51,7 @@ public class DaoHomeBuildMenu {
 			if (rs.next()) {
 				enclosure.setId(rs.getInt("id"));
 				enclosure.setLocate_x(rs.getInt("locate_x"));
-				enclosure. setLocate_y(rs.getInt("locate_y"));
+				enclosure.setLocate_y(rs.getInt("locate_y"));
 				enclosure.setCapacity(rs.getInt("capacity"));
 				enclosure.setAnimal_quantity(rs.getInt("animal_quantity"));
 				enclosure.setCleanliness_gauge(rs.getInt("cleanliness_gauge"));
@@ -77,7 +77,7 @@ public class DaoHomeBuildMenu {
 			   EnclosureBean enclosure = new EnclosureBean();
 			   	enclosure.setId(rs.getInt("id"));
 				enclosure.setLocate_x(rs.getInt("locate_x"));
-				enclosure. setLocate_y(rs.getInt("locate_y"));
+				enclosure.setLocate_y(rs.getInt("locate_y"));
 				enclosure.setCapacity(rs.getInt("capacity"));
 				enclosure.setAnimal_quantity(rs.getInt("animal_quantity"));
 				enclosure.setCleanliness_gauge(rs.getInt("cleanliness_gauge"));
