@@ -15,7 +15,10 @@
 		<div id="main-wrapper">
 			<c:if test="${ !empty sessionScope.user }">
 				<header id="main-header">
-					<div id="page-header"></div>
+					<div id="page-header">
+						Bienvenue, ${ sessionScope.user.pseudo }<br>
+						<a href="user?action=disconnect">Déconnexion</a>
+					</div>
 					<div id="top-menu">
 						<nav>
 							<ul>
