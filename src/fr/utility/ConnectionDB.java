@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectionBDD {
+public class ConnectionDB {
 	private static Connection connection;
 
 	static String driver = "com.mysql.jdbc.Driver";
