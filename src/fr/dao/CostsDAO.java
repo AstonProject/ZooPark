@@ -18,20 +18,20 @@ public class CostsDAO {
 			JSONObject jsonObject = (JSONObject) obj;
 
 			String enclosureCosts_lion = (String) jsonObject.get("enclosureCosts_lion");
-			String enclosureCosts_girafe = (String) jsonObject.get("enclosureCosts_girafe");
+			String enclosureCosts_giraffe = (String) jsonObject.get("enclosureCosts_giraffe");
 			String enclosureCosts_elephant = (String) jsonObject.get("enclosureCosts_elephant");
 			String enclosureCosts_camel = (String) jsonObject.get("enclosureCosts_camel");
 			String lionCosts = (String) jsonObject.get("lionCosts");
-			String girafeCosts = (String) jsonObject.get("girafeCosts");
+			String giraffeCosts = (String) jsonObject.get("giraffeCosts");
 			String elephantCosts = (String) jsonObject.get("elephantCosts");
 			String camelCosts = (String) jsonObject.get("camelCosts");
 
 			System.out.println("Enclosure costs for a lion: " + enclosureCosts_lion);
-			System.out.println("Enclosure costs for a girafe: " + enclosureCosts_girafe);
+			System.out.println("Enclosure costs for a giraffe: " + enclosureCosts_giraffe);
 			System.out.println("Enclosure costs for an elephant: " + enclosureCosts_elephant);
 			System.out.println("Enclosure costs for a camel: " + enclosureCosts_camel);
 			System.out.println("Costs for a lion: " + lionCosts);
-			System.out.println("Costs for a girafe: " + girafeCosts);
+			System.out.println("Costs for a giraffe: " + giraffeCosts);
 			System.out.println("Costs for an elephant: " + elephantCosts);
 			System.out.println("Costs for a camel: " + camelCosts);
 
