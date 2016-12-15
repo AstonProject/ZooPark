@@ -11,18 +11,15 @@ import javax.servlet.http.HttpSession;
 
 import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
-import fr.dao.PlayersDAO;
+
 
 @WebServlet("/createEnclosure")
 public class BuildEnclosureMenu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private PlayersDAO dao;
-	private HttpSession session; 
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
 	}
 
