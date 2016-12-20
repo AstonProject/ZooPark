@@ -14,21 +14,17 @@
 
 	// Fonction d'affichage des prix
 	function showPrice($selectedRadioSize){
-		$($selectedRadioSize).click(function() {
-			var callback=function(donnees){
+		
+		//$($selectedRadioSize).click(function() {
+		var callback=function(donnees){
 	            var $blockPrice=$('.showPrice');
 	            $blockPrice.html("");
-	            if(donnees.data){
-	                for (let prices of donnees.data) {
-	                    console.log(prices);
-	                    $blockPrice.prepend("<div>"+ prices.enclosureCosts_lion + "</div>");
-	                }
-	            }
+	            $blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
 	        };
-		});   
+		//});   
 
 	        var monObjet ={};
-	        irc.monAjax(monObjet, "createEnclosure", callback, 'POST');
+	        server.monAjax(monObjet, "createEnclosure", callback, 'POST');
     }
 	
 	$(document).ready(
@@ -50,6 +46,8 @@
 				var $radioS1 = $('#size_1');
 				var $radioS2 = $('#size_2');
 				var $radioS3 = $('#size_3');
+				
+				
 
 				// Execution de la fonction d'affichage de la description des
 				// enclos

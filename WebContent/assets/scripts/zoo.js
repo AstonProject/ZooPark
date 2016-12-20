@@ -4,7 +4,7 @@ var server = {};
 
 	server.monAjax = function(dataObj, url, callback, method) {
 		var objAjax = {
-			url : "http://localhost:8080/" + url, // URL où envoyer la requête
+			url : "http://localhost:8080/zoopark/" + url, // URL où envoyer la requête
 													// (correspond à l'action
 													// d'un form
 			data : dataObj, // données envoyées
@@ -20,7 +20,7 @@ var server = {};
 				callback(donnees);
 			},
 			error : function(xhr, status, msgErreur) {
-				console.log("Une erreur de type 4xx ou 5xx ou timeout");
+				console.log(msgErreur);
 			},
 		};
 		$.ajax(objAjax);

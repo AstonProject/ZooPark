@@ -1,12 +1,7 @@
 package fr.servlets;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,9 +25,13 @@ public class BuildEnclosureMenu extends HttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		CostsDAO cdao = new CostsDAO();
+		JSONObject prices = cdao.getCosts();
 		
-		JSONObject prices = CostsDAO.getCosts();
+		if( prices != null){
+		response.setContentType("application/json");
+		response.getWriter().append(prices.toString());
+		}
 		
-		request.setAttribute("prices", prices);
 	}
 }
