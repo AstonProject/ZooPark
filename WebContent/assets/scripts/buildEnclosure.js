@@ -13,16 +13,23 @@
 	}
 
 	// Fonction d'affichage des prix
-	$(document).on("click", "#size_1", function() {               		// When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
-	    $.post("createEnclosure", function(responseJson) {            	 // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-	        var $select = $(".showPrice");                          	 // Locate HTML DOM element with ID "someselect".
-	        $select.find("prices").remove();                         	 // Find all child elements with tag name "option" and remove them (just to prevent duplicate options when button is pressed again).
-	        $.each(responseJson, function(key, value) {              	 // Iterate over the JSON object.
-	            $("<prices>").val(key).text(value).appendTo($select);	 // Create HTML <option> element, set its value with currently iterated key and its text content with currently iterated item and finally append it to the <select>.
-	        });
-	    });
-	});
+	function showPrice($selectedRadioSize){
+		$($selectedRadioSize).click(function() {
+			var callback=function(donnees){
+	            var $blockPrice=$('.showPrice');
+	            if(donnees.data){
+	                for (let price of donnees.data) {
+	                    console.log(price);
+	                    $blockPrice.prepend("<div>"+ prices.enclosureCosts_lion + "</div>");
+	                }
+	            }
+	        };
+		});   
 
+	        var monObjet ={};
+	        irc.monAjax(monObjet, "prices", callback, 'POST');
+    }
+	
 	$(document).ready(
 			function() {
 				// Creation d'objets jQuery referancant les classes des 4
@@ -53,5 +60,8 @@
 						$Description2, $Description4);
 				showDescription($radioE4, $Description4, $Description1,
 						$Description2, $Description3);
+				
+				// affichage des prix
+				showPrice($radioS1);
 			})
 })(jQuery);

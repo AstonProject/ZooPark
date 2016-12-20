@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 
 import fr.dao.CostsDAO;
 
@@ -28,8 +31,9 @@ public class BuildEnclosureMenu extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Map<String, String> prices = new LinkedHashMap<>();
-		prices = CostsDAO.getCosts();
-		response.getWriter().append((CharSequence) prices);
+		JSONObject prices = CostsDAO.getCosts();
+		
+		request.setAttribute("prices", prices.toString());
+		request.getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
 	}
 }
