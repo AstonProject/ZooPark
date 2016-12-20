@@ -18,8 +18,8 @@
 			var callback=function(donnees){
 	            var $blockPrice=$('.showPrice');
 	            if(donnees.data){
-	                for (let price of donnees.data) {
-	                    console.log(price);
+	                for (let prices of donnees.data) {
+	                    console.log(prices);
 	                    $blockPrice.prepend("<div>"+ prices.enclosureCosts_lion + "</div>");
 	                }
 	            }
@@ -27,7 +27,7 @@
 		});   
 
 	        var monObjet ={};
-	        irc.monAjax(monObjet, "prices", callback, 'POST');
+	        irc.monAjax(monObjet, "createEnclosure", callback, 'POST');
     }
 	
 	$(document).ready(

@@ -33,7 +33,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 		
 		JSONObject prices = CostsDAO.getCosts();
 		
-		request.setAttribute("prices", prices.toString());
-		request.getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
+		request.setAttribute("prices", prices);
 	}
 }
