@@ -17,6 +17,7 @@
 		$($selectedRadioSize).click(function() {
 			var callback=function(donnees){
 	            var $blockPrice=$('.showPrice');
+	            $blockPrice.html("");
 	            if(donnees.data){
 	                for (let prices of donnees.data) {
 	                    console.log(prices);
