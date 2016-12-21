@@ -2,9 +2,9 @@
 	"use strict";
 
 	// Fonction d'affichage la description associée au radio coché
-	function showDescription($selectedRadio, $descriptionShown,
+	function showDescription($selectedRadioEnclosure, $descriptionShown,
 			$descriptionHide1, $descriptionHide2, $descriptionHide3) {
-		$($selectedRadio).click(function() {
+		$($selectedRadioEnclosure).click(function() {
 			$descriptionShown.css("display", "inline");
 			$descriptionHide1.css("display", "none");
 			$descriptionHide2.css("display", "none");
@@ -13,15 +13,24 @@
 	}
 
 	// Fonction d'affichage des prix
-	function showPrice($selectedRadioSize){
+	function showPrice($selectedRadioEnclosure){
 		
-		//$($selectedRadioSize).click(function() {
 		var callback=function(donnees){
-	            var $blockPrice=$('.showPrice');
-	            $blockPrice.html("");
-	            $blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
+			var $blockPrice=$('.showPrice');
+	            
+	            $($selectedRadioEnclosure).click(function() {
+	            	$blockPrice.empty();
+	            	if ($('#radio_elephant').is(':checked')){
+	            $blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant + "</div>");
+	            	}else if ($('#radio_giraffe').is(':checked')){
+	            		 $blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe + "</div>");
+	            	}else if ($('#radio_lion').is(':checked')){
+	            		$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
+	            	}else if($('#radio_camel').is(':checked')) {
+	            		$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel + "</div>");
+	            	}
+	            });
 	        };
-		//});   
 
 	        var monObjet ={};
 	        server.monAjax(monObjet, "createEnclosure", callback, 'POST');
@@ -47,7 +56,11 @@
 				var $radioS2 = $('#size_2');
 				var $radioS3 = $('#size_3');
 				
-				
+//				// Prix enclos
+//				var ElephantEnclosurePrice= 'enclosureCosts_elephant';
+//				var GiraffeEnclosurePrice= 'enclosureCosts_giraffe';
+//				var LionEnclosurePrice= 'enclosureCosts_lion';
+//				var CamelEnclosurePrice= 'enclosureCosts_camel';
 
 				// Execution de la fonction d'affichage de la description des
 				// enclos
@@ -61,6 +74,9 @@
 						$Description2, $Description3);
 				
 				// affichage des prix
-				showPrice($radioS1);
+				showPrice($radioE1);
+				showPrice($radioE2);
+				showPrice($radioE3);
+				showPrice($radioE4);
 			})
 })(jQuery);
