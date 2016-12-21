@@ -25,10 +25,21 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		PlayerBean user = (PlayerBean) session.getAttribute("user");
-		/*List<EnclosureBean> enclos = null;
-		EnclosuresDAO edao = new EnclosuresDAO();
-		enclos = edao.getAllEnclosures(user.getId());
-		session.setAttribute("construction", enclos);*/
+		if(user != null)
+		{
+			List<EnclosureBean> enclos = null;
+			EnclosureBean[][] constructions = new EnclosureBean[5][5];
+			EnclosuresDAO edao = new EnclosuresDAO();
+			enclos = edao.getAllEnclosures(user.getId());
+			int cpt = 1;
+			for(int i = 0; i < 5; i++){
+				for(int j = 0; j < 5; j++){
+					constructions[i][j] = enclos.get(cpt);
+					cpt++;
+				}
+			}
+			session.setAttribute("construction", constructions);
+		}
 		this.getServletContext()
 			.getRequestDispatcher("/WEB-INF/home.jsp")
 			.forward(request, response);
