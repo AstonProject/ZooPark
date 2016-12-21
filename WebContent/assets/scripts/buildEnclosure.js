@@ -1,7 +1,7 @@
 (function($) {
 	"use strict";
 
-	// Fonction d'affichage la description associée au radio coché
+	// Fonction d'affichage des descriptions associées à la selection des radios "enclosureType"
 	function showDescription($selectedRadioEnclosure, $descriptionShown,
 			$descriptionHide1, $descriptionHide2, $descriptionHide3) {
 		$($selectedRadioEnclosure).click(function() {
@@ -14,14 +14,20 @@
 
 	// Fonction d'affichage des prix
 	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
-		
 		var callback=function(donnees){
 			var $blockPrice=$('.showPrice');
 	            
 	            $($selectedRadioEnclosure).click(function() {
+	            	// Réinitialise le contenu du blockPrice si une radio "enclosureType" est selectionnée
 	            	$blockPrice.empty();
+	            	// Réinitialise les radioSize si une radio enclosure est selectionnée
+	            	$('input:radio[name=enclosureSize]').each(function () { $(this).prop('checked', false); });
+	            	
 	            	$($selectedRadioSize).change(function() {
+	            		// Réinitialise le contenu du blockPrice si une radio "enclosureSize" est selectionnée
 	            		$blockPrice.empty();
+	            		
+	            		// Verification des 2 radios selectionnés et revoie du prix selon les cas
 	            		if ($('#radio_elephant').is(':checked')){
 	            			if(($('#size_1').is(':checked'))){
 	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant + "</div>");
@@ -70,31 +76,25 @@
 	$(document).ready(
 			function() {
 				// Creation d'objets jQuery referancant les classes des 4
-				// descriptions
+				// descriptions de la jsp
 				var $Description1 = $('.elephantDiscription');
 				var $Description2 = $('.giraffeDiscription');
 				var $Description3 = $('.lionDiscription');
 				var $Description4 = $('.camelDiscription');
 
-				// Creation d'objets jQuery referancant les 4 id radios d'enclos
+				// Creation d'objets jQuery referancant les 4 id radio "enclosureType"
 				var $radioE1 = $('#radio_elephant');
 				var $radioE2 = $('#radio_giraffe');
 				var $radioE3 = $('#radio_lion');
 				var $radioE4 = $('#radio_camel');
 
-				// Creation d'objet jQuery referancant les 3 id radio de taille
+				// Creation d'objet jQuery referancant les 3 id radio "enclosureSize"
 				var $radioS1 = $('#size_1');
 				var $radioS2 = $('#size_2');
 				var $radioS3 = $('#size_3');
 				
-//				// Prix enclos
-//				var ElephantEnclosurePrice= 'enclosureCosts_elephant';
-//				var GiraffeEnclosurePrice= 'enclosureCosts_giraffe';
-//				var LionEnclosurePrice= 'enclosureCosts_lion';
-//				var CamelEnclosurePrice= 'enclosureCosts_camel';
-
-				// Execution de la fonction d'affichage de la description des
-				// enclos
+				// Execution des fonctions d'affichage de description des
+				// enclos selon la radio "enclosureType" selectionnée
 				showDescription($radioE1, $Description1, $Description2,
 						$Description3, $Description4);
 				showDescription($radioE2, $Description2, $Description1,
@@ -104,7 +104,8 @@
 				showDescription($radioE4, $Description4, $Description1,
 						$Description2, $Description3);
 				
-				// affichage des prix
+				// Execution des fonctions d'affichage des prix des
+				// enclos selon les selections effectuées de radios dans "enclosureType" et "enclosureSize"
 				showPrice($radioE1, $radioS1);
 				showPrice($radioE1, $radioS2);
 				showPrice($radioE1, $radioS3);
