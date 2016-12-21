@@ -1,1 +1,7 @@
-/build/
+/*
+!/src
+!/WebContent
+!.classpath
+!.project
+!pom.xml
+!.gitignore

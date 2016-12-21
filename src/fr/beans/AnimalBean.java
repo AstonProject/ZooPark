@@ -8,6 +8,7 @@ public class AnimalBean {
 	private String description;
 	private int specie_id;
 	private int enclosure_id;
+	private int player_id;
 	
 	public int getId() {
 		return id;
@@ -63,6 +64,14 @@ public class AnimalBean {
 	
 	public void setEnclosure_id(int enclosure_id) {
 		this.enclosure_id = enclosure_id;
+	}
+
+	public int getPlayer_id() {
+		return player_id;
+	}
+
+	public void setPlayer_id(int player_id) {
+		this.player_id = player_id;
 	}
 	
 	
