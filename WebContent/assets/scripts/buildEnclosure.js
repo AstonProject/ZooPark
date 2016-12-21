@@ -15,7 +15,7 @@
 	// Fonction d'affichage des prix
 	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
 		var callback=function(donnees){
-			var $blockPrice=$('.showPrice');
+			var $blockPrice=$('.price');
 	            
 	            $($selectedRadioEnclosure).click(function() {
 	            	// Réinitialise le contenu du blockPrice si une radio "enclosureType" est selectionnée

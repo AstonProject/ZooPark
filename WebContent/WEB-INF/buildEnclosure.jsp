@@ -108,7 +108,7 @@
 
 			<h3>Enclosure size</h3>
 
-			<div id="radio1">
+			<div id="radio2">
 				<input type="radio" name="enclosureSize" value="1"
 					id="size_1"> 1 <input type="radio" name="enclosureSize"
 					value="2" id="size_2"> 2 <input type="radio"
@@ -117,7 +117,8 @@
 
 			<h3>Price</h3>
 
-			<div class="showPrice"></div>
+			<div class="showPrice">
+			<div class="price"></div></div>
 			<br> <input type="submit" value="buy" name="validate">
 		</form>
 	</div>
