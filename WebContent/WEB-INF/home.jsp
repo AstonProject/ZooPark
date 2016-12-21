@@ -38,11 +38,11 @@
 						<c:forEach var="i" begin="1" end="5">
 							<c:forEach var="j" begin="1" end="5">
 								<span class="zoo-site" id="zoo-site-${ i }">
-								<c:if test="${ empty sessionScope.construction[i][j] }">
+								<c:if test="${ empty sessionScope.construction[i-1][j-1] }">
 									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>
 								</c:if>
-								<c:if test="${ !empty sessionScope.construction[i][j] }">
-									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i][j].id }</a>
+								<c:if test="${ !empty sessionScope.construction[i-1][j-1] }">
+									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a>
 								</c:if>
 								</span>
 							</c:forEach>

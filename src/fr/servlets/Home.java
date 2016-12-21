@@ -28,7 +28,7 @@ public class Home extends HttpServlet {
 		if(user != null)
 		{
 			List<EnclosureBean> enclos = null;
-			EnclosureBean[][] constructions = new EnclosureBean[6][6];
+			EnclosureBean[][] constructions = new EnclosureBean[5][5];
 			EnclosuresDAO edao = new EnclosuresDAO();
 			enclos = edao.getAllEnclosures(user.getId());
 			int cpt = 0;
