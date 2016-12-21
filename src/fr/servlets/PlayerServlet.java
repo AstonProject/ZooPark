@@ -23,7 +23,7 @@ public class PlayerServlet extends HttpServlet {
 	private static final String ATT_PLAYER = "player";
 	private static final String ATT_FORM = "form";
 	
-	private static final String VUE = "WEB-INF/home.jsp";
+	private static final String VUE = "home";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
@@ -43,7 +43,7 @@ public class PlayerServlet extends HttpServlet {
 			request.setAttribute("isValide", form.isValide);
 					
 			// Transmission à la JSP en charge de l'affichage des données
-			this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+			response.sendRedirect( VUE );
 			
 		} else if (action.equals("connect")) {
 			
@@ -62,8 +62,7 @@ public class PlayerServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("user", player);
 				
-				RequestDispatcher rs = request.getRequestDispatcher( VUE );
-				rs.forward(request, response);
+				response.sendRedirect( VUE );
 				
 			} else {
 				
@@ -77,8 +76,7 @@ public class PlayerServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
 			
-			RequestDispatcher rs = request.getRequestDispatcher( VUE );
-			rs.include(request, response);
+			response.sendRedirect( VUE );
 			
 		}
 	}

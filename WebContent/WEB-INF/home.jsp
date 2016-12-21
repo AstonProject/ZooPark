@@ -35,18 +35,18 @@
 				<div id="main-content">
 					<h1>ZooPark</h1>
 					<div id="zoo-container">
-						<c:forEach var="i" begin="1" end="25">
-							<span class="zoo-site" id="zoo-site-${ i }">
-							<c:if test="${ empty construction }">
-								<a href="createEnclosure">Construire</a>
-							</c:if>
-							<c:if test="${ !empty construction }">
-								<a href="seeBuilding">Bâtiment</a>
-							</c:if>
-							</span>
-							<c:if test="${ i % 5 == 0 }">
-								<br>
-							</c:if>
+						<c:forEach var="i" begin="1" end="5">
+							<c:forEach var="j" begin="1" end="5">
+								<span class="zoo-site" id="zoo-site-${ i }">
+								<c:if test="${ empty sessionScope.construction[i][j] }">
+									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>
+								</c:if>
+								<c:if test="${ !empty sessionScope.construction[i][j] }">
+									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i][j].id }</a>
+								</c:if>
+								</span>
+							</c:forEach>
+							<br>
 						</c:forEach>
 					</div>
 				</div>
