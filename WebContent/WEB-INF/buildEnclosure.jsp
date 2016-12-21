@@ -109,7 +109,7 @@
 			<h3>Enclosure size</h3>
 
 			<div id="radio1">
-				<input type="radio" name="enclosureSize" value="1" checked="checked"
+				<input type="radio" name="enclosureSize" value="1"
 					id="size_1"> 1 <input type="radio" name="enclosureSize"
 					value="2" id="size_2"> 2 <input type="radio"
 					name="enclosureSize" value="3" id="size_3"> 3

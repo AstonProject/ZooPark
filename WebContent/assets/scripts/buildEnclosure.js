@@ -13,22 +13,53 @@
 	}
 
 	// Fonction d'affichage des prix
-	function showPrice($selectedRadioEnclosure){
+	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
 		
 		var callback=function(donnees){
 			var $blockPrice=$('.showPrice');
 	            
 	            $($selectedRadioEnclosure).click(function() {
 	            	$blockPrice.empty();
-	            	if ($('#radio_elephant').is(':checked')){
-	            $blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant + "</div>");
-	            	}else if ($('#radio_giraffe').is(':checked')){
-	            		 $blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe + "</div>");
-	            	}else if ($('#radio_lion').is(':checked')){
-	            		$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
-	            	}else if($('#radio_camel').is(':checked')) {
-	            		$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel + "</div>");
-	            	}
+	            	$($selectedRadioSize).change(function() {
+	            		$blockPrice.empty();
+	            		if ($('#radio_elephant').is(':checked')){
+	            			if(($('#size_1').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant + "</div>");
+	            			} else if (($('#size_2').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant*2 + "</div>");
+	            			}
+	            			else if (($('#size_3').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant*3 + "</div>");
+	            			}
+	            		}else if ($('#radio_giraffe').is(':checked')){
+	            			if(($('#size_1').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe + "</div>");
+	            			} else if (($('#size_2').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe*2 + "</div>");
+	            			}
+	            			else if (($('#size_3').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe*3 + "</div>");
+	            			}
+	            		}else if ($('#radio_lion').is(':checked')){
+	            			if(($('#size_1').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
+	            			} else if (($('#size_2').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion*2 + "</div>");
+	            			}
+	            			else if (($('#size_3').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion*3 + "</div>");
+	            			}
+	            		}else if($('#radio_camel').is(':checked')) {
+	            			if(($('#size_1').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel + "</div>");
+	            			} else if (($('#size_2').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel*2 + "</div>");
+	            			}
+	            			else if (($('#size_3').is(':checked'))){
+	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel*3 + "</div>");
+	            			}
+	            		}
+	            	});
 	            });
 	        };
 
@@ -74,9 +105,20 @@
 						$Description2, $Description3);
 				
 				// affichage des prix
-				showPrice($radioE1);
-				showPrice($radioE2);
-				showPrice($radioE3);
-				showPrice($radioE4);
+				showPrice($radioE1, $radioS1);
+				showPrice($radioE1, $radioS2);
+				showPrice($radioE1, $radioS3);
+				
+				showPrice($radioE2, $radioS1);
+				showPrice($radioE2, $radioS2);
+				showPrice($radioE2, $radioS3);
+				
+				showPrice($radioE3, $radioS1);
+				showPrice($radioE3, $radioS2);
+				showPrice($radioE3, $radioS3);
+				
+				showPrice($radioE4, $radioS1);
+				showPrice($radioE4, $radioS2);
+				showPrice($radioE4, $radioS3);
 			})
 })(jQuery);
