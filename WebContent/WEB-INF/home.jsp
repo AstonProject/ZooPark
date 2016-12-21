@@ -72,14 +72,23 @@
 						<h2>Inscription</h2>
 							<form method="post" id="register_form" action="user?action=register">
 								<ul>
+									<li> ${ valid.resultat } </li>
 									<li><label for="reg_pseudo">Pseudo :</label></li>
-									<li><input type="text" name="reg_pseudo" id="reg_pseudo"></li>
+									<li><input type="text" name="reg_pseudo" id="reg_pseudo">
+									<br><span>${valid.erreurs['pseudo']}</span></li>
+
 									<li><label for="reg_password">Mot de passe :</label></li>
-									<li><input type="text" name="reg_password" id="reg_password"></li>
+									<li><input type="text" name="reg_password" id="reg_password">
+									<br><span>${valid.erreurs['password']}</span></li>
+
 									<li><label for="reg_confirmation">Retapez le mot de passe :</label></li>
-									<li><input type="text" name="reg_confirmation" id="reg_confirmation"></li>
+									<li><input type="text" name="reg_confirmation" id="reg_confirmation">
+									<br><span>${valid.erreurs['confirmation']}</span></li>
+		
 									<li><label for="reg_email">Email :</label></li>
-									<li><input type="text" name="reg_email" id="reg_email"></li>
+									<li><input type="text" name="reg_email" id="reg_email">
+									<br><span>${valid.erreurs['email']}</span></li>
+		
 									<li><input type="submit" value="inscription"></li>
 								</ul>
 							</form>

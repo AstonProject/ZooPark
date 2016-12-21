@@ -37,6 +37,22 @@ public class PlayerBean {
 	public void setMoney(int money) {
 		this.money = money;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PlayerBean [id=");
+		builder.append(id);
+		builder.append(", pseudo=");
+		builder.append(pseudo);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", money=");
+		builder.append(money);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 }
