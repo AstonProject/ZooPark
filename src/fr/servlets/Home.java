@@ -28,10 +28,10 @@ public class Home extends HttpServlet {
 		if(user != null)
 		{
 			List<EnclosureBean> enclos = null;
-			EnclosureBean[][] constructions = new EnclosureBean[5][5];
+			EnclosureBean[][] constructions = new EnclosureBean[6][6];
 			EnclosuresDAO edao = new EnclosuresDAO();
 			enclos = edao.getAllEnclosures(user.getId());
-			int cpt = 1;
+			int cpt = 0;
 			for(int i = 0; i < 5; i++){
 				for(int j = 0; j < 5; j++){
 					constructions[i][j] = enclos.get(cpt);
