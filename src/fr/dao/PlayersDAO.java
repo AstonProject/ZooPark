@@ -20,55 +20,94 @@ public class PlayersDAO {
 	}
 
 	/** Global methods **/
-	public void addPlayer(PlayerBean player) {
+	public void createPlayer(PlayerBean player) {
+		PreparedStatement st = null;
+		
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement("INSERT INTO player (pseudo, password, email) VALUES (?, ?, ?)");
-			preparedStatement.setString(1, player.getPseudo());
-			preparedStatement.setString(2, player.getPassword());
-			preparedStatement.setString(3, player.getEmail());
+			st = connection.prepareStatement("INSERT INTO player (pseudo, password, email) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, player.getPseudo());
+			st.setString(2, player.getPassword());
+			st.setString(3, player.getEmail());
 
-			preparedStatement.executeUpdate();
+			st.executeUpdate();
+			
+			ResultSet generatedKeys = st.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				player.setId(generatedKeys.getInt(1));
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
 	public void updatePlayer(PlayerBean player) {
+		PreparedStatement st = null;
+		
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement("UPDATE player SET pseudo=?, password=?, email=?, money=? WHERE id=?");
-			preparedStatement.setString(1, player.getPseudo());
-			preparedStatement.setString(2, player.getPassword());
-			preparedStatement.setString(3, player.getEmail());
-			preparedStatement.setInt(4, player.getMoney());
-			preparedStatement.setInt(5, player.getId());
+			st = connection.prepareStatement("UPDATE player SET pseudo=?, password=?, email=?, money=? WHERE id=?");
+			st.setString(1, player.getPseudo());
+			st.setString(2, player.getPassword());
+			st.setString(3, player.getEmail());
+			st.setInt(4, player.getMoney());
+			st.setInt(5, player.getId());
 
-			preparedStatement.executeUpdate();
+			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
 	public void deletePlayer(int idPlayer) {
+		PreparedStatement st = null;
+		
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM player WHERE id=?");
-			preparedStatement.setInt(1, idPlayer);
+			st = connection.prepareStatement("DELETE FROM player WHERE id=?");
+			st.setInt(1, idPlayer);
 
-			preparedStatement.executeUpdate();
+			st.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
 	public PlayerBean getPlayerById(int idPlayer) {
+		PreparedStatement st = null;
+		ResultSet rs = null;		
 		PlayerBean player = new PlayerBean();
-
+		
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM player WHERE id=?");
-			preparedStatement.setInt(1, idPlayer);
-			ResultSet rs = preparedStatement.executeQuery();
+			st = connection.prepareStatement("SELECT * FROM player WHERE id=?");
+			st.setInt(1, idPlayer);
+			rs = st.executeQuery();
 
 			if (rs.next()) {
 				player.setId(rs.getInt("id"));
@@ -79,19 +118,166 @@ public class PlayersDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
+		return player;
+	}
+	
+	public PlayerBean getByPseudo (String pseudo) throws SQLException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		PlayerBean player = new PlayerBean();
+		
+		try {
+			
+			st = connection.prepareStatement("SELECT pseudo FROM player WHERE pseudo=? ");
+			
+			st.setString(1, pseudo);
+			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			
+			if (rs.next()) {
+				player.setPseudo(rs.getString("pseudo"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return player;
+	}
+	
+
+	public PlayerBean getByEmail (String email) throws Exception {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		PlayerBean player = new PlayerBean();
+		
+		try {
+			
+			st = connection.prepareStatement("SELECT email FROM player WHERE email=? ");
+			
+			st.setString(1, email);
+			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			
+			if (rs.next()) {
+				player.setEmail(rs.getString("email"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return player;
+	}
+	
+	public PlayerBean getByPassword (String pseudo, String password) throws SQLException {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		PlayerBean player = new PlayerBean();
+		
+		try {
+			
+			st = connection.prepareStatement("SELECT * FROM player WHERE pseudo=? AND password=?");
+			
+			st.setString(1, pseudo);
+			st.setString(2, password);
+			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			
+			while (rs.next()) {
+				player.setId(rs.getInt("id"));
+				player.setPseudo(rs.getString("pseudo"));
+				player.setEmail(rs.getString("email"));
+				player.setMoney(rs.getInt("money"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return player;
 	}
 
 	public List<PlayerBean> getAllplayers() {
 		List<PlayerBean> players = new ArrayList<PlayerBean>();
-
+		
+		Statement st = null;
+		ResultSet rs = null;
+		
 		try {
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT * FROM player");
+			st = connection.createStatement();
+			rs = st.executeQuery("SELECT * FROM player");
 
 			while (rs.next()) {
 				PlayerBean player = new PlayerBean();
+
 				player.setId(rs.getInt("id"));
 				player.setPseudo(rs.getString("pseudo"));
 				player.setPassword(rs.getString("password"));
@@ -100,27 +286,65 @@ public class PlayersDAO {
 
 				players.add(player);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return players;
 	}
 
 	// Specific methods
 	public Integer getPlayerMoneyById(int idPlayer) {
-			Integer money=0;
+		Integer money=0;
+		PreparedStatement st = null;
+		ResultSet rs = null;	
 			
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement("SELECT money FROM player WHERE id=?");
-			preparedStatement.setInt(1, idPlayer);
-			ResultSet rs = preparedStatement.executeQuery();
+			st = connection.prepareStatement("SELECT money FROM player WHERE id=?");
+			st.setInt(1, idPlayer);
+			rs = st.executeQuery();
 
 			if (rs.next()) {
 				money = rs.getInt("money");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally { // tres impportant : on ferme tout !!!
+			
+			if (rs != null) {
+				try {
+					rs.close(); // on ferme le resultat de la requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (st != null) {
+				try {
+					st.close(); // on ferme l'objet requete
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return money;
 	}
+
 }

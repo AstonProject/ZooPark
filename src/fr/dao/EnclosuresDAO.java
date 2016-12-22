@@ -18,10 +18,25 @@ public class EnclosuresDAO {
 		connection = ConnectionDB.getConnection();
 	}
 
+	public void initEnclosure(EnclosureBean enclosure) {
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"INSERT INTO enclosure (locate_x, locate_y, player_id) VALUES (?, ?, ?) ");
+
+			preparedStatement.setInt(1, enclosure.getLocate_x());
+			preparedStatement.setInt(2, enclosure.getLocate_y());
+			preparedStatement.setInt(3, enclosure.getPlayer_id());
+			
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}	
+	
 	public void addEnclosure(EnclosureBean enclosure) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"INSERT INTO player (locate_x(), locate_y(), capacity(), animal_quantity(), cleanliness_gauge(), employee_slot(), employee_quantity(), specie_id(), player_id() ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					"INSERT INTO enclosure (locate_x, locate_y, capacity, animal_quantity, cleanliness_gauge, employee_slot, employee_quantity, specie_id, player_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			preparedStatement.setInt(1, enclosure.getLocate_x());
 			preparedStatement.setInt(2, enclosure.getLocate_y());
@@ -39,10 +54,10 @@ public class EnclosuresDAO {
 		}
 	}
 
-	public void updatePlayer(EnclosureBean enclosure) {
+	public void updateEnclosure(EnclosureBean enclosure) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"UPDATE player SET locate_x=?, locate_y=?, capacity=?, animal_quantity=?, cleanliness_gauge=?, employee_slot=?, employee_quantity=?, specie_id=?, player_id=?  WHERE id=?");
+					"UPDATE enclosure SET locate_x=?, locate_y=?, capacity=?, animal_quantity=?, cleanliness_gauge=?, employee_slot=?, employee_quantity=?, specie_id=?, player_id=?  WHERE id=?");
 			preparedStatement.setInt(1, enclosure.getLocate_x());
 			preparedStatement.setInt(2, enclosure.getLocate_y());
 			preparedStatement.setInt(3, enclosure.getCapacity());
