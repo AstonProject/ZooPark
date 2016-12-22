@@ -35,8 +35,7 @@ public class PlayerServlet extends HttpServlet {
 			if (session != null) {
 				session.removeAttribute("user");
 				session.invalidate();
-				RequestDispatcher rs = request.getRequestDispatcher( VUE );
-				rs.include(request, response);
+				response.sendRedirect( VUE );
 			}
 		}
 	}
