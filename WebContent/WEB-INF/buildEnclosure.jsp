@@ -11,7 +11,7 @@
 	<h1>Building menu</h1>
 	<br>
 	<div class="enclosureChoice">
-		<form action="createEnclosure" method="post" id="myForm">
+		<form action="createEnclosure" method="post" id="FormCreateEnclosure">
 			<h3>Enclosure type</h3>
 			<br>
 
@@ -114,13 +114,23 @@
 					value="2" id="size_2"> 2 <input type="radio"
 					name="enclosureSize" value="3" id="size_3"> 3
 			</div>
-
+			<div id="getLocate">
+			Locate_x:<input type="hidden" name="loc_x" value = "locate_x"/>
+        	Locate_y:<input type="hidden" name="loc_y"  value = "locate_y"/>
+        	Price:<input type="hidden" name="price"  value = ""/>
+        	</div>
 			<h3>Price</h3>
 
 			<div class="showPrice">
 			<div class="price"></div></div>
 			<br> <input type="submit" value="buy" name="validate">
 		</form>
+		
+		
+		
+		
+		
+		
 	</div>
 	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
