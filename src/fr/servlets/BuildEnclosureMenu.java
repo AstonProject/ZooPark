@@ -26,11 +26,11 @@ public class BuildEnclosureMenu extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			// Recuperation des coordonneees de l'enclos a construire depuis la
+			// Recuperation des coordonneees de l'enclos aï¿½construire depuis la
 			// Home.jsp
 			// et enregistrement dans la session
-			String locate_x = request.getParameter("x");
-			String locate_y = request.getParameter("y");
+			int locate_x = Integer.parseInt(request.getParameter("x"));
+			int locate_y = Integer.parseInt(request.getParameter("y"));
 
 			session.setAttribute("current_locate_x", locate_x);
 			session.setAttribute("current_locate_y", locate_y);
@@ -58,30 +58,44 @@ public class BuildEnclosureMenu extends HttpServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(prices.toString());
 			}
-
-			/**
-			 * Creation d'un nouvel enclos et update du player après achat
-			 **/
-			/*
-			// Recuperation de donnees enregistrée dans la session:
-			// - les coordonnées d'enclos(ce doGet)
-			int locate_x = (int) session.getAttribute("current_locate_x");
-			int locate_y = (int) session.getAttribute("current_locate_y");
 			
-			// - les attributs du joueurs connecté (doPost de PlayerServlet)
+			int enclosurePrice=Integer.parseInt(request.getParameter("price"));
+			System.out.println(enclosurePrice);
+			
+			/**
+			 * Creation d'un nouvel enclos et update du player apres achat
+			 **/
+			
+			/*// Recuperation de donnees enregistrï¿½e dans la session:
+			// - les coordonnï¿½es d'enclos(ce doGet)
+				int locate_x = (int) session.getAttribute("current_locate_x");
+				int locate_y = (int) session.getAttribute("current_locate_y");
+				
+				
+			// - les attributs du joueurs connectï¿½ (doPost de PlayerServlet)
 			PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 			// Creation d'un objet local enclosure
 			EnclosureBean enclosure = new EnclosureBean();
-
-			// recuperation des données json envoyees en Ajax via getForm()
+			
+			// recuperation des donnees json envoyees en Ajax via getForm()
 			// dans buildEnclosure.js
-			int specie_id = Integer.parseInt(request.getParameter("specie_id"));
-			int enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
-			int enclosurePrice = Integer.parseInt(request.getParameter("price"));
-
+			int specie_id =1;
+			int enclosureCapacity=5;
+			int enclosurePrice=0;
+			try {
+				specie_id = Integer.parseInt(request.getParameter("specie_id"));
+				enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
+				enclosurePrice = Integer.parseInt(request.getParameter("price"));
+				System.out.println("donnees du getForm" + specie_id + enclosureCapacity + enclosurePrice);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			// Creation des objets dao (EnclosuresDAO, PlayersDAO) pour
-			// acceder aux méthodes updates
+			// acceder aux mï¿½thodes updates
 			EnclosuresDAO edao = new EnclosuresDAO();
 			PlayersDAO pdao = new PlayersDAO();
 
@@ -93,13 +107,14 @@ public class BuildEnclosureMenu extends HttpServlet {
 			player.setMoney(solde - enclosurePrice);
 			pdao.updatePlayer(player);
 
-			// Modification des données de l'enclo acheté
+			// Modification des donnï¿½es de l'enclo achete
 			enclosure.setLocate_x(locate_x);
 			enclosure.setLocate_y(locate_y);
 			enclosure.setSpecie_id(specie_id);
 			enclosure.setCapacity(enclosureCapacity);
-			edao.updateEnclosure(enclosure);*/
-			
+			edao.updateEnclosure(enclosure);
+			System.out.println("finish");
+			*/
 		}
 	}
 }
