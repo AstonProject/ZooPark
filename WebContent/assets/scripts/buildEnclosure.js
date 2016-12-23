@@ -88,7 +88,7 @@
 	
 	//Fonction de récupération des données: type d'enclos d'enclos, taille et de son coût
 	function getForm(){
-		var callback=function(donnees){
+		
 			var $formCE = $('FormCreateEnclosure');
 			var $radioType = $formCE.find('#radio1');
 			var $radioSize = $formCE.find('#radio2');
@@ -128,7 +128,7 @@
 			}
 			status = "ok";
 		});
-			
+			var callback=function(donnees){
 			};
 			var monObjet ={
 					"specie_id": specie_id,
