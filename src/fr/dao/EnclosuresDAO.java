@@ -14,10 +14,12 @@ import fr.utility.ConnectionDB;
 public class EnclosuresDAO {
 	private Connection connection;
 
+	/** Constructor**/
 	public EnclosuresDAO() {
 		connection = ConnectionDB.getConnection();
 	}
 
+	/** Global methods **/
 	public void initEnclosure(EnclosureBean enclosure) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(

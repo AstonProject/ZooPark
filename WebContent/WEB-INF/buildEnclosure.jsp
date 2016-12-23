@@ -114,11 +114,7 @@
 					value="2" id="size_2"> 2 <input type="radio"
 					name="enclosureSize" value="3" id="size_3"> 3
 			</div>
-			<div id="getLocate">
-			Locate_x:<input type="hidden" name="loc_x" value = "locate_x"/>
-        	Locate_y:<input type="hidden" name="loc_y"  value = "locate_y"/>
-        	Price:<input type="hidden" name="price"  value = ""/>
-        	</div>
+			
 			<h3>Price</h3>
 
 			<div class="showPrice">

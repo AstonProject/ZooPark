@@ -14,7 +14,8 @@ import fr.utility.ConnectionDB;
 /** DAO to perform queries on players **/
 public class PlayersDAO {
 	private Connection connection;
-
+	
+	/** Constructor**/
 	public PlayersDAO() {
 		connection = ConnectionDB.getConnection();
 	}
@@ -38,11 +39,11 @@ public class PlayersDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -64,11 +65,11 @@ public class PlayersDAO {
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -87,11 +88,11 @@ public class PlayersDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -118,11 +119,11 @@ public class PlayersDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close(); // on ferme le resultat de la requete
+					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -130,7 +131,7 @@ public class PlayersDAO {
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -150,7 +151,7 @@ public class PlayersDAO {
 			st = connection.prepareStatement("SELECT pseudo FROM player WHERE pseudo=? ");
 			
 			st.setString(1, pseudo);
-			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			rs = st.executeQuery(); 
 			
 			if (rs.next()) {
 				player.setPseudo(rs.getString("pseudo"));
@@ -158,11 +159,11 @@ public class PlayersDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close(); // on ferme le resultat de la requete
+					rs.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -170,7 +171,7 @@ public class PlayersDAO {
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -191,7 +192,7 @@ public class PlayersDAO {
 			st = connection.prepareStatement("SELECT email FROM player WHERE email=? ");
 			
 			st.setString(1, email);
-			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			rs = st.executeQuery();
 			
 			if (rs.next()) {
 				player.setEmail(rs.getString("email"));
@@ -199,11 +200,11 @@ public class PlayersDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close(); // on ferme le resultat de la requete
+					rs.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -211,7 +212,7 @@ public class PlayersDAO {
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -232,7 +233,7 @@ public class PlayersDAO {
 			
 			st.setString(1, pseudo);
 			st.setString(2, password);
-			rs = st.executeQuery(); // envoi de la requete et recuperation du resultat
+			rs = st.executeQuery(); 
 			
 			while (rs.next()) {
 				player.setId(rs.getInt("id"));
@@ -243,11 +244,11 @@ public class PlayersDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close(); // on ferme le resultat de la requete
+					rs.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -255,7 +256,7 @@ public class PlayersDAO {
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -289,11 +290,11 @@ public class PlayersDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally { // tres impportant : on ferme tout !!!
+		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close(); // on ferme le resultat de la requete
+					rs.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -301,7 +302,7 @@ public class PlayersDAO {
 			
 			if (st != null) {
 				try {
-					st.close(); // on ferme l'objet requete
+					st.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -310,7 +311,7 @@ public class PlayersDAO {
 		return players;
 	}
 
-	// Specific methods
+	/** Specific methods **/
 	public Integer getPlayerMoneyById(int idPlayer) {
 		Integer money=0;
 		PreparedStatement st = null;

@@ -16,53 +16,90 @@ import fr.dao.CostsDAO;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
 
-
 @WebServlet("/createEnclosure")
 public class BuildEnclosureMenu extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//Recuperation des coordonnÃ©es de l'enclos Ã  construire depuis la Home.jsp
-		String locate_x=null;
-		String locate_y=null;
-		locate_x = request.getParameter("x");
-		locate_y = request.getParameter("y");
-		
-		//Envoie des coordonnÃ©es Ã  la jsp BuildEnclosure
-		if(locate_x  != null && locate_y != null){
-		request.setAttribute( "locate_x", locate_x );
-		request.setAttribute( "locate_y", locate_y );
-		this.getServletContext().getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
-		//int locat_x = Integer.parseInt(x);
-		//int locat_y = Integer.parseInt(y);
+		// recuperation de la session actuelle
+		HttpSession session = request.getSession(false);
+
+		if (session != null) {
+			// Recuperation des coordonneees de l'enclos a construire depuis la
+			// Home.jsp
+			// et enregistrement dans la session
+			String locate_x = request.getParameter("x");
+			String locate_y = request.getParameter("y");
+
+			session.setAttribute("current_locate_x", locate_x);
+			session.setAttribute("current_locate_y", locate_y);
+
+			this.getServletContext().getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Recuperation des prix d'enclos depuis la CostsDAO
-		CostsDAO cdao = new CostsDAO();
-		JSONObject prices = cdao.getCosts();
+		// recuperation de la session actuelle
+		HttpSession session = request.getSession(false);
 		
-		// Envoie des prix dans la rÃ©ponse pour Ãªtre recupÃ©rÃ© dans la fonction showPrice (buildEnclosure.js) 
-		if( prices != null){
-		response.setContentType("application/json");
-		response.getWriter().append(prices.toString());
+
+		if (session != null) {
+			/** Affichage des prix dans la jsp buildEnclosure **/
+			// Recuperation des prix d'enclos depuis la CostsDAO
+			CostsDAO cdao = new CostsDAO();
+			JSONObject prices = cdao.getCosts();
+
+			// Envoie des prix dans la reponse pour etre recupere dans la
+			// fonction showPrice() dans buildEnclosure.js
+			if (prices != null) {
+				response.setContentType("application/json");
+				response.getWriter().append(prices.toString());
+			}
+
+			/**
+			 * Creation d'un nouvel enclos et update du player après achat
+			 **/
+			/*
+			// Recuperation de donnees enregistrée dans la session:
+			// - les coordonnées d'enclos(ce doGet)
+			int locate_x = (int) session.getAttribute("current_locate_x");
+			int locate_y = (int) session.getAttribute("current_locate_y");
+			
+			// - les attributs du joueurs connecté (doPost de PlayerServlet)
+			PlayerBean player = (PlayerBean) session.getAttribute("user");
+
+			// Creation d'un objet local enclosure
+			EnclosureBean enclosure = new EnclosureBean();
+
+			// recuperation des données json envoyees en Ajax via getForm()
+			// dans buildEnclosure.js
+			int specie_id = Integer.parseInt(request.getParameter("specie_id"));
+			int enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
+			int enclosurePrice = Integer.parseInt(request.getParameter("price"));
+
+			// Creation des objets dao (EnclosuresDAO, PlayersDAO) pour
+			// acceder aux méthodes updates
+			EnclosuresDAO edao = new EnclosuresDAO();
+			PlayersDAO pdao = new PlayersDAO();
+
+			// Recuperation du solde actuel du joueur (prevoir de changer en
+			// double)
+			int solde = player.getMoney();
+
+			// Modification de money du player dans la BBD
+			player.setMoney(solde - enclosurePrice);
+			pdao.updatePlayer(player);
+
+			// Modification des données de l'enclo acheté
+			enclosure.setLocate_x(locate_x);
+			enclosure.setLocate_y(locate_y);
+			enclosure.setSpecie_id(specie_id);
+			enclosure.setCapacity(enclosureCapacity);
+			edao.updateEnclosure(enclosure);*/
+			
 		}
-		
-		//Creation d'un nouvel enclos et update du player
-		HttpSession session = request.getSession();
-		EnclosuresDAO edao= new EnclosuresDAO();
-		PlayersDAO pdao = new PlayersDAO();
-		EnclosureBean enclosure = new EnclosureBean();
-		//Recuperation des donnÃ©es du joueurs enregistrÃ©es dans la session
-		PlayerBean player = (PlayerBean) session.getAttribute("user");
-		int money= player.getMoney();
-		
-		
-		
-		
 	}
 }
