@@ -25,31 +25,36 @@
 			 $selectedRadioSize.on('change', function() {
 				// Reinitialise le contenu du blockPrice si un radio EnclosureSize est selectionne
 				 $blockPrice.empty();
+				 var price;
 				 var callback = function(donnees) {
-					 
+					 var EnclosurePrice;
 					//Verificaation du radio selectionne et correlation avec les prix de CostsDAO 
 					 if ($('#radio_elephant').is(':checked')){
-						 var EnclosurePrice= donnees.enclosureCosts_elephant;
+						 EnclosurePrice= donnees.enclosureCosts_elephant;
 					 } else if ($('#radio_giraffe').is(':checked')){
-						 var  EnclosurePrice= donnees.enclosureCosts_giraffe;
+						EnclosurePrice= donnees.enclosureCosts_giraffe;
 					 }else if ($('#radio_lion').is(':checked')){
-						 var  EnclosurePrice= donnees.enclosureCosts_lion;
+						EnclosurePrice= donnees.enclosureCosts_lion;
 					 }else if ($('#radio_camel').is(':checked')){
-						 var EnclosurePrice= donnees.enclosureCosts_camel;
+						EnclosurePrice= donnees.enclosureCosts_camel;
 					 }
 					// Reinitialise le contenu du blockPrice (necessaire)
 					 $blockPrice.empty();
+					
 					if(($('#size_1').is(':checked'))){
-						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
+						price=EnclosurePrice;
+						 $blockPrice.prepend("<div>"+ price + "</div>");
 					} else if (($('#size_2').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
+						price= EnclosurePrice*2;
+						$blockPrice.prepend("<div>"+ price + "</div>");
 					}
 					 else if (($('#size_3').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
+						 price = EnclosurePrice*3;
+						$blockPrice.prepend("<div>"+ price + "</div>");	
 					}
 				 };
-				 var monObjet ={}
-				 server.monAjax(monObjet, "createEnclosure", callback)
+				 var monObjet ={"price":price}
+				 server.monAjax(monObjet, "createEnclosure", callback, 'POST')
 			 });
 		 });
 		

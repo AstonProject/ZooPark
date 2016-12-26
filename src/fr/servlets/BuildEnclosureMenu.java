@@ -59,9 +59,17 @@ public class BuildEnclosureMenu extends HttpServlet {
 				response.getWriter().append(prices.toString());
 			}
 			
+			
+			try {
+				int enclosurePrice=Integer.parseInt(request.getParameter("price"));
+				System.out.println(enclosurePrice);
+				session.setAttribute("curent_enclosure_price", enclosurePrice);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			/*
-			int enclosurePrice=Integer.parseInt(request.getParameter("price"));
-			System.out.println(enclosurePrice);
 			if(request.getParameter("status").equals("ok")){
 			*//**
 			 * Creation d'un nouvel enclos et update du player apres achat
