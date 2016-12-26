@@ -11,80 +11,50 @@
 			$descriptionHide3.css("display", "none");
 		});
 	}
-
+	
 	// Fonction d'affichage des prix
-	function showPrice($selectedRadioEnclosure, $selectedRadioSize, $price){
+	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
+		//attribution d'une variable selectionnant la div d'affichage des prix
+		var $blockPrice=$('.price');
+    	
+		$selectedRadioEnclosure.on('click', function() {
+			// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
+			$blockPrice.empty();
+			// Réinitialise les radioSize si une radio enclosureType est selectionnée
+        	$('input:radio[name=enclosureSize]').each(function () { $(this).prop('checked', false); });
+			 $selectedRadioSize.on('change', function() {
+				// Reinitialise le contenu du blockPrice si un radio EnclosureSize est selectionne
+				 $blockPrice.empty();
+				 var callback = function(donnees) {
+					 
+					//Verificaation du radio selectionne et correlation avec les prix de CostsDAO 
+					 if ($('#radio_elephant').is(':checked')){
+						 var EnclosurePrice= donnees.enclosureCosts_elephant;
+					 } else if ($('#radio_giraffe').is(':checked')){
+						 var  EnclosurePrice= donnees.enclosureCosts_giraffe;
+					 }else if ($('#radio_lion').is(':checked')){
+						 var  EnclosurePrice= donnees.enclosureCosts_lion;
+					 }else if ($('#radio_camel').is(':checked')){
+						 var EnclosurePrice= donnees.enclosureCosts_camel;
+					 }
+					// Reinitialise le contenu du blockPrice (necessaire)
+					 $blockPrice.empty();
+					if(($('#size_1').is(':checked'))){
+						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
+					} else if (($('#size_2').is(':checked'))){
+						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
+					}
+					 else if (($('#size_3').is(':checked'))){
+						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
+					}
+				 };
+				 var monObjet ={}
+				 server.monAjax(monObjet, "createEnclosure", callback)
+			 });
+		 });
 		
-		var callback=function(donnees){
-			var $blockPrice=$('.price');
-	            $($selectedRadioEnclosure).click(function() {
-	            	// Réinitialise le contenu du blockPrice si un radio EnclosureType est selectionné
-	            	$blockPrice.empty();
-	            	// Réinitialise les radioSize si une radio enclosureType est selectionnée
-	            	$('input:radio[name=enclosureSize]').each(function () { $(this).prop('checked', false); });
-	            	
-	            	$($selectedRadioSize).change(function() {
-	            		// Réinitialise le contenu du blockPrice si un radio EnclosureSize est selectionné
-	            		$blockPrice.empty();
-	            		
-	            		// Verification des 2 radios selectionnes puis affichage du prix selon les cas 
-	            		//et son enregistrement dans la variable $price 
-	            		if ($('#radio_elephant').is(':checked')){
-	            			if(($('#size_1').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant + "</div>");
-	            				$price = donnees.enclosureCosts_elephant;
-	            			} else if (($('#size_2').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant*2 + "</div>");
-	            				$price = donnees.enclosureCosts_elephant*2;
-	            			}
-	            			else if (($('#size_3').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_elephant*3 + "</div>");
-	            				$price = donnees.enclosureCosts_elephant*3;
-	            			}
-	            		}else if ($('#radio_giraffe').is(':checked')){
-	            			if(($('#size_1').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe + "</div>");
-	            				$price = donnees.enclosureCosts_giraffe;
-	            			} else if (($('#size_2').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe*2 + "</div>");
-	            				$price = donnees.enclosureCosts_giraffe*2;
-	            			}
-	            			else if (($('#size_3').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_giraffe*3 + "</div>");
-	            				$price =  donnees.enclosureCosts_giraffe*3;
-	            			}
-	            		}else if ($('#radio_lion').is(':checked')){
-	            			if(($('#size_1').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion + "</div>");
-	            				$price = donnees.enclosureCosts_lion;
-	            			} else if (($('#size_2').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion*2 + "</div>");
-	            				$price = donnees.enclosureCosts_lion*2;
-	            			}
-	            			else if (($('#size_3').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_lion*3 + "</div>");
-	            				$price = donnees.enclosureCosts_lion*3;
-	            			}
-	            		}else if($('#radio_camel').is(':checked')) {
-	            			if(($('#size_1').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel + "</div>");
-	            				$price = donnees.enclosureCosts_camel;
-	            			} else if (($('#size_2').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel*2 + "</div>");
-	            				$price = donnees.enclosureCosts_camel*2;
-	            			}
-	            			else if (($('#size_3').is(':checked'))){
-	            				$blockPrice.prepend("<div>"+ donnees.enclosureCosts_camel*3 + "</div>");
-	            				$price = donnees.enclosureCosts_camel*3;
-	            			}
-	            		}
-	            	});
-	            });
-	        };
-
-	        var monObjet ={"price": $price };
-	        server.monAjax(monObjet, "createEnclosure", callback, 'POST');
-    }
+	}
+	
 	
 	//Fonction de récupération des données: type d'enclos d'enclos, taille et de son coût
 	function getForm(){
@@ -138,6 +108,7 @@
 			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 		
 	}
+	
 	$(document).ready(
 			function() {
 				
@@ -159,9 +130,7 @@
 				var $radioS1 = $('#size_1');
 				var $radioS2 = $('#size_2');
 				var $radioS3 = $('#size_3');
-				
-				var $price = 0;
-				
+
 				/**Execution des fonctions **/
 				// Execution des fonctions d'affichage de description des
 				// enclos selon le radio "enclosureType" selectionnée
@@ -176,21 +145,21 @@
 				
 				// Execution des fonctions d'affichage des prix des
 				// enclos selon les selections des radios EnclosureType et EnclosureSize
-				showPrice($radioE1, $radioS1, $price);
-				showPrice($radioE1, $radioS2, $price);
-				showPrice($radioE1, $radioS3, $price);
+				showPrice($radioE1, $radioS1);
+				showPrice($radioE1, $radioS2);
+				showPrice($radioE1, $radioS3);
 				
-				showPrice($radioE2, $radioS1, $price);
-				showPrice($radioE2, $radioS2, $price);
-				showPrice($radioE2, $radioS3, $price);
+				showPrice($radioE2, $radioS1);
+				showPrice($radioE2, $radioS2);
+				showPrice($radioE2, $radioS3);
 				
-				showPrice($radioE3, $radioS1, $price);
-				showPrice($radioE3, $radioS2, $price);
-				showPrice($radioE3, $radioS3, $price);
+				showPrice($radioE3, $radioS1);
+				showPrice($radioE3, $radioS2);
+				showPrice($radioE3, $radioS3);
 				
-				showPrice($radioE4, $radioS1, $price);
-				showPrice($radioE4, $radioS2, $price);
-				showPrice($radioE4, $radioS3, $price);
+				showPrice($radioE4, $radioS1);
+				showPrice($radioE4, $radioS2);
+				showPrice($radioE4, $radioS3);
 				
 				//Execution de la fonction de recuperation des données d'enclos 
 				//pour sa création depuis le controleur BuildEnclosureMenu

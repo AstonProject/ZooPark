@@ -59,19 +59,20 @@ public class BuildEnclosureMenu extends HttpServlet {
 				response.getWriter().append(prices.toString());
 			}
 			
+			/*
 			int enclosurePrice=Integer.parseInt(request.getParameter("price"));
 			System.out.println(enclosurePrice);
 			if(request.getParameter("status").equals("ok")){
-			/**
+			*//**
 			 * Creation d'un nouvel enclos et update du player apres achat
-			 **/
+			 **//*
 			
 			// Recuperation de donnees enregistr�e dans la session:
 			// - les coordonn�es d'enclos(ce doGet)
 				int locate_x = (int) session.getAttribute("current_locate_x");
 				int locate_y = (int) session.getAttribute("current_locate_y");
 				
-				/*	
+				
 			// - les attributs du joueurs connect� (doPost de PlayerServlet)
 			PlayerBean player = (PlayerBean) session.getAttribute("user");
 
@@ -114,8 +115,8 @@ public class BuildEnclosureMenu extends HttpServlet {
 			enclosure.setCapacity(enclosureCapacity);
 			edao.updateEnclosure(enclosure);
 			System.out.println("finish");
-			*/
-			}
+			
+			}*/
 		}
 	}
 }
