@@ -1,6 +1,6 @@
 (function($) {
-	"use strict";
-
+	 "use strict";
+	
 	// Fonction d'affichage des descriptions associées à la selection des radios EnclosureType
 	function showDescription($selectedRadioEnclosure, $descriptionShown,
 			$descriptionHide1, $descriptionHide2, $descriptionHide3) {
@@ -16,7 +16,7 @@
 	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
 		//attribution d'une variable selectionnant la div d'affichage des prix
 		var $blockPrice=$('.price');
-    	
+    	var statusP = "okP";
 		$selectedRadioEnclosure.on('click', function() {
 			// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
 			$blockPrice.empty();
@@ -25,12 +25,12 @@
 			 $selectedRadioSize.on('change', function() {
 				// Reinitialise le contenu du blockPrice si un radio EnclosureSize est selectionne
 				 $blockPrice.empty();
-				 var price;
 				 var callback = function(donnees) {
 					 var EnclosurePrice;
+					 
 					//Verificaation du radio selectionne et correlation avec les prix de CostsDAO 
 					 if ($('#radio_elephant').is(':checked')){
-						 EnclosurePrice= donnees.enclosureCosts_elephant;
+						EnclosurePrice= donnees.enclosureCosts_elephant;
 					 } else if ($('#radio_giraffe').is(':checked')){
 						EnclosurePrice= donnees.enclosureCosts_giraffe;
 					 }else if ($('#radio_lion').is(':checked')){
@@ -42,19 +42,17 @@
 					 $blockPrice.empty();
 					
 					if(($('#size_1').is(':checked'))){
-						price=EnclosurePrice;
-						 $blockPrice.prepend("<div>"+ price + "</div>");
+						
+						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
 					} else if (($('#size_2').is(':checked'))){
-						price= EnclosurePrice*2;
-						$blockPrice.prepend("<div>"+ price + "</div>");
+						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
 					}
 					 else if (($('#size_3').is(':checked'))){
-						 price = EnclosurePrice*3;
-						$blockPrice.prepend("<div>"+ price + "</div>");	
+						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
 					}
 				 };
-				 var monObjet ={"price":price}
-				 server.monAjax(monObjet, "createEnclosure", callback, 'POST')
+				 var monObjet ={"statusPrices": statusP};
+				 server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 			 });
 		 });
 		
@@ -71,7 +69,7 @@
 			var size= null;
 			var capacity=null;
 			var specie_id= null;
-			var status=null;
+			var statusF=null;
 				
 			
 		$formCE.on('submit', function(event) {
@@ -101,15 +99,15 @@
 			}else if (type == "Camel"){
 				specie_id = "4";
 			}
-			status = "ok";
+			status = "okF";
 		});
 			var callback=function(donnees){
 			};
 			var monObjet ={
 					"specie_id": specie_id,
 					"capacity": capacity,
-					"status": status
-			}
+					"statusForm": statusF
+			};
 			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 		
 	}

@@ -1,6 +1,6 @@
 var server = {};
 (function($) {
-	"use strict";
+	 "use strict";
 
 	server.monAjax = function(dataObj, url, callback, method) {
 		var objAjax = {
