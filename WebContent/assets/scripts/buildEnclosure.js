@@ -62,14 +62,14 @@
 	//Fonction de récupération des données: type d'enclos d'enclos, taille et de son coût
 	function getForm(){
 		
-			var $formCE = $('FormCreateEnclosure');
+			var $formCE = $('#FormCreateEnclosure');
 			var $radioType = $formCE.find('#radio1');
 			var $radioSize = $formCE.find('#radio2');
 			var type= null;
 			var size= null;
 			var capacity=null;
 			var specie_id= null;
-			var statusF=null;
+			var statusF = "okF";
 				
 			
 		$formCE.on('submit', function(event) {
@@ -81,34 +81,36 @@
 			size=$radioSize.val();
 			
 			//Attribution de la capacité et de la FK_specie_id par défaut a assigner a l'enclos
-			capacity = "5";
-			specie_id = "1";
+			capacity = 5;
+			specie_id = 1;
 			
 			//Modification de la capacité de l'enclos  selon le radio EnclosureSize selectionne
-			if(size == "2"){
-				 capacity = "10";
-			}else if (size == "3"){
-				 capacity = "15";
+			if(size == 2){
+				 capacity = 10;
+			}else if (size == 3){
+				 capacity = 15;
 			} 
 			
 			//Modification de FK_specie_id de l'enclos selon le radio EnclosureType selectionne
 			if(type == "Giraffe"){
-				specie_id = "2";
+				specie_id = 2;
 			} else if (type == "Lion"){
-				specie_id = "3";
+				specie_id = 3;
 			}else if (type == "Camel"){
-				specie_id = "4";
+				specie_id = 4;
 			}
-			status = "okF";
-		});
+			
 			var callback=function(donnees){
 			};
 			var monObjet ={
-					"specie_id": specie_id,
-					"capacity": capacity,
-					"statusForm": statusF
+					"specie_id":specie_id,
+					"capacity":capacity,
+					"statusForm":statusF
 			};
+			console.log(monObjet);
 			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+		});
+			
 		
 	}
 	
@@ -166,6 +168,6 @@
 				
 				//Execution de la fonction de recuperation des données d'enclos 
 				//pour sa création depuis le controleur BuildEnclosureMenu
-				//getForm();
+				getForm();
 			})
 })(jQuery);

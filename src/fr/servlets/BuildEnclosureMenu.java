@@ -50,7 +50,11 @@ public class BuildEnclosureMenu extends HttpServlet {
 			/** Affichage des prix dans la jsp buildEnclosure **/
 			
 			// Recuperation des prix d'enclos depuis la CostsDAO
-			if (request.getParameter("statusPrices").equals("okP")) {
+			String statPrices = request.getParameter("statusPrices");
+			System.out.println("statprices = "+statPrices);
+			String statForm = request.getParameter("statusForm");
+			System.out.println("statform = "+statForm);
+			if ((statPrices != null) && statPrices.equals("okP")) {
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
 
@@ -60,7 +64,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 					response.setContentType("application/json");
 					response.getWriter().append(prices.toString());
 				}
-			} else if (request.getParameter("statusForm").equals("okF")) {
+			} else if ((statForm != null) &&statForm.equals("okF")) {
 
 				/** Creation d'un nouvel enclos et update du player apres achat **/
 				// Recuperation de donnees enregistr�e dans la session:
@@ -83,7 +87,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// dans buildEnclosure.js
 				int specie_id = 1;
 				int enclosureCapacity = 5;
-				int enclosurePrice = 0;
 				try {
 					specie_id = Integer.parseInt(request.getParameter("specie_id"));
 					enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
