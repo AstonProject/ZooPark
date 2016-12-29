@@ -51,7 +51,7 @@
 						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
 					}
 				 };
-				 var monObjet ={"statusPrices": statusP};
+				 var monObjet ={"statusPrices":statusP};
 				 server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 			 });
 		 });
@@ -107,7 +107,7 @@
 					"capacity":capacity,
 					"statusForm":statusF
 			};
-			console.log(monObjet);
+			
 			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 		});
 			
