@@ -5,7 +5,7 @@ public class PlayerBean {
 	private String pseudo;
 	private String password;
 	private String email;
-	private int money;
+	private long money;
 	
 	public int getId() {
 		return id;
@@ -31,10 +31,10 @@ public class PlayerBean {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getMoney() {
+	public long getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
+	public void setMoney(long money) {
 		this.money = money;
 	}
 	@Override

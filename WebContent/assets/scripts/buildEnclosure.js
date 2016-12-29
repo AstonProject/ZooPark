@@ -42,7 +42,6 @@
 					 $blockPrice.empty();
 					
 					if(($('#size_1').is(':checked'))){
-						
 						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
 					} else if (($('#size_2').is(':checked'))){
 						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
@@ -61,7 +60,6 @@
 	
 	//Fonction de récupération des données: type d'enclos d'enclos, taille et de son coût
 	function getForm(){
-		
 			var $formCE = $('#FormCreateEnclosure');
 			var $radioType = $formCE.find('#radio1');
 			var $radioSize = $formCE.find('#radio2');
@@ -77,8 +75,8 @@
 			event.preventDefault();
 			
 			//Recuperation des valeurs des radios EnclosureType & EnclosureSize
-			type=$radioType.val();
-			size=$radioSize.val();
+			type= $('input[name=enclosureType]:checked').val();
+			size=$('input[name=enclosureSize]:checked').val();
 			
 			//Attribution de la capacité et de la FK_specie_id par défaut a assigner a l'enclos
 			capacity = 5;
@@ -100,8 +98,11 @@
 				specie_id = 4;
 			}
 			
+			//appel du callback car obligatoire
 			var callback=function(donnees){
 			};
+			
+			//Remplissage de l'objet a envoyer
 			var monObjet ={
 					"specie_id":specie_id,
 					"capacity":capacity,

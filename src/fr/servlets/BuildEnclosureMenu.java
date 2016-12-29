@@ -15,6 +15,7 @@ import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
+import fr.utility.CalculateEnclosurePrice;
 
 @WebServlet("/createEnclosure")
 public class BuildEnclosureMenu extends HttpServlet {
@@ -47,18 +48,17 @@ public class BuildEnclosureMenu extends HttpServlet {
 		HttpSession session = request.getSession(false);
 
 		if (session != null) {
-			CostsDAO cdao = new CostsDAO();
-			JSONObject prices = cdao.getCosts();
 			/** Affichage des prix dans la jsp buildEnclosure **/
 			
-			// Recuperation des prix d'enclos depuis la CostsDAO
+			//Recuperation des parametres status envoyes par les fonctions ajax showPrice() et getForm()
+			//pour effectuer des redirections dans ce doPost
 			String statPrices = request.getParameter("statusPrices");
-			System.out.println("statprices = "+statPrices);
 			String statForm = request.getParameter("statusForm");
-			System.out.println("statform = "+statForm);
 			
+			// Recuperation des prix d'enclos depuis la CostsDAO lorsque showPrice() est appelee
 			if ((statPrices != null) && statPrices.equals("okP")) {
-				
+				CostsDAO cdao = new CostsDAO();
+				JSONObject prices = cdao.getCosts();
 
 				// Envoie des prix dans la reponse pour etre recupere dans la
 				// fonction showPrice() dans buildEnclosure.js
@@ -66,16 +66,17 @@ public class BuildEnclosureMenu extends HttpServlet {
 					response.setContentType("application/json");
 					response.getWriter().append(prices.toString());
 				}
-			} else if ((statForm != null) &&statForm.equals("okF")) {
+			} 
+			/** Creation d'un nouvel enclos et update du player apres achat **/
+			//Si getForm() est appelee
+			else if ((statForm != null) &&statForm.equals("okF")) {
 
-				/** Creation d'un nouvel enclos et update du player apres achat **/
+				
 				// Recuperation de donnees enregistrees dans la session:
 				// - les coordonnees d'enclos(ce doGet)
 					int locate_x = (int) session.getAttribute("current_locate_x");
 					int locate_y = (int) session.getAttribute("current_locate_y");
-				
-					System.out.println("locate "+ locate_x +" " +locate_y);
-					
+
 					// - les attributs du joueurs connecte (doPost de PlayerServlet)
 					PlayerBean player = (PlayerBean) session.getAttribute("user");
 
@@ -84,55 +85,36 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 					// recuperation des donnees json envoyees en Ajax via getForm()
 					// dans buildEnclosure.js
-					int specie_id = Integer.parseInt(request.getParameter("specie_id"));
+					int specieId = Integer.parseInt(request.getParameter("specie_id"));
 					int enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
-						
-					System.out.println("donnees du getForm: sp_id= "+ specie_id +" ec= "+ enclosureCapacity);
-						
+
 					// Creation des objets dao (EnclosuresDAO, PlayersDAO) pour
-						// acceder aux methodes updates
-						EnclosuresDAO edao = new EnclosuresDAO();
-						PlayersDAO pdao = new PlayersDAO();
+					// acceder aux methodes updates
+					EnclosuresDAO edao = new EnclosuresDAO();
+					PlayersDAO pdao = new PlayersDAO();
 						
-					//recupration du prix de l'enclos
-						int enclosurePrice=0;
+					//recuperation du prix de l'enclos via la classe CalculateEnclosurePrice
+					long finalPrice= CalculateEnclosurePrice.CalEP(request);
+
+					// Recuperation de l'id et du solde du joueur
+					int playerId= player.getId();
+					long money = player.getMoney();
 						
-						//https://www.mkyong.com/java/json-simple-example-read-and-write-json/
-						if (specie_id == 1){
-							enclosurePrice = (int) prices.get("enclosureCosts_elephant");
-						}else if (specie_id == 2){
-							enclosurePrice = (int) prices.get("enclosureCosts_giraffe");
-						}else if (specie_id == 3){
-							enclosurePrice = (int) prices.get("enclosureCosts_lion");
-						}else if (specie_id == 3){
-							enclosurePrice = (int) prices.get("enclosureCosts_camel");
-						}
-						System.out.println("enclosurePrice: " + enclosurePrice );
+					// Modification de money du player dans la BBD
+					player.setMoney(money - finalPrice);
 					
+					pdao.updatePlayer(player);
 						
+					// Modification des donnees de l'enclo achete	
+					enclosure.setCapacity(enclosureCapacity);
+					enclosure.setSpecie_id(specieId);
+					enclosure.setPlayer_id(playerId);
+					enclosure.setLocate_x(locate_x);
+					enclosure.setLocate_y(locate_y);
+						
+					edao.buyEnclosure(enclosure);	
 			}
 		}
 	}
-				/*
 				
-
-				
-
-				
-
-				// Modification de money du player dans la BBD
-				player.setMoney(solde - enclosurePrice);
-				pdao.updatePlayer(player);
-
-				// Modification des donn�es de l'enclo achete
-				enclosure.setLocate_x(locate_x);
-				enclosure.setLocate_y(locate_y);
-				enclosure.setSpecie_id(specie_id);
-				enclosure.setCapacity(enclosureCapacity);
-				edao.updateEnclosure(enclosure);
-				System.out.println("finish");*/
-
-			
-
-	
 }
