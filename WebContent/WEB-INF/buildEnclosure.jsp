@@ -118,7 +118,8 @@
 			<h3>Price</h3>
 
 			<div class="showPrice">
-			<div class="price"></div></div>
+				<div class="price"></div>
+			</div>
 			<br> <input type="submit" value="buy" name="validate">
 		</form>
 		

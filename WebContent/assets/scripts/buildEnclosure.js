@@ -71,7 +71,7 @@
 				
 			
 		$formCE.on('submit', function(event) {
-			// Bypass du submit par la fonction callback
+			// Bypass du submit pour la fonction callback
 			event.preventDefault();
 			
 			//Recuperation des valeurs des radios EnclosureType & EnclosureSize

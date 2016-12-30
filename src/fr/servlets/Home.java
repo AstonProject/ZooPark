@@ -23,13 +23,17 @@ public class Home extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Recuperation de la session existante, si il y'en a pas elle est cree
 		HttpSession session = request.getSession();
+		//Recupere l'utilisateur en session si il y en a un
 		PlayerBean user = (PlayerBean) session.getAttribute("user");
+		
 		if(user != null)
-		{
+		{  //Initialisation des 25 emplacements d'enclos disponibles pour le joueur
 			List<EnclosureBean> enclos = null;
 			EnclosureBean[][] constructions = new EnclosureBean[5][5];
 			EnclosuresDAO edao = new EnclosuresDAO();
+			//Recuperation des 25 enclos du joueur crees lors de l'inscription de celui-ci
 			enclos = edao.getAllEnclosures(user.getId());
 			int cpt = 0;
 			for(int i = 0; i < 5; i++){
@@ -38,6 +42,8 @@ public class Home extends HttpServlet {
 					cpt++;
 				}
 			}
+			//Les enclos recuperes de la bdd sont enregistres en session 
+			//pour etre utilises dans la jsp Home
 			session.setAttribute("construction", constructions);
 		}
 		this.getServletContext()

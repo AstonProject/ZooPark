@@ -23,13 +23,12 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// recuperation de la session actuelle
+		// Recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
+		PlayerBean player = (PlayerBean) session.getAttribute("user");
 
-		if (session != null) {
-			// Recuperation des coordonneees de l'enclos a�construire depuis
-			// la
-			// Home.jsp
+		if (session != null && player != null) {
+			// Recuperation des coordonneees de l'enclos a construire depuis  la Home.jsp
 			// et enregistrement dans la session
 			int locate_x = Integer.parseInt(request.getParameter("x"));
 			int locate_y = Integer.parseInt(request.getParameter("y"));
@@ -37,11 +36,12 @@ public class BuildEnclosureMenu extends HttpServlet {
 			session.setAttribute("current_locate_x", locate_x);
 			session.setAttribute("current_locate_y", locate_y);
 
+			//Puis redirection vers la JSP buildEnclosure
 			this.getServletContext().getRequestDispatcher("/WEB-INF/buildEnclosure.jsp").forward(request, response);
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// recuperation de la session actuelle
@@ -54,7 +54,8 @@ public class BuildEnclosureMenu extends HttpServlet {
 			//pour effectuer des redirections dans ce doPost
 			String statPrices = request.getParameter("statusPrices");
 			String statForm = request.getParameter("statusForm");
-			
+			System.out.println("statPrices " + statPrices);
+			System.out.println("statForm " + statForm);
 			// Recuperation des prix d'enclos depuis la CostsDAO lorsque showPrice() est appelee
 			if ((statPrices != null) && statPrices.equals("okP")) {
 				CostsDAO cdao = new CostsDAO();
@@ -77,6 +78,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 					int locate_x = (int) session.getAttribute("current_locate_x");
 					int locate_y = (int) session.getAttribute("current_locate_y");
 
+					System.out.println("locate " + locate_x + " " + locate_y);
 					// - les attributs du joueurs connecte (doPost de PlayerServlet)
 					PlayerBean player = (PlayerBean) session.getAttribute("user");
 
@@ -88,6 +90,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 					int specieId = Integer.parseInt(request.getParameter("specie_id"));
 					int enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
 
+					System.out.println("sp_id " + specieId  + " enclosureCapacity" + enclosureCapacity);
 					// Creation des objets dao (EnclosuresDAO, PlayersDAO) pour
 					// acceder aux methodes updates
 					EnclosuresDAO edao = new EnclosuresDAO();
@@ -96,15 +99,20 @@ public class BuildEnclosureMenu extends HttpServlet {
 					//recuperation du prix de l'enclos via la classe CalculateEnclosurePrice
 					long finalPrice= CalculateEnclosurePrice.CalEP(request);
 
+					System.out.println("finalPrice " + finalPrice);
 					// Recuperation de l'id et du solde du joueur
 					int playerId= player.getId();
 					long money = player.getMoney();
-						
+						System.out.println("playerId " + playerId);
+						System.out.println("money " + money);
 					// Modification de money du player dans la BBD
 					player.setMoney(money - finalPrice);
 					
 					pdao.updatePlayer(player);
 						
+					money = player.getMoney();
+					System.out.println("moneyAUpdate " + money);
+					
 					// Modification des donnees de l'enclo achete	
 					enclosure.setCapacity(enclosureCapacity);
 					enclosure.setSpecie_id(specieId);
@@ -112,7 +120,8 @@ public class BuildEnclosureMenu extends HttpServlet {
 					enclosure.setLocate_x(locate_x);
 					enclosure.setLocate_y(locate_y);
 						
-					edao.buyEnclosure(enclosure);	
+					edao.buyEnclosure(enclosure);
+					System.out.println("enclosure " + enclosure);
 			}
 		}
 	}

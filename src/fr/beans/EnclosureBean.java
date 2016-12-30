@@ -91,6 +91,33 @@ public class EnclosureBean {
 	public void setPlayer_id(int player_id) {
 		this.player_id = player_id;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("EnclosureBean [id=");
+		builder.append(id);
+		builder.append(", locate_x=");
+		builder.append(locate_x);
+		builder.append(", locate_y=");
+		builder.append(locate_y);
+		builder.append(", capacity=");
+		builder.append(capacity);
+		builder.append(", animal_quantity=");
+		builder.append(animal_quantity);
+		builder.append(", cleanliness_gauge=");
+		builder.append(cleanliness_gauge);
+		builder.append(", employee_slot=");
+		builder.append(employee_slot);
+		builder.append(", employee_quantity=");
+		builder.append(employee_quantity);
+		builder.append(", specie_id=");
+		builder.append(specie_id);
+		builder.append(", player_id=");
+		builder.append(player_id);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 	
 
