@@ -44,10 +44,11 @@ public class BuildEnclosureMenu extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// recuperation de la session actuelle
+		// recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
-
-		if (session != null) {
+		PlayerBean player = (PlayerBean) session.getAttribute("user");
+		
+		if (session != null && player != null) {
 			/** Affichage des prix dans la jsp buildEnclosure **/
 			
 			//Recuperation des parametres status envoyes par les fonctions ajax showPrice() et getForm()
@@ -80,7 +81,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 					System.out.println("locate " + locate_x + " " + locate_y);
 					// - les attributs du joueurs connecte (doPost de PlayerServlet)
-					PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 					// Creation d'un objet local enclosure
 					EnclosureBean enclosure = new EnclosureBean();
