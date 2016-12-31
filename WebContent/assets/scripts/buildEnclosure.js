@@ -2,13 +2,26 @@
 	 "use strict";
 	
 	// Fonction d'affichage des descriptions associées à la selection des radios EnclosureType
-	function showDescription($selectedRadioEnclosure, $descriptionShown,
-			$descriptionHide1, $descriptionHide2, $descriptionHide3) {
-		$($selectedRadioEnclosure).click(function() {
-			$descriptionShown.css("display", "inline");
-			$descriptionHide1.css("display", "none");
-			$descriptionHide2.css("display", "none");
-			$descriptionHide3.css("display", "none");
+	function showDescription($selectedRadioEnclosure) {
+		var $blockDescription=$('.enclosureDescription');
+		var statusD = "okD";
+			$selectedRadioEnclosure.on('click', function() {
+				// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
+				$blockDescription.empty();
+				// Affichage des descriptions selon le radio selectionne
+					var callback1=function(donnees){
+							if ($('#radio_elephant').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description0 + "</div>");
+							} else if ($('#radio_giraffe').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description1 + "</div>");	
+							}else if ($('#radio_lion').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description2 + "</div>");	
+							}else if ($('#radio_camel').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
+							}
+					};
+					 var monObjet ={"statusDescriptions":statusD};
+					 server.monAjax(monObjet, "createEnclosure", callback1, 'POST');
 		});
 	}
 	
@@ -20,12 +33,13 @@
 		$selectedRadioEnclosure.on('click', function() {
 			// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
 			$blockPrice.empty();
-			// Réinitialise les radioSize si une radio enclosureType est selectionnée
+
+			// Réinitialise les radioSize si une radio enclosureType est selectionnee
         	$('input:radio[name=enclosureSize]').each(function () { $(this).prop('checked', false); });
 			 $selectedRadioSize.on('change', function() {
 				// Reinitialise le contenu du blockPrice si un radio EnclosureSize est selectionne
 				 $blockPrice.empty();
-				 var callback = function(donnees) {
+				 var callback2 = function(donnees) {
 					 var EnclosurePrice;
 					 
 					//Verificaation du radio selectionne et correlation avec les prix de CostsDAO 
@@ -51,7 +65,7 @@
 					}
 				 };
 				 var monObjet ={"statusPrices":statusP};
-				 server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+				 server.monAjax(monObjet, "createEnclosure", callback2, 'POST');
 			 });
 		 });
 		
@@ -121,10 +135,10 @@
 				/**Declaration des variables **/
 				// Creation d'objets jQuery referancant les classes des 4
 				// descriptions de la jsp
-				var $Description1 = $('.elephantDiscription');
-				var $Description2 = $('.giraffeDiscription');
-				var $Description3 = $('.lionDiscription');
-				var $Description4 = $('.camelDiscription');
+				var $Description1 = $('.elephantDescription');
+				var $Description2 = $('.giraffeDescription');
+				var $Description3 = $('.lionDescription');
+				var $Description4 = $('.camelDescription');
 
 				// Creation d'objets jQuery referancant les 4 id radio EnclosureType
 				var $radioE1 = $('#radio_elephant');
@@ -140,14 +154,10 @@
 				/**Execution des fonctions **/
 				// Execution des fonctions d'affichage de description des
 				// enclos selon le radio "enclosureType" selectionnée
-				showDescription($radioE1, $Description1, $Description2,
-						$Description3, $Description4);
-				showDescription($radioE2, $Description2, $Description1,
-						$Description3, $Description4);
-				showDescription($radioE3, $Description3, $Description1,
-						$Description2, $Description4);
-				showDescription($radioE4, $Description4, $Description1,
-						$Description2, $Description3);
+				showDescription($radioE1);
+				showDescription($radioE2);
+				showDescription($radioE3);
+				showDescription($radioE4);
 				
 				// Execution des fonctions d'affichage des prix des
 				// enclos selon les selections des radios EnclosureType et EnclosureSize

@@ -1,6 +1,8 @@
 package fr.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,8 @@ import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
+import fr.dao.SpecieDAO;
+
 import fr.utility.CalculateEnclosurePrice;
 
 @WebServlet("/createEnclosure")
@@ -55,13 +59,43 @@ public class BuildEnclosureMenu extends HttpServlet {
 			//pour effectuer des redirections dans ce doPost
 			String statPrices = request.getParameter("statusPrices");
 			String statForm = request.getParameter("statusForm");
+			String statDescriptions = request.getParameter("statusDescriptions");
 			System.out.println("statPrices " + statPrices);
 			System.out.println("statForm " + statForm);
+			System.out.println("statDescription " + statDescriptions);
+			
+			if ((statDescriptions != null) && statDescriptions.equals("okD")) {
+				//Recuperation des descriptions via SpecieDAO dans une ArrayList
+				SpecieDAO spdao = new SpecieDAO();
+				List<String> descriptions = spdao.getDescriptions();
+			
+				String reponseJson = "{";
+				int lengthList = descriptions.size();
+				int count = 0;
+			
+				for (String description : descriptions) {
+					reponseJson += "\"description"+ count+  "\":\"" + description + "\"";
+	
+					count++;
+					 
+					if (count != lengthList) {
+						reponseJson += ",";
+					}
+			}
+			reponseJson += "}";
+			System.out.println(reponseJson);
+			response.getWriter().append(reponseJson);
+			}
+			
+			
 			// Recuperation des prix d'enclos depuis la CostsDAO lorsque showPrice() est appelee
 			if ((statPrices != null) && statPrices.equals("okP")) {
+				//Recuperation des prix via CostsDAO dans un objet Json
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
 
+				
+				
 				// Envoie des prix dans la reponse pour etre recupere dans la
 				// fonction showPrice() dans buildEnclosure.js
 				if (prices != null) {

@@ -1,4 +1,4 @@
-.enclosure-Description {
+.enclosureDescription {
 	width: 400px;
 	height: 400px;
 	background: orange;
@@ -45,18 +45,18 @@
 	padding: 7px;
 }
 
-.elephantDiscription {
+.elephantDescription {
 	display: none;
 }
 
-.giraffeDiscription {
+.giraffeDescription {
 	display: none;
 }
 
-.lionDiscription {
+.lionDescription {
 	display: none;
 }
 
-.camelDiscription {
+.camelDescription {
 	display: none;
 }
