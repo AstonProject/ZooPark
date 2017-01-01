@@ -29,7 +29,6 @@
 
 		var monObjet = {};
 		server.monAjax(monObjet, "home", callback, 'POST');
-
 	}
 
 	$(document).ready(function() {
