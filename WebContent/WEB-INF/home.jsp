@@ -42,11 +42,11 @@
 								<span class="zoo-site" id="zoo-site-${ i }-${ j }">
 								<%-- Si pas de construction en session OU capacité nulle => emplacement constructible --%>
 								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }">
-									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>
+									<%--<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>--%>
 								</c:if>
 								<%-- Si une construction ET capacité non nulle => enclos à l'emplacement --%>
 								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }">
-									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a>
+									<%--<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a>--%>
 								</c:if>
 								</span>
 							</c:forEach>
@@ -120,6 +120,7 @@
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
 </body>
 
 </html>

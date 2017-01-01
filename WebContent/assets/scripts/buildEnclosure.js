@@ -6,7 +6,7 @@
 		var $blockDescription=$('.enclosureDescription');
 		var statusD = "okD";
 			$selectedRadioEnclosure.on('click', function() {
-				// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
+				// Reinitialise le contenu du blockDescription si un radio EnclosureType est selectionne
 				$blockDescription.empty();
 				// Affichage des descriptions selon le radio selectionne
 					var callback1=function(donnees){
@@ -114,6 +114,11 @@
 			
 			//appel du callback car obligatoire
 			var callback=function(donnees){
+				if(donnees.code == "OK"){
+					 window.location.href = "home";
+                }else if (donnees.code == "ERROR"){
+                	 failed();
+                }
 			};
 			
 			//Remplissage de l'objet a envoyer
@@ -131,14 +136,6 @@
 	
 	$(document).ready(
 			function() {
-				
-				/**Declaration des variables **/
-				// Creation d'objets jQuery referancant les classes des 4
-				// descriptions de la jsp
-				var $Description1 = $('.elephantDescription');
-				var $Description2 = $('.giraffeDescription');
-				var $Description3 = $('.lionDescription');
-				var $Description4 = $('.camelDescription');
 
 				// Creation d'objets jQuery referancant les 4 id radio EnclosureType
 				var $radioE1 = $('#radio_elephant');
