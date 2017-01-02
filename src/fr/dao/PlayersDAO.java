@@ -59,7 +59,7 @@ public class PlayersDAO {
 			st.setString(1, player.getPseudo());
 			st.setString(2, player.getPassword());
 			st.setString(3, player.getEmail());
-			st.setInt(4, player.getMoney());
+			st.setLong(4, player.getMoney());
 			st.setInt(5, player.getId());
 
 			st.executeUpdate();
@@ -238,8 +238,10 @@ public class PlayersDAO {
 			while (rs.next()) {
 				player.setId(rs.getInt("id"));
 				player.setPseudo(rs.getString("pseudo"));
+				player.setPassword(rs.getString("password"));
 				player.setEmail(rs.getString("email"));
 				player.setMoney(rs.getInt("money"));
+				
 			}
 			
 		} catch (SQLException e) {

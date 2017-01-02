@@ -146,4 +146,22 @@ public class EnclosuresDAO {
 		return enclosures;
 	}
 
+	/** Specific methods **/
+	
+	public void buyEnclosure(EnclosureBean enclosure) {
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"UPDATE enclosure SET capacity=?, specie_id=? WHERE locate_x=? AND locate_y=? AND player_id=?");
+			
+			preparedStatement.setInt(1, enclosure.getCapacity());
+			preparedStatement.setInt(2, enclosure.getSpecie_id());
+			preparedStatement.setInt(3, enclosure.getLocate_x());
+			preparedStatement.setInt(4, enclosure.getLocate_y());
+			preparedStatement.setInt(5, enclosure.getPlayer_id());
+
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
