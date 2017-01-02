@@ -225,7 +225,7 @@ public class PlayersDAO {
 	public PlayerBean getByPassword (String pseudo, String password) throws SQLException {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		PlayerBean player = new PlayerBean();
+		PlayerBean player = null;
 		
 		try {
 			
@@ -233,9 +233,10 @@ public class PlayersDAO {
 			
 			st.setString(1, pseudo);
 			st.setString(2, password);
-			rs = st.executeQuery(); 
+			rs = st.executeQuery();
 			
-			while (rs.next()) {
+			if (rs.next()) {
+				player = new PlayerBean();
 				player.setId(rs.getInt("id"));
 				player.setPseudo(rs.getString("pseudo"));
 				player.setPassword(rs.getString("password"));
