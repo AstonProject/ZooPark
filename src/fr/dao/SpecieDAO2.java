@@ -9,10 +9,10 @@ import java.util.List;
 
 import fr.utility.ConnectionDB;
 
-public class SpecieDAO {
+public class SpecieDAO2 {
 	private Connection connection;
 	
-	public SpecieDAO() {
+	public SpecieDAO2() {
 		connection = ConnectionDB.getConnection();
 	}
 	

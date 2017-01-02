@@ -1,3 +1,4 @@
+//sessionStorage.setItem('clé', 'valeur');
 (function($) {
 	 "use strict";
 	
@@ -64,6 +65,7 @@
 						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
 					}
 				 };
+				 
 				 var monObjet ={"statusPrices":statusP};
 				 server.monAjax(monObjet, "createEnclosure", callback2, 'POST');
 			 });

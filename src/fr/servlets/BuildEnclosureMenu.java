@@ -17,7 +17,7 @@ import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
-import fr.dao.SpecieDAO;
+import fr.dao.SpecieDAO2;
 
 import fr.utility.CalculateEnclosurePrice;
 
@@ -70,7 +70,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 			if ((statDescriptions != null) && statDescriptions.equals("okD")) {
 				// Recuperation des descriptions via SpecieDAO dans une
 				// ArrayList
-				SpecieDAO spdao = new SpecieDAO();
+				SpecieDAO2 spdao = new SpecieDAO2();
 				List<String> descriptions = spdao.getDescriptions();
 
 				// Recuperation des descriptions au format Json pour envoie par
@@ -169,10 +169,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// getForm()
 
 				response.getWriter().append("{\"code\" : \"OK\"}");
-
-			} else {
-				response.getWriter().append("{\"code\" : \"ERROR\"}");
-			}
+			} 
 
 		}
 	}

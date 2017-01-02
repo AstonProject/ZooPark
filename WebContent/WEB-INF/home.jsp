@@ -40,14 +40,14 @@
 							<c:forEach var="j" begin="1" end="5">
 								<%-- 1 emplacement du zoo --%>
 								<span class="zoo-site" id="zoo-site-${ i }-${ j }">
-								<%-- Si pas de construction en session OU capacité nulle => emplacement constructible --%>
-								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }">
-									<%--<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>--%>
-								</c:if>
-								<%-- Si une construction ET capacité non nulle => enclos à l'emplacement --%>
-								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }">
-									<%--<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a>--%>
-								</c:if>
+<%-- 								Si pas de construction en session OU capacité nulle => emplacement constructible --%>
+<%-- 								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }"> --%>
+<%-- 									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a> --%>
+<%-- 								</c:if> --%>
+<%-- 								Si une construction ET capacité non nulle => enclos à l'emplacement --%>
+<%-- 								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }"> --%>
+<%-- 									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a> --%>
+<%-- 								</c:if> --%>
 								</span>
 							</c:forEach>
 							<br>

@@ -69,12 +69,11 @@ public class Home extends HttpServlet {
 			int count = 0;
 			
 			for (EnclosureBean enclosure : enclosures) {
-				reponseJson += "\"data"+ enclosure.getLocate_x()+enclosure.getLocate_y()+ "\": [";
+				reponseJson += "\"data"+ enclosure.getLocate_x()+enclosure.getLocate_y()+ "\": ";
 				reponseJson += "{\"specie_id\":" + enclosure.getSpecie_id() + ",";
 				reponseJson += "\"capacity\":" + enclosure.getCapacity() + ",";
 				reponseJson += "\"locate_x\":" + enclosure.getLocate_x() + ",";
 				reponseJson += "\"locate_y\":" + enclosure.getLocate_y() + "}";
-				reponseJson += "]";
 				count++;
 				 
 				if (count != lengthList) {
@@ -84,7 +83,6 @@ public class Home extends HttpServlet {
 			reponseJson += "}";
 			System.out.println(reponseJson);
 			response.getWriter().append(reponseJson);
-			
 		}
 	}
 
