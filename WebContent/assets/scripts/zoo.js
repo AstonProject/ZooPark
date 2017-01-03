@@ -11,7 +11,7 @@ var server = {};
 			type : method || 'post', // méthode HTTP de la requête//type des
 										// données attendues en retour : xml,
 										// json, script, html
-			dataType : 'json',// temps max pour une réponse (ms)
+			dataType : 'json',
 
 			complete : function(xhr, status, msg) {
 				console.log("Requête bien envoyée");

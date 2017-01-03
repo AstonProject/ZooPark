@@ -58,15 +58,10 @@
 				<div class="error"></div>
 			</div>
 		</form>
-		
-		
-		
-		
-		
-		
 	</div>
+
+</body>
 	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/scripts/buildEnclosure.js"></script>
-</body>
 </html>
