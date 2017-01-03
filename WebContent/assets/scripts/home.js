@@ -37,7 +37,7 @@
 							img += "3.png alt=\"logo\" /> </a>";
 						}
 						
-						$blockEnclosure.prepend("<a href=\"seeBuilding?x="+(i+1)+"&y="+(j+1)+"\">"+ img+ "</a>");
+						$blockEnclosure.prepend("<a href=\"enclosureManagment?x="+(i+1)+"&y="+(j+1)+"\">"+ img+ "</a>");
 					}
 				}
 			}

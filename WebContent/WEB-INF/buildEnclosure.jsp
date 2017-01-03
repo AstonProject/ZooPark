@@ -50,7 +50,13 @@
 			<div class="showPrice">
 				<div class="price"></div>
 			</div>
-			<br> <input type="submit" value="buy" name="validate">
+			<br> 
+			<div class= "decision_menu">
+				<span id="decision">
+					<input type="submit" value="" class="validate_img"><a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>		
+				</span>
+				<div class="error"></div>
+			</div>
 		</form>
 		
 		
