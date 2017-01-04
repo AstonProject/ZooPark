@@ -95,7 +95,7 @@ public class EnclosureManagment extends HttpServlet {
 				// ajax
 				String reponseJson = "{";
 				int lengthList = employees.size();
-				int count = 0;
+				int count = 1;
 
 				if (employees.size() > 0) {
 					for (EmployeeBean employee : employees) {
@@ -104,7 +104,7 @@ public class EnclosureManagment extends HttpServlet {
 						reponseJson += "\"type" + count + "\":\"" + type + "\"";
 						count++;
 
-						if (count != lengthList) {
+						if (count != (lengthList+1)) {
 							reponseJson += ",";
 						}
 					}

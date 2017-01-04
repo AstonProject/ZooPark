@@ -39,24 +39,32 @@
 	//Fonction pour afficher les employes de l'enclos
 	function showEmployees(){
 		var statusSE="okSE";
-		var $block_slot1= $('.slot1');
-		var $block_slot2= $('.slot2');
-		var type= null;
-		var img= "<img src=/zoopark/assets/images/";
-		$block_slot1.empty();
-		$block_slot2.empty();
+
 		
 		var callback = function(donnees) {
-			for (var i = 0; i < donnees.length; i++){
+			console.log(Object.keys(donnees).length);
+			
+			for (var i = 1; i < ((Object.keys(donnees).length) +1); i++){
+				var type= null;
+				
+				var img= "<img src=/zoopark/assets/images/";
+				var $block_slot = $(".slot" +i);
+				$block_slot.empty();
+				
 				type = "type" + i; 
 				
-				if(donnees.type == "healer"){
+				console.log("slot= " + (".slot" +i) + " type= " + type);
+				console.log("donnees.type" + donnees[type]);
+				if(donnees[type]== "healer"){
 					img += "healer.png alt=\"logo\" />"
-				}else if(donnees.type == "security"){
+				}else if(donnees[type] == "security"){
 					img += "security.png alt=\"logo\" />"
-				}else if(donnees.type == "cleaner"){
+				}else if(donnees[type] == "cleaner"){
 					img += "cleaner.png alt=\"logo\" />"
 				}
+				console.log("img"+ img);
+				$block_slot.prepend(img);
+				
 			}
 			
 			
