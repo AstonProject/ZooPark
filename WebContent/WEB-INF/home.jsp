@@ -26,8 +26,7 @@
 								<li>Employés : 0</li>
 								<li><a href="#">Satisfaction</a></li>
 								<li><a href="#">Messages</a></li>
-								<li>lecture | avance rapide | stop</li>
-								<li>Date</li>
+								<li><img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> <span id="turn">HEURE : 0</span></li>
 							</ul>
 						</nav>
 					</div>
@@ -121,6 +120,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/time.js"></script>
 </body>
 
 </html>
