@@ -15,9 +15,9 @@
 								$blockDescription.prepend("<div>"+ donnees.description0 + "</div>");
 							} else if ($('#radio_giraffe').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description1 + "</div>");	
-							}else if ($('#radio_lion').is(':checked')){
+							} else if ($('#radio_lion').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description2 + "</div>");	
-							}else if ($('#radio_camel').is(':checked')){
+							} else if ($('#radio_camel').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
 							}
 					};
