@@ -26,7 +26,7 @@
 								<li>Employés : 0</li>
 								<li><a href="#">Satisfaction</a></li>
 								<li><a href="#">Messages</a></li>
-								<li><img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> <span id="turn">HEURE : 0</span></li>
+								<li><img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> <span id="gamedate">HEURE : 0 JOUR : 1</span></li>
 							</ul>
 						</nav>
 					</div>

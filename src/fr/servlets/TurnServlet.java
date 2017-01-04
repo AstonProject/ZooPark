@@ -26,6 +26,7 @@ public class TurnServlet extends HttpServlet {
 		// Recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
+		String day = request.getParameter("day");
 	}
 
 }
