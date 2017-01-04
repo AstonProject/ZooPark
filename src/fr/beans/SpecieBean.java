@@ -3,7 +3,7 @@ package fr.beans;
 public class SpecieBean {
 	private int id;
 	private String name;
-	private String food_factor;
+	private int food_factor;
 	private String food_type;
 	private String description;
 	
@@ -23,11 +23,11 @@ public class SpecieBean {
 		this.name = name;
 	}
 	
-	public String getFood_factor() {
+	public int getFood_factor() {
 		return food_factor;
 	}
 	
-	public void setFood_factor(String food_factor) {
+	public void setFood_factor(int food_factor) {
 		this.food_factor = food_factor;
 	}
 	

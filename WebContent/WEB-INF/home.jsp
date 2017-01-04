@@ -35,15 +35,19 @@
 				<div id="main-content">
 					<h1>ZooPark</h1>
 					<div id="zoo-container">
+					<%-- Parcours abscisse i + ordonnée j --%>
 						<c:forEach var="i" begin="1" end="5">
 							<c:forEach var="j" begin="1" end="5">
-								<span class="zoo-site" id="zoo-site-${ i }">
-								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }">
-									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a>
-								</c:if>
-								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }">
-									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a>
-								</c:if>
+								<%-- 1 emplacement du zoo --%>
+								<span class="zoo-site" id="zoo-site-${ i }-${ j }">
+<%-- 								Si pas de construction en session OU capacité nulle => emplacement constructible --%>
+<%-- 								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }"> --%>
+<%-- 									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a> --%>
+<%-- 								</c:if> --%>
+<%-- 								Si une construction ET capacité non nulle => enclos à l'emplacement --%>
+<%-- 								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }"> --%>
+<%-- 									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a> --%>
+<%-- 								</c:if> --%>
 								</span>
 							</c:forEach>
 							<br>
@@ -61,6 +65,7 @@
 					<button name="aide" id="aide">Aide</button>
 				</footer>
 			</c:if>
+			<%-- Si pas de joueur en session --%>
 			<c:if test="${ empty sessionScope.user }">
 				<header id="main-header">
 					<div id="page-header"></div>
@@ -115,6 +120,7 @@
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
 </body>
 
 </html>

@@ -1,14 +1,28 @@
+//sessionStorage.setItem('clé', 'valeur');
 (function($) {
 	 "use strict";
 	
 	// Fonction d'affichage des descriptions associées à la selection des radios EnclosureType
-	function showDescription($selectedRadioEnclosure, $descriptionShown,
-			$descriptionHide1, $descriptionHide2, $descriptionHide3) {
-		$($selectedRadioEnclosure).click(function() {
-			$descriptionShown.css("display", "inline");
-			$descriptionHide1.css("display", "none");
-			$descriptionHide2.css("display", "none");
-			$descriptionHide3.css("display", "none");
+	function showDescription($selectedRadioEnclosure) {
+		var $blockDescription=$('.enclosureDescription');
+		var statusD = "okD";
+			$selectedRadioEnclosure.on('click', function() {
+				// Reinitialise le contenu du blockDescription si un radio EnclosureType est selectionne
+				$blockDescription.empty();
+				// Affichage des descriptions selon le radio selectionne
+					var callback1=function(donnees){
+							if ($('#radio_elephant').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description0 + "</div>");
+							} else if ($('#radio_giraffe').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description1 + "</div>");	
+							}else if ($('#radio_lion').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description2 + "</div>");	
+							}else if ($('#radio_camel').is(':checked')){
+								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
+							}
+					};
+					 var monObjet ={"statusDescriptions":statusD};
+					 server.monAjax(monObjet, "createEnclosure", callback1, 'POST');
 		});
 	}
 	
@@ -20,12 +34,13 @@
 		$selectedRadioEnclosure.on('click', function() {
 			// Reinitialise le contenu du blockPrice si un radio EnclosureType est selectionne
 			$blockPrice.empty();
-			// Réinitialise les radioSize si une radio enclosureType est selectionnée
+
+			// Réinitialise les radioSize si une radio enclosureType est selectionnee
         	$('input:radio[name=enclosureSize]').each(function () { $(this).prop('checked', false); });
 			 $selectedRadioSize.on('change', function() {
 				// Reinitialise le contenu du blockPrice si un radio EnclosureSize est selectionne
 				 $blockPrice.empty();
-				 var callback = function(donnees) {
+				 var callback2 = function(donnees) {
 					 var EnclosurePrice;
 					 
 					//Verificaation du radio selectionne et correlation avec les prix de CostsDAO 
@@ -42,7 +57,6 @@
 					 $blockPrice.empty();
 					
 					if(($('#size_1').is(':checked'))){
-						
 						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
 					} else if (($('#size_2').is(':checked'))){
 						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
@@ -51,8 +65,9 @@
 						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
 					}
 				 };
-				 var monObjet ={"statusPrices": statusP};
-				 server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+				 
+				 var monObjet ={"statusPrices":statusP};
+				 server.monAjax(monObjet, "createEnclosure", callback2, 'POST');
 			 });
 		 });
 		
@@ -61,7 +76,6 @@
 	
 	//Fonction de récupération des données: type d'enclos d'enclos, taille et de son coût
 	function getForm(){
-		
 			var $formCE = $('#FormCreateEnclosure');
 			var $radioType = $formCE.find('#radio1');
 			var $radioSize = $formCE.find('#radio2');
@@ -73,12 +87,12 @@
 				
 			
 		$formCE.on('submit', function(event) {
-			// Bypass du submit par la fonction callback
+			// Bypass du submit pour la fonction callback
 			event.preventDefault();
 			
 			//Recuperation des valeurs des radios EnclosureType & EnclosureSize
-			type=$radioType.val();
-			size=$radioSize.val();
+			type= $('input[name=enclosureType]:checked').val();
+			size=$('input[name=enclosureSize]:checked').val();
 			
 			//Attribution de la capacité et de la FK_specie_id par défaut a assigner a l'enclos
 			capacity = 5;
@@ -100,14 +114,22 @@
 				specie_id = 4;
 			}
 			
+			//appel du callback car obligatoire
 			var callback=function(donnees){
+				if(donnees.code == "OK"){
+					 window.location.href = "home";
+                }else if (donnees.code == "ERROR"){
+                	 failed();
+                }
 			};
+			
+			//Remplissage de l'objet a envoyer
 			var monObjet ={
 					"specie_id":specie_id,
 					"capacity":capacity,
 					"statusForm":statusF
 			};
-			console.log(monObjet);
+			
 			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 		});
 			
@@ -116,14 +138,6 @@
 	
 	$(document).ready(
 			function() {
-				
-				/**Declaration des variables **/
-				// Creation d'objets jQuery referancant les classes des 4
-				// descriptions de la jsp
-				var $Description1 = $('.elephantDiscription');
-				var $Description2 = $('.giraffeDiscription');
-				var $Description3 = $('.lionDiscription');
-				var $Description4 = $('.camelDiscription');
 
 				// Creation d'objets jQuery referancant les 4 id radio EnclosureType
 				var $radioE1 = $('#radio_elephant');
@@ -139,14 +153,10 @@
 				/**Execution des fonctions **/
 				// Execution des fonctions d'affichage de description des
 				// enclos selon le radio "enclosureType" selectionnée
-				showDescription($radioE1, $Description1, $Description2,
-						$Description3, $Description4);
-				showDescription($radioE2, $Description2, $Description1,
-						$Description3, $Description4);
-				showDescription($radioE3, $Description3, $Description1,
-						$Description2, $Description4);
-				showDescription($radioE4, $Description4, $Description1,
-						$Description2, $Description3);
+				showDescription($radioE1);
+				showDescription($radioE2);
+				showDescription($radioE3);
+				showDescription($radioE4);
 				
 				// Execution des fonctions d'affichage des prix des
 				// enclos selon les selections des radios EnclosureType et EnclosureSize
