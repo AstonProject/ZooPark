@@ -164,4 +164,33 @@ public class EnclosuresDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public EnclosureBean getEnclosureByLocation(int current_locate_x, int current_locate_y, int player_id) {
+		EnclosureBean enclosure = new EnclosureBean();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM enclosure WHERE locate_x=? AND locate_y=? AND player_id=?");
+			preparedStatement.setInt(1, current_locate_x);
+			preparedStatement.setInt(2, current_locate_y);
+			preparedStatement.setInt(3, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				enclosure.setId(rs.getInt("id"));
+				enclosure.setLocate_x(rs.getInt("locate_x"));
+				enclosure.setLocate_y(rs.getInt("locate_y"));
+				enclosure.setCapacity(rs.getInt("capacity"));
+				enclosure.setAnimal_quantity(rs.getInt("animal_quantity"));
+				enclosure.setCleanliness_gauge(rs.getInt("cleanliness_gauge"));
+				enclosure.setEmployee_slot(rs.getInt("employee_slot"));
+				enclosure.setEmployee_quantity(rs.getInt("employee_quantity"));
+				enclosure.setEmployee_quantity(rs.getInt("employee_quantity"));
+				enclosure.setSpecie_id(rs.getInt("specie_id"));
+				enclosure.setPlayer_id(rs.getInt("player_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enclosure;
+	}
 }

@@ -15,9 +15,9 @@
 								$blockDescription.prepend("<div>"+ donnees.description0 + "</div>");
 							} else if ($('#radio_giraffe').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description1 + "</div>");	
-							}else if ($('#radio_lion').is(':checked')){
+							} else if ($('#radio_lion').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description2 + "</div>");	
-							}else if ($('#radio_camel').is(':checked')){
+							} else if ($('#radio_camel').is(':checked')){
 								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
 							}
 					};
@@ -79,6 +79,7 @@
 			var $formCE = $('#FormCreateEnclosure');
 			var $radioType = $formCE.find('#radio1');
 			var $radioSize = $formCE.find('#radio2');
+			var $blockError= $('.error');
 			var type= null;
 			var size= null;
 			var capacity=null;
@@ -94,19 +95,19 @@
 			type= $('input[name=enclosureType]:checked').val();
 			size=$('input[name=enclosureSize]:checked').val();
 			
-			//Attribution de la capacité et de la FK_specie_id par défaut a assigner a l'enclos
-			capacity = 5;
-			specie_id = 1;
-			
 			//Modification de la capacité de l'enclos  selon le radio EnclosureSize selectionne
-			if(size == 2){
+			if(size == 1){
+				capacity = 5;
+			}else if(size == 2){
 				 capacity = 10;
 			}else if (size == 3){
 				 capacity = 15;
 			} 
 			
 			//Modification de FK_specie_id de l'enclos selon le radio EnclosureType selectionne
-			if(type == "Giraffe"){
+			if(type == "Elephant"){
+				specie_id = 1;
+			}else if(type == "Giraffe"){
 				specie_id = 2;
 			} else if (type == "Lion"){
 				specie_id = 3;
@@ -114,7 +115,6 @@
 				specie_id = 4;
 			}
 			
-			//appel du callback car obligatoire
 			var callback=function(donnees){
 				if(donnees.code == "OK"){
 					 window.location.href = "home";
@@ -129,8 +129,13 @@
 					"capacity":capacity,
 					"statusForm":statusF
 			};
+			if(specie_id = null || capacity != null){
+				server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+			}else{
+				$blockError.empty();
+				$blockError.prepend("<h2> Please, select a type and a size to bluid an enclosure... </h2>");
+			}
 			
-			server.monAjax(monObjet, "createEnclosure", callback, 'POST');
 		});
 			
 		
