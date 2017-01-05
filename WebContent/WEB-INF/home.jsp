@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,8 +27,13 @@
 								<li>Visitors : 0</li>
 								<li><a href="#">Satisfaction</a></li>
 								<li><a href="#">Messages</a></li>
-								<li>Play | Fast forward | Stop</li>
-								<li>Date</li>
+								<li>
+									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 
+									<span id="gamedate">
+										<c:set var="ht" value="${fn:split(sessionScope.user.turn, ',')}" />
+										HEURE : ${ ht[0] } JOUR : ${ ht[1] }
+									</span>
+								</li>
 							</ul>
 						</nav>
 					</div>
@@ -111,6 +117,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/time.js"></script>
 </body>
 
 </html>
