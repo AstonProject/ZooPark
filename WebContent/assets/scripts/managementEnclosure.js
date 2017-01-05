@@ -76,6 +76,9 @@
 		
 		var callback = function(donnees){
 			console.log(donnees);
+			
+			var $inputQuantity = $(".mod");
+			$inputQuantity.attr("max", donnees.rest);
 		};
 		
 		var monObj = {"statusSQ":statusSQ};
