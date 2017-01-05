@@ -66,18 +66,26 @@
 				$block_slot.prepend(img);
 				
 			}
-			
-			
-			
-			
-			
         };
          var monObj = {"statusSE":statusSE};
          server.monAjax(monObj, "enclosureManagment", callback,'POST');
+	}
+	//fonction pour afficher la quantite d'animaux pouvant encore rentrer dans l'enclos
+	function setRestQuantity(){
+		var statusSQ="okSQ";
+		
+		var callback = function(donnees){
+			console.log(donnees);
+		};
+		
+		var monObj = {"statusSQ":statusSQ};
+        server.monAjax(monObj, "enclosureManagment", callback,'POST');
+		
 	}
 
 	$(document).ready(function() {
 		showAnimals();
 		showEmployees();
+		setRestQuantity();
 	})
 })(jQuery);
