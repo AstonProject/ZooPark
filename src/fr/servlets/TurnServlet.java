@@ -34,9 +34,6 @@ public class TurnServlet extends HttpServlet {
 			pdao.updatePlayer(player);
 		}
 		
-		
-		//maj du joueur
-		
 	}
 
 }
