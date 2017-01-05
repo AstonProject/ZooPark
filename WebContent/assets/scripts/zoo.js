@@ -4,14 +4,10 @@ var server = {};
 
 	server.monAjax = function(dataObj, url, callback, method) {
 		var objAjax = {
-			url : "http://localhost:8080/zoopark/" + url, // URL où envoyer la requête
-													// (correspond à l'action
-													// d'un form
-			data : dataObj, // données envoyées
-			type : method || 'post', // méthode HTTP de la requête//type des
-										// données attendues en retour : xml,
-										// json, script, html
-			dataType : 'json',// temps max pour une réponse (ms)
+			url : "http://localhost:8080/zoopark/" + url, 
+			data : dataObj, 
+			type : method || 'post', 
+			dataType : 'json',
 
 			complete : function(xhr, status, msg) {
 				console.log("Requête bien envoyée");

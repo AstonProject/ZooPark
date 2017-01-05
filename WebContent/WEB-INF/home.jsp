@@ -16,17 +16,17 @@
 			<c:if test="${ !empty sessionScope.user }">
 				<header id="main-header">
 					<div id="page-header">
-						Bienvenue, ${ sessionScope.user.pseudo }<br>
-						<a href="user?action=disconnect">Déconnexion</a>
+						Welcome, ${ sessionScope.user.pseudo }<br>
+						<a href="user?action=disconnect">Disconnect</a>
 					</div>
 					<div id="top-menu">
 						<nav>
 							<ul>
-								<li>Argent : ${ sessionScope.user.money } Z</li>
-								<li>Employés : 0</li>
+								<li>Money : ${ sessionScope.user.money } Z</li>
+								<li>Visitors : 0</li>
 								<li><a href="#">Satisfaction</a></li>
 								<li><a href="#">Messages</a></li>
-								<li>lecture | avance rapide | stop</li>
+								<li>Play | Fast forward | Stop</li>
 								<li>Date</li>
 							</ul>
 						</nav>
@@ -40,14 +40,6 @@
 							<c:forEach var="j" begin="1" end="5">
 								<%-- 1 emplacement du zoo --%>
 								<span class="zoo-site" id="zoo-site-${ i }-${ j }">
-<%-- 								Si pas de construction en session OU capacité nulle => emplacement constructible --%>
-<%-- 								<c:if test="${ (empty sessionScope.construction[i-1][j-1]) || (sessionScope.construction[i-1][j-1].capacity == 0) }"> --%>
-<%-- 									<a href="createEnclosure?x=${ i }&y=${ j }">Construire</a> --%>
-<%-- 								</c:if> --%>
-<%-- 								Si une construction ET capacité non nulle => enclos à l'emplacement --%>
-<%-- 								<c:if test="${ (!empty sessionScope.construction[i-1][j-1]) && (sessionScope.construction[i-1][j-1].capacity != 0) }"> --%>
-<%-- 									<a href="seeBuilding?x=${ i }&y=${ j }">Enclos n° ${ construction[i-1][j-1].id }</a> --%>
-<%-- 								</c:if> --%>
 								</span>
 							</c:forEach>
 							<br>
@@ -55,14 +47,12 @@
 					</div>
 				</div>
 				<footer id="bottom-menu">
-					<button name="construction" id="construction">Construction</button>
-					<button name="gestion_personnel" id="gestion_personnel">Gestion
-						du personnel</button>
-					<button name="consommables" id="consommables">Consommables</button>
+					<button name="construction" id="construction">Build</button>
+					<button name="gestion_personnel" id="gestion_personnel">Staff</button>
+					<button name="consommables" id="consommables">Consumables</button>
 					<button name="finances" id="finances">Finances</button>
-					<button name="detail_enclos" id="detail_enclos">Détail des
-						Enclos</button>
-					<button name="aide" id="aide">Aide</button>
+					<button name="detail_enclos" id="detail_enclos">Enclosures details</button>
+					<button name="aide" id="aide">Help</button>
 				</footer>
 			</c:if>
 			<%-- Si pas de joueur en session --%>
@@ -82,11 +72,11 @@
 									<li><input type="text" name="reg_pseudo" id="reg_pseudo">
 									<br><span>${valid.erreurs['pseudo']}</span></li>
 
-									<li><label for="reg_password">Mot de passe :</label></li>
+									<li><label for="reg_password">Password :</label></li>
 									<li><input type="text" name="reg_password" id="reg_password">
 									<br><span>${valid.erreurs['password']}</span></li>
 
-									<li><label for="reg_confirmation">Retapez le mot de passe :</label></li>
+									<li><label for="reg_confirmation">Confirm password :</label></li>
 									<li><input type="text" name="reg_confirmation" id="reg_confirmation">
 									<br><span>${valid.erreurs['confirmation']}</span></li>
 		
@@ -105,7 +95,7 @@
 									<li>${ erreur }</li>
 									<li><label for="con_pseudo">Pseudo :</label></li>
 									<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
-									<li><label for="con_password">Mot de passe :</label></li>
+									<li><label for="con_password">Password :</label></li>
 									<li><input type="text" name="con_password" id="con_password"></li>
 									<li><input type="submit" value="connexion"></li>
 								</ul>
