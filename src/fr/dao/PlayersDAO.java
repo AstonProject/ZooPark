@@ -55,12 +55,13 @@ public class PlayersDAO {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("UPDATE player SET pseudo=?, password=?, email=?, money=? WHERE id=?");
+			st = connection.prepareStatement("UPDATE player SET pseudo=?, password=?, email=?, money=?, turn=? WHERE id=?");
 			st.setString(1, player.getPseudo());
 			st.setString(2, player.getPassword());
 			st.setString(3, player.getEmail());
 			st.setLong(4, player.getMoney());
-			st.setInt(5, player.getId());
+			st.setString(5, player.getTurn());
+			st.setInt(6, player.getId());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -116,6 +117,7 @@ public class PlayersDAO {
 				player.setPassword(rs.getString("password"));
 				player.setEmail(rs.getString("email"));
 				player.setMoney(rs.getInt("money"));
+				player.setTurn(rs.getString("turn"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -242,7 +244,7 @@ public class PlayersDAO {
 				player.setPassword(rs.getString("password"));
 				player.setEmail(rs.getString("email"));
 				player.setMoney(rs.getInt("money"));
-				
+				player.setTurn(rs.getString("turn"));
 			}
 			
 		} catch (SQLException e) {
@@ -287,6 +289,7 @@ public class PlayersDAO {
 				player.setPassword(rs.getString("password"));
 				player.setEmail(rs.getString("email"));
 				player.setMoney(rs.getInt("money"));
+				player.setTurn(rs.getString("turn"));
 
 				players.add(player);
 			}

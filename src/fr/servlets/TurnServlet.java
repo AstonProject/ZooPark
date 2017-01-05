@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.beans.PlayerBean;
+import fr.dao.PlayersDAO;
 
 @WebServlet("/newturn")
 public class TurnServlet extends HttpServlet {
@@ -26,7 +27,16 @@ public class TurnServlet extends HttpServlet {
 		// Recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
-		String day = request.getParameter("day");
+		PlayersDAO pdao = new PlayersDAO();
+		if(!request.getParameter("newTime").equals(null)){
+			player.setTurn(request.getParameter("newTime"));
+			session.setAttribute("user", player);
+			pdao.updatePlayer(player);
+		}
+		
+		
+		//maj du joueur
+		
 	}
 
 }

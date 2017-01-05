@@ -6,6 +6,7 @@ public class PlayerBean {
 	private String password;
 	private String email;
 	private long money;
+	private String turn;
 	
 	public int getId() {
 		return id;
@@ -37,6 +38,13 @@ public class PlayerBean {
 	public void setMoney(long money) {
 		this.money = money;
 	}
+	public String getTurn() {
+		return turn;
+	}
+	public void setTurn(String turn) {
+		this.turn = turn;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
