@@ -58,6 +58,7 @@ public class EnclosureManagment extends HttpServlet {
 
 			String statSA = request.getParameter("statusSA");
 			String statSE = request.getParameter("statusSE");
+			String statSQ = request.getParameter("statusSQ");
 
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
@@ -114,8 +115,20 @@ public class EnclosureManagment extends HttpServlet {
 
 					response.getWriter().append(reponseJson);
 				}
+			} else if ((statSQ != null) && statSQ.equals("okSQ")) {
+			//recuperation capacity et animal_quantity
+			int capacity = enclosure.getCapacity();
+			int animal_quantity = enclosure.getAnimal_quantity();
+			
+			//calcul de la capacite restante
+			int rest = capacity - animal_quantity;
+			int min = animal_quantity * -1;
+			
+			
+			String responseJson = "{\"rest\":" + rest +",\"min\":"+min+"}";
+			System.out.println(responseJson);
+			response.getWriter().append(responseJson);
 			}
-
 		}
 	}
 
