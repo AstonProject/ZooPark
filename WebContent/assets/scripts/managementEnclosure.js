@@ -79,6 +79,7 @@
 			
 			var $inputQuantity = $(".mod");
 			$inputQuantity.attr("max", donnees.rest);
+			$inputQuantity.attr("min", donnees.min);
 		};
 		
 		var monObj = {"statusSQ":statusSQ};

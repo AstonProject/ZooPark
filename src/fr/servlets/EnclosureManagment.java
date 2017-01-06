@@ -122,10 +122,10 @@ public class EnclosureManagment extends HttpServlet {
 			
 			//calcul de la capacite restante
 			int rest = capacity - animal_quantity;
+			int min = animal_quantity * -1;
 			
 			
-			
-			String responseJson = "{\"rest\":" + rest +"}";
+			String responseJson = "{\"rest\":" + rest +",\"min\":"+min+"}";
 			System.out.println(responseJson);
 			response.getWriter().append(responseJson);
 			}
