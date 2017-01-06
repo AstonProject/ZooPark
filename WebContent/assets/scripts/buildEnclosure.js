@@ -21,8 +21,8 @@
 								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
 							}
 					};
-					 var monObjet ={"statusDescriptions":statusD};
-					 server.monAjax(monObjet, "createEnclosure", callback1, 'POST');
+					 var object ={"statusDescriptions":statusD};
+					 server.monAjax(object, "createEnclosure", callback1, 'POST');
 		});
 	}
 	
@@ -66,8 +66,8 @@
 					}
 				 };
 				 
-				 var monObjet ={"statusPrices":statusP};
-				 server.monAjax(monObjet, "createEnclosure", callback2, 'POST');
+				 var object ={"statusPrices":statusP};
+				 server.monAjax(object, "createEnclosure", callback2, 'POST');
 			 });
 		 });
 		
@@ -118,19 +118,19 @@
 			var callback=function(donnees){
 				if(donnees.code == "OK"){
 					 window.location.href = "home";
-                }else if (donnees.code == "ERROR"){
+                }else {
                 	 failed();
                 }
 			};
 			
 			//Remplissage de l'objet a envoyer
-			var monObjet ={
+			var object ={
 					"specie_id":specie_id,
 					"capacity":capacity,
 					"statusForm":statusF
 			};
 			if(specie_id = null || capacity != null){
-				server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+				server.monAjax(object, "createEnclosure", callback, 'POST');
 			}else{
 				$blockError.empty();
 				$blockError.prepend("<h2> Please, select a type and a size to bluid an enclosure... </h2>");

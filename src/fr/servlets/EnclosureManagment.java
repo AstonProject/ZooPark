@@ -55,10 +55,11 @@ public class EnclosureManagment extends HttpServlet {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 		if (session != null && player != null) {
-
+			
 			String statSA = request.getParameter("statusSA");
 			String statSE = request.getParameter("statusSE");
-
+			String statPA = request.getParameter("statusPA");
+			
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -69,7 +70,6 @@ public class EnclosureManagment extends HttpServlet {
 			EnclosureBean enclosure = new EnclosureBean();
 
 			enclosure = ecdao.getEnclosureByLocation(locate_x, locate_y, player_id);
-			System.out.println(enclosure);
 
 			if ((statSA != null) && statSA.equals("okSA")) {
 				// Recuperation des descriptions au format Json pour envoie par
@@ -78,8 +78,6 @@ public class EnclosureManagment extends HttpServlet {
 				String reponseJson = "{\"specie_id\":" + enclosure.getSpecie_id() + ",";
 				reponseJson += "\"capacity\":" + enclosure.getCapacity() + ",";
 				reponseJson += "\"animal_quantity\":" + enclosure.getAnimal_quantity() + "}";
-
-				System.out.println(reponseJson);
 
 				response.getWriter().append(reponseJson);
 			} else if ((statSE != null) && statSE.equals("okSE")) {
@@ -110,10 +108,17 @@ public class EnclosureManagment extends HttpServlet {
 					}
 					reponseJson += "}";
 
-					System.out.println(reponseJson);
-
 					response.getWriter().append(reponseJson);
 				}
+			}else if ((statPA != null) && statPA.equals("okPA")) {
+				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				int enclosure_id= enclosure.getId();
+				int animal_quantity= enclosure.getAnimal_quantity();
+				enclosure.setAnimal_quantity(animal_quantity+quantity);
+				
+				ecdao.updateEnclosure(enclosure);
+				System.out.println("qty: "+ quantity);
+				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
 
 		}

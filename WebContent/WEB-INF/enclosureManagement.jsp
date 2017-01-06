@@ -23,7 +23,7 @@
 
 <div id="staff_status">
 <span class="staff_img"><img src="${pageContext.request.contextPath}/assets/images/worker.png" alt="logo" /></span>
-<span class="slot1">slot1</span><span class="slot2">slot2</span>
+<span class="slot1"></span><span class="slot2"></span>
 </div>
 <br>
 
@@ -48,7 +48,7 @@
 <h2>Purchase</h2>
 <form action="enclosureManagement" method="post" id="FormPurchaseAnimals">
 	<div id="animal_purchase">
-	<span class="animal">v</span>          <span class="buyingQuantity"><input type="number" max="15" min="1" value="1" name ="" class="mod"/></span>
+	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="1" value="1" name ="quantity" class="mod"/></span>
 	</div>
 	<br>
 	<div class= "decision_menu">
@@ -58,7 +58,6 @@
 		<div class="error"></div>
 	</div>
 </form>
-
 
 </body>
 	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
