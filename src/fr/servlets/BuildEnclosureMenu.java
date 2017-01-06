@@ -146,7 +146,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 				money = player.getMoney();
 
-
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
 				enclosure.setSpecie_id(specieId);
