@@ -129,10 +129,11 @@ public class EnclosureManagment extends HttpServlet {
 				// via CostsDAO dans un objet Json
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
-				int specie_id = enclosure.getId();
+				int specie_id = enclosure.getSpecie_id();
 				SpeciesDAO spdao= new SpeciesDAO();
 				SpecieBean specie= spdao.getSpecieById(specie_id);
 				String name= specie.getName();
+				
 				long unit_price= (long) prices.get(name+"Costs");
 				
 				
