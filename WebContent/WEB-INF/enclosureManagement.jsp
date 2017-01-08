@@ -45,12 +45,17 @@
 </div>
 <br>
 
-<h2>Purchase</h2>
+<h2>Purchase / Resale</h2>
 <form action="enclosureManagement" method="post" id="FormPurchaseAnimals">
 	<div id="animal_purchase">
-	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="-15" value="1" name ="quantity" class="mod"/></span>
+	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="-15" value="1" name ="quantity" class="mod" id="a_quantity"/></span>
 	</div>
 	<br>
+	<h3>Price</h3>
+			<div class="showPrice">
+				<div class="animal_price">0</div>
+			</div>
+			<br>
 	<div class= "decision_menu">
 		<span id="decision">
 			<input type="submit" value="" class="validate_img"><a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>		

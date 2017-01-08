@@ -1,4 +1,3 @@
-
 (function($) {
 	"use strict";
 	// Fonction pour afficher les animaux de l'enclos
@@ -70,28 +69,60 @@
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
 
-	// Fonction achat des animaux
-	function purshaseAnimals() {
-		var statusPA = "okPA";
-		var quantity = null;
-		var $formPA = $('#FormPurchaseAnimals');
-		
-		$formPA.on('submit', function(event) {
-			// Bypass du submit pour la fonction callback
-			event.preventDefault();
+	// Fonction d'affichage des prix
+	function showAnimalsPrice() {
+		var statusAP = "okAP";
+		// attribution d'une variable selectionnant la div d'affichage des prix
+
+		var $blockAnimalPrice = $('.animal_price');
+		var animals_quantity = 0;
+		var animals_price = 0;
+
+		$('#a_quantity').on('click', function() {
+			// Reinitialise le contenu du blockPrice si un radio EnclosureType
+			// est selectionne
+			$blockAnimalPrice.empty();
+
+			// Recuperation de la quantite d'animaux choisie
+			animals_quantity = $('input[name=quantity]').val();
 			
-			quantity = $('input[name=quantity]').val();
 			
 			var callback = function(donnees) {
-				if(donnees.code == "OK"){
-					 window.location.href = "home";
-               }else {
-               	 failed();
-               }
+				animals_price = (((donnees.unit_price) * animals_quantity)*(-1));
+				$blockAnimalPrice.prepend("<div>" + animals_price + "</div>");
 			};
 
 			var object = {
-				"statusPA" : statusPA,
+				"statusAPrices" : statusAP
+			};
+			server.monAjax(object, "enclosureManagment", callback, 'POST');
+
+		});
+
+	}
+
+	// Fonction achat des animaux
+	function purshaseResaleAnimals() {
+		var statusPRA = "okPRA";
+		var quantity = null;
+		var $formPA = $('#FormPurchaseAnimals');
+
+		$formPA.on('submit', function(event) {
+			// Bypass du submit pour la fonction callback
+			event.preventDefault();
+
+			quantity = $('input[name=quantity]').val();
+
+			var callback = function(donnees) {
+				if (donnees.code == "OK") {
+					window.location.href = "home";
+				} else {
+					failed();
+				}
+			};
+
+			var object = {
+				"statusPRA" : statusPRA,
 				"quantity" : quantity
 			};
 			server.monAjax(object, "enclosureManagment", callback, 'POST');
@@ -101,6 +132,7 @@
 	$(document).ready(function() {
 		showAnimals();
 		showEmployees();
-		purshaseAnimals();
+		showAnimalsPrice();
+		purshaseResaleAnimals();
 	})
 })(jQuery);

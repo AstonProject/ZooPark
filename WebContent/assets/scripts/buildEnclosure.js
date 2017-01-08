@@ -27,7 +27,7 @@
 	}
 	
 	// Fonction d'affichage des prix
-	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
+	function showEnclosurePrice($selectedRadioEnclosure, $selectedRadioSize){
 		//attribution d'une variable selectionnant la div d'affichage des prix
 		var $blockPrice=$('.price');
     	var statusP = "okP";
@@ -57,12 +57,12 @@
 					 $blockPrice.empty();
 					
 					if(($('#size_1').is(':checked'))){
-						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
+						 $blockPrice.prepend("<div>"+ (EnclosurePrice*(-1)) + "</div>");
 					} else if (($('#size_2').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
+						$blockPrice.prepend("<div>"+ (EnclosurePrice*(-2)) + "</div>");
 					}
 					 else if (($('#size_3').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
+						$blockPrice.prepend("<div>"+ (EnclosurePrice*(-3)) + "</div>");	
 					}
 				 };
 				 
@@ -165,21 +165,21 @@
 				
 				// Execution des fonctions d'affichage des prix des
 				// enclos selon les selections des radios EnclosureType et EnclosureSize
-				showPrice($radioE1, $radioS1);
-				showPrice($radioE1, $radioS2);
-				showPrice($radioE1, $radioS3);
+				showEnclosurePrice($radioE1, $radioS1);
+				showEnclosurePrice($radioE1, $radioS2);
+				showEnclosurePrice($radioE1, $radioS3);
 				
-				showPrice($radioE2, $radioS1);
-				showPrice($radioE2, $radioS2);
-				showPrice($radioE2, $radioS3);
+				showEnclosurePrice($radioE2, $radioS1);
+				showEnclosurePrice($radioE2, $radioS2);
+				showEnclosurePrice($radioE2, $radioS3);
 				
-				showPrice($radioE3, $radioS1);
-				showPrice($radioE3, $radioS2);
-				showPrice($radioE3, $radioS3);
+				showEnclosurePrice($radioE3, $radioS1);
+				showEnclosurePrice($radioE3, $radioS2);
+				showEnclosurePrice($radioE3, $radioS3);
 				
-				showPrice($radioE4, $radioS1);
-				showPrice($radioE4, $radioS2);
-				showPrice($radioE4, $radioS3);
+				showEnclosurePrice($radioE4, $radioS1);
+				showEnclosurePrice($radioE4, $radioS2);
+				showEnclosurePrice($radioE4, $radioS3);
 				
 				//Execution de la fonction de recuperation des données d'enclos 
 				//pour sa création depuis le controleur BuildEnclosureMenu

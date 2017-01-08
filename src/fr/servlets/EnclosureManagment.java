@@ -66,7 +66,8 @@ public class EnclosureManagment extends HttpServlet {
 			
 			String statSA = request.getParameter("statusSA");
 			String statSE = request.getParameter("statusSE");
-			String statPA = request.getParameter("statusPA");
+			String statAP = request.getParameter("statusAPrices");
+			String statPRA = request.getParameter("statusPRA");
 			
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
@@ -121,8 +122,27 @@ public class EnclosureManagment extends HttpServlet {
 
 					response.getWriter().append(reponseJson);
 				}
-				/**permettre achat ou revente des animaux**/
-			}else if ((statPA != null) && statPA.equals("okPA")) {
+				
+			}/**permettre affichage des prix**/
+			else if ((statAP != null) && statAP.equals("okAP")) {
+				// Recuperation des prix unitaire d'un animal du type indique 
+				// via CostsDAO dans un objet Json
+				CostsDAO cdao = new CostsDAO();
+				JSONObject prices = cdao.getCosts();
+				int specie_id = enclosure.getId();
+				SpeciesDAO spdao= new SpeciesDAO();
+				SpecieBean specie= spdao.getSpecieById(specie_id);
+				String name= specie.getName();
+				long unit_price= (long) prices.get(name+"Costs");
+				
+				
+				//Envoie au format Json dans la reponse pour la fonction showAnimalsPrice() en JS
+				String reponseJson = "{\"unit_price\":"+unit_price+"}";
+				response.getWriter().append(reponseJson);
+				
+				
+			}/**permettre achat ou revente des animaux**/
+			else if ((statPRA != null) && statPRA.equals("okPRA")) {
 				PlayersDAO pdao = new PlayersDAO();
 				//Recuperation de la quantite d'animaux demande
 				int quantity = Integer.parseInt(request.getParameter("quantity"));

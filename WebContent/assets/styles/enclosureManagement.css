@@ -35,3 +35,18 @@ input[type="number"].mod::-moz-inner-spin-button:hover,
 input[type="number"].mod::-moz-inner-spin-button:active{
     border: none;
 }
+
+
+.showPrice {
+	width: 100px;
+	height: 30px;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.animal_price {
+	text-align: center;
+	padding: 7px;
+}
