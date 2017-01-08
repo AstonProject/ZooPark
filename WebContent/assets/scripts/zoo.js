@@ -13,6 +13,7 @@ var server = {};
 				console.log("Requête bien envoyée");
 			},
 			success : function(donnees, textStatus) {
+				console.log("succès");
 				callback(donnees);
 			},
 			error : function(xhr, status, msgErreur) {
