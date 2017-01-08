@@ -62,7 +62,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 			String statPrices = request.getParameter("statusPrices");
 			String statForm = request.getParameter("statusForm");
 
-			// Recuperation des description d'enclos vie SpecieDAZO lorsque
+			// Recuperation des description d'enclos via SpecieDAO lorsque
 			// showDescription() est appelee (buildEnclosure.js)
 			if ((statDescriptions != null) && statDescriptions.equals("okD")) {
 				// Recuperation des descriptions via SpecieDAO dans une
