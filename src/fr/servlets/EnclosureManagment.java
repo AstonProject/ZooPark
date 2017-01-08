@@ -11,14 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import fr.beans.AnimalBean;
 import fr.beans.EmployeeBean;
 import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
 import fr.beans.SpecieBean;
 import fr.dao.AnimalsDAO;
+import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.PlayersDAO;
 import fr.dao.SpeciesDAO;
 
 @WebServlet("/enclosureManagment")
@@ -75,7 +79,7 @@ public class EnclosureManagment extends HttpServlet {
 
 			enclosure = ecdao.getEnclosureByLocation(locate_x, locate_y, player_id);
 
-			//Permettre affichage des animaux de l'enclos, showAnimals() en JS
+			/**Permettre affichage des animaux de l'enclos, showAnimals() en JS**/
 			if ((statSA != null) && statSA.equals("okSA")) {
 				// Recuperation des descriptions au format Json pour envoie par
 				// ajax
@@ -86,7 +90,7 @@ public class EnclosureManagment extends HttpServlet {
 
 				response.getWriter().append(reponseJson);
 				
-			//Permettre affichage des employés dans l'enclos,showEmployees() en JS	
+				/**Permettre affichage des employés dans l'enclos,showEmployees() en JS	**/
 			} else if ((statSE != null) && statSE.equals("okSE")) {
 				// Recuperation de l'id de l'enclos selectionne et de ses employés
 				int enclosure_id = enclosure.getId();
@@ -102,7 +106,7 @@ public class EnclosureManagment extends HttpServlet {
 				int lengthList = employees.size();
 				int count = 1;
 
-				if (employees.size() > 0) {
+				if (lengthList > 0) {
 					for (EmployeeBean employee : employees) {
 						String type = employee.getType();
 
@@ -117,31 +121,55 @@ public class EnclosureManagment extends HttpServlet {
 
 					response.getWriter().append(reponseJson);
 				}
-			//permettre achat/Revente des animaux
+				/**permettre achat ou revente des animaux**/
 			}else if ((statPA != null) && statPA.equals("okPA")) {
+				PlayersDAO pdao = new PlayersDAO();
 				//Recuperation de la quantite d'animaux demande
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				
 				//Recuperation des caracteristique de l'enclos necessaire aux differentes
 				//MAJ dans la BDD
 				int enclosure_id= enclosure.getId();
 				int specie_id= enclosure.getSpecie_id();
 				int animal_quantity= enclosure.getAnimal_quantity();
 				int enclosure_capacity = enclosure.getCapacity();
-			
-				
+
 				//MAj du nb d'animaux dans l'enclos dans la bdd
 				enclosure.setAnimal_quantity(animal_quantity+quantity);
 				ecdao.updateEnclosure(enclosure);
+				System.out.println("ajout dans l'enclos");
 				
-				//Creation des des animaux si achat
-				if(quantity > 0 && quantity <= (enclosure_capacity-animal_quantity)){
-					AnimalsDAO andao= new AnimalsDAO();
+				// Recuperation des prix unitaire d'un animal du type indique 
+				// via CostsDAO dans un objet Json
+				CostsDAO cdao = new CostsDAO();
+				JSONObject prices = cdao.getCosts();
 					
-					//Recuperation du nom d'espece pour attribution d'un nom a l'animal 
-					SpeciesDAO spdao= new SpeciesDAO();
-					SpecieBean specie= spdao.getSpecieById(specie_id);
+				SpeciesDAO spdao= new SpeciesDAO();
+				SpecieBean specie= spdao.getSpecieById(specie_id);
+				String name= specie.getName();
+				long unit_price= (long) prices.get(name+"Costs");
+				System.out.println("price= "+ unit_price);
+				
+				//MAJ du solde du player dans la BDD et en session
+				long finalPrice= unit_price*quantity;
+				long money = player.getMoney();
+				System.out.println("solde AV achat/revente: "+ money);
+				player.setMoney(money - finalPrice);
+				
+				pdao.updatePlayer(player);
+				session.setAttribute("user", player);
+				
+				money = player.getMoney();
+				System.out.println("solde AP achat/revente: "+ money);
+				/**Creation des des animaux si achat ou revente**/
+				AnimalsDAO andao= new AnimalsDAO();
+				
+				//si achat
+				if(quantity > 0 && quantity <= (enclosure_capacity-animal_quantity)){
+					System.out.println("entree boucle create animal");
 
-					for (int i=1; i < quantity; i++){
+					//Creation des animaux achetes
+					for (int i=0; i < quantity; i++){
 						
 						AnimalBean animal= new AnimalBean();
 						animal.setName(specie.getName());
@@ -151,18 +179,33 @@ public class EnclosureManagment extends HttpServlet {
 						animal.setSpecie_id(specie_id);
 						animal.setEnclosure_id(enclosure_id);		
 						
-						//Ajout dans la BDD
+						//Ajout dans la BDD des animaux achetes
 						andao.createAnimal(animal);
+						System.out.println("animal" + i +" create sur: " + quantity);
 					}
 				
-				}//Delete des animaux si revent
+				}//si revente
 				else if(quantity < 0 && quantity <= (animal_quantity)){
-				
+					System.out.println("entree boucle delete animal");
+					//Recuperation de la liste des animaux de l'enclos selectionne
+					List<AnimalBean> animals = andao.getAnimalsByEnclosure(enclosure_id);
+					
+					int count = 0;
+					for (AnimalBean animal : animals) {
+						//Recuperation de l'id des animaux a delete
+						andao.deleteAnimal(animal.getId());
+						
+						count++;
+						System.out.println("animal_id: "+animal.getId()+" a ete delete");
+						//Arret lorsque le bon nombre est atteint
+						if (count == (quantity*(-1))) {
+							break;
+						}
+					}
 				}
 				
 				//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
-				
 			}
 
 		}

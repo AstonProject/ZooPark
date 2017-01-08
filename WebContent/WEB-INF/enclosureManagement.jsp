@@ -48,7 +48,7 @@
 <h2>Purchase</h2>
 <form action="enclosureManagement" method="post" id="FormPurchaseAnimals">
 	<div id="animal_purchase">
-	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="1" value="1" name ="quantity" class="mod"/></span>
+	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="-15" value="1" name ="quantity" class="mod"/></span>
 	</div>
 	<br>
 	<div class= "decision_menu">

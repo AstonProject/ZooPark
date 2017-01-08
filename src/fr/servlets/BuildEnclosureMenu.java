@@ -144,7 +144,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 				pdao.updatePlayer(player);
 
-				money = player.getMoney();
+				
 
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
