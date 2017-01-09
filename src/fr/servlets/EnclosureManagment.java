@@ -67,8 +67,11 @@ public class EnclosureManagment extends HttpServlet {
 			String statSA = request.getParameter("statusSA");
 			String statSE = request.getParameter("statusSE");
 			String statAP = request.getParameter("statusAPrices");
+			String statEP = request.getParameter("statusEPrices");
 			String statPRA = request.getParameter("statusPRA");
+			String statRE = request.getParameter("statusRE");
 			
+			System.out.println("statusEPrices: "+statEP);
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -124,23 +127,38 @@ public class EnclosureManagment extends HttpServlet {
 				}
 				
 			}/**permettre affichage des prix**/
-			else if ((statAP != null) && statAP.equals("okAP")) {
-				// Recuperation des prix unitaire d'un animal du type indique 
-				// via CostsDAO dans un objet Json
+			else if ((statAP != null) ||(statEP != null)) {
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
+				
 				int specie_id = enclosure.getSpecie_id();
 				SpeciesDAO spdao= new SpeciesDAO();
 				SpecieBean specie= spdao.getSpecieById(specie_id);
 				String name= specie.getName();
 				
-				long unit_price= (long) prices.get(name+"Costs");
-				
-				
-				//Envoie au format Json dans la reponse pour la fonction showAnimalsPrice() en JS
-				String reponseJson = "{\"unit_price\":"+unit_price+"}";
-				response.getWriter().append(reponseJson);
-				
+				// Recuperation des prix unitaire d'un animal de type"name"
+				// via CostsDAO 
+				if( statEP == null && statAP.equals("okAP")){
+					long unit_price= (long) prices.get(name+"Costs");
+
+					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
+					String reponseJson = "{\"unit_price\":"+unit_price+"}";
+					response.getWriter().append(reponseJson);
+				}// Recuperation des prix de l'enclos et de tous les animaux
+				 // en cas de revente d'enclos
+				else if(statAP == null && statEP.equals("okEP")){
+					long enclosure_price= (long) prices.get("enclosureCosts_"+name);
+					long animal_price= ((long)prices.get(name+"Costs"))*enclosure.getAnimal_quantity();
+					long total_priceEAP= enclosure_price + animal_price;
+
+					//enregistrement dans la session en cas de revente
+					session.setAttribute("total_priceEAP", total_priceEAP);
+					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
+					String reponseJson = "{\"total_price\":"+total_priceEAP+"}";
+					response.getWriter().append(reponseJson);
+					System.out.println("total_price json: "+reponseJson);
+					
+				}
 				
 			}/**permettre achat ou revente des animaux**/
 			else if ((statPRA != null) && statPRA.equals("okPRA")) {
@@ -223,6 +241,43 @@ public class EnclosureManagment extends HttpServlet {
 							break;
 						}
 					}
+				}
+				
+				//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)
+				response.getWriter().append("{\"code\" : \"OK\"}");
+			}
+			/**permettre la revente d'un enclos et de tous ses animaux**/
+			else if ((statRE != null) && statRE.equals("okRE")) {
+				//MAJ du solde du player dans la BDD et en session
+				PlayersDAO pdao = new PlayersDAO();
+				
+				long total_priceEAP = (long) session.getAttribute("total_priceEAP");
+				long money = player.getMoney();
+				
+				System.out.println("solde AV achat/revente: "+ money);
+				player.setMoney(money + total_priceEAP);
+				
+				pdao.updatePlayer(player);
+				session.setAttribute("user", player);
+				
+				money = player.getMoney();
+				System.out.println("solde AP achat/revente: "+ money);
+				//Delete de l'enclos
+				enclosure.setCapacity(0);
+				enclosure.setAnimal_quantity(0);
+				enclosure.setCleanliness_gauge(0);
+				enclosure.setEmployee_quantity(0);//A modifier quand les enployes seront crees
+				
+				ecdao.updateEnclosure(enclosure);
+				//Delete des animaux
+				AnimalsDAO andao= new AnimalsDAO();
+				List<AnimalBean> animals = andao.getAnimalsByEnclosure(enclosure.getId());
+
+				for (AnimalBean animal : animals) {
+					//Recuperation de l'id des animaux a delete
+					andao.deleteAnimal(animal.getId());
+	
+					System.out.println("animal_id: "+animal.getId()+" a ete delete");	
 				}
 				
 				//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)

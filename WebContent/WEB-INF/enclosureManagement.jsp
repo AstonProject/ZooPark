@@ -48,12 +48,16 @@
 <h2>Purchase / Resale</h2>
 <form action="enclosureManagement" method="post" id="FormPurchaseAnimals">
 	<div id="animal_purchase">
-	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="-15" value="1" name ="quantity" class="mod" id="a_quantity"/></span>
+	<span class="animal"></span><span class="buyingQuantity"><input type="number" max="15" min="-15" value="0" name ="quantity" class="mod" id="a_quantity"/></span>
+	</div>
+	<br>
+	<div id="enclosure_resale">
+	Resale enclosure? <input type="checkbox" name="ecl_resale" id="resale_all" > 
 	</div>
 	<br>
 	<h3>Price</h3>
 			<div class="showPrice">
-				<div class="animal_price">0</div>
+				<div class="ae_price">0</div>
 			</div>
 			<br>
 	<div class= "decision_menu">
