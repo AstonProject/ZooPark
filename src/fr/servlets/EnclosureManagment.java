@@ -94,9 +94,9 @@ public class EnclosureManagment extends HttpServlet {
 
 				response.getWriter().append(reponseJson);
 				
-				/**Permettre affichage des employés dans l'enclos,showEmployees() en JS	**/
+				/**Permettre affichage des employï¿½s dans l'enclos,showEmployees() en JS	**/
 			} else if ((statSE != null) && statSE.equals("okSE")) {
-				// Recuperation de l'id de l'enclos selectionne et de ses employés
+				// Recuperation de l'id de l'enclos selectionne et de ses employï¿½s
 				int enclosure_id = enclosure.getId();
 
 				EmployeesDAO epdao = new EmployeesDAO();
@@ -149,7 +149,7 @@ public class EnclosureManagment extends HttpServlet {
 				else if(statAP == null && statEP.equals("okEP")){
 					long enclosure_price= (long) prices.get("enclosureCosts_"+name);
 					long animal_price= ((long)prices.get(name+"Costs"))*enclosure.getAnimal_quantity();
-					long total_priceEAP= enclosure_price + animal_price;
+					long total_priceEAP= (long) ((enclosure_price + animal_price)*(0.75));
 
 					//enregistrement dans la session en cas de revente
 					session.setAttribute("total_priceEAP", total_priceEAP);
@@ -193,13 +193,18 @@ public class EnclosureManagment extends HttpServlet {
 				long finalPrice= unit_price*quantity;
 				long money = player.getMoney();
 				System.out.println("solde AV achat/revente: "+ money);
-				player.setMoney(money - finalPrice);
 				
+				if(quantity < 0){
+				player.setMoney((long) (money - (finalPrice)*(0.75)));
+				}else{
+					player.setMoney(money - finalPrice);
+				}
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
 				
 				money = player.getMoney();
 				System.out.println("solde AP achat/revente: "+ money);
+				
 				/**Creation des des animaux si achat ou revente**/
 				AnimalsDAO andao= new AnimalsDAO();
 				
@@ -220,7 +225,7 @@ public class EnclosureManagment extends HttpServlet {
 						
 						//Ajout dans la BDD des animaux achetes
 						andao.createAnimal(animal);
-						System.out.println("animal" + i +" create sur: " + quantity);
+						System.out.println("animal" + (i+1) +" create sur: " + quantity);
 					}
 				
 				}//si revente
@@ -265,7 +270,7 @@ public class EnclosureManagment extends HttpServlet {
 				//Delete de l'enclos
 				enclosure.setCapacity(0);
 				enclosure.setAnimal_quantity(0);
-				enclosure.setCleanliness_gauge(0);
+				enclosure.setCleanliness_gauge(100);
 				enclosure.setEmployee_quantity(0);//A modifier quand les enployes seront crees
 				
 				ecdao.updateEnclosure(enclosure);

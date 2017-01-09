@@ -91,8 +91,14 @@
 			animals_quantity = $('input[name=quantity]').val();
 
 			var callback = function(donnees) {
-				animals_price = (((donnees.unit_price) * animals_quantity) * (-1));
-				$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
+				if(animals_quantity < 0){
+					animals_price = (((donnees.unit_price) * animals_quantity) * (-1)*(0.75));
+					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
+				}else{
+					animals_price = (((donnees.unit_price) * animals_quantity) * (-1));
+					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
+				}
+				
 			};
 
 			var object = {
