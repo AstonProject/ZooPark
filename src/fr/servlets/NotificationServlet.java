@@ -49,7 +49,7 @@ public class NotificationServlet extends HttpServlet {
 
 		if (messages.size() > 0) {
 			for (MessageBean message : messages) {
-				reponseJson += "{\"title\":\"" + message.getTitle() + "\",";
+				reponseJson += "\"message"+count+"\":{\"title\":\"" + message.getTitle() + "\",";
 				reponseJson += "\"content\":\"" + message.getContent() + "\"}";
 				count++;
 
@@ -58,6 +58,7 @@ public class NotificationServlet extends HttpServlet {
 				}
 			}
 			reponseJson += "}";
+			response.setContentType("application/json");
 			response.getWriter().append(reponseJson);
 		}
 	}

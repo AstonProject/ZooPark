@@ -3,17 +3,16 @@
 	
 	$(document).ready(function() {
 		var $mainContent = $("#main-content");
-		setInterval(function(){
-			
-			var callback=function(donnees){
-				console.log(donnees);
-				var count = 0;
-				$mainContent.empty();
-				for(var message of donnees){
-					$mainContent.prepend("<div class=\"message\">"+message.title+":<br>"+message.content+"</div>");
-					count++;
-				};
+		var callback=function(donnees){
+			$mainContent.empty();
+			var count = 0;
+			for(var message in donnees){
+				console.log(message);
+				$mainContent.prepend("<div class=\"message\">"+message.title+":<br>"+message.content+"</div>");
+				count++;
 			};
+		};
+		setInterval(function(){
 			var obj = {};
 			server.monAjax(obj, "notifications", callback);
 			
