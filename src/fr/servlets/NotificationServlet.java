@@ -43,7 +43,7 @@ public class NotificationServlet extends HttpServlet {
 		List<MessageBean> messages = new ArrayList<>();
 		System.out.println(user.getId());
 		messages = mdao.getMessagesByPlayerId(user.getId());
-		String reponseJson = "{[";
+		String reponseJson = "{";
 		int lengthList = messages.size();
 		int count = 0;
 
@@ -57,8 +57,7 @@ public class NotificationServlet extends HttpServlet {
 					reponseJson += ",";
 				}
 			}
-			reponseJson += "]}";
-			response.setContentType("application/json");
+			reponseJson += "}";
 			response.getWriter().append(reponseJson);
 		}
 	}
