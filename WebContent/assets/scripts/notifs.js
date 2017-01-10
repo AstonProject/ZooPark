@@ -5,11 +5,9 @@
 		var $mainContent = $("#main-content");
 		var callback=function(donnees){
 			$mainContent.empty();
-			var count = 0;
-			for(var message in donnees){
-				console.log(message);
-				$mainContent.prepend("<div class=\"message\">"+message.title+":<br>"+message.content+"</div>");
-				count++;
+			for(let message in donnees){
+				console.log(donnees);
+				$mainContent.prepend("<div class=\"message\">"+donnees[message]["title"]+":<br>"+donnees[message]["content"]+"</div>");
 			};
 		};
 		setInterval(function(){
