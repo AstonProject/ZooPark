@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <title>Notifications</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/global.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/notifs.css">
 </head>
 <body>
 	<div id="body">
@@ -36,7 +37,7 @@
 					</div>
 				</header>
 				<div id="main-content">
-					<h1>ZooPark</h1>
+					
 				</div>
 				<footer id="bottom-menu">
 					<button name="construction" id="construction">Build</button>

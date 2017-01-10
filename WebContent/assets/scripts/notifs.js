@@ -7,7 +7,7 @@
 			$mainContent.empty();
 			for(let message in donnees){
 				console.log(donnees);
-				$mainContent.prepend("<div class=\"message\">"+donnees[message]["title"]+":<br>"+donnees[message]["content"]+"</div>");
+				$mainContent.prepend("<div class=\"message\"><span class=\"titre\">"+donnees[message]["title"]+":</span> <span class=\"contenu\">"+donnees[message]["content"]+"</span> <a href=\"?action=delete&id="+donnees[message]["id"]+"\">Supprimer</a></div>");
 			};
 		};
 		setInterval(function(){

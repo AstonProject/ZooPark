@@ -1,0 +1,10 @@
+#main-content .message{
+	margin: 10px;
+}
+#main-content .message .titre{
+	font-weight: bold;
+	font-size: 16px;
+}
+#main-content .message .contenu{
+	font-size: 12px;
+}

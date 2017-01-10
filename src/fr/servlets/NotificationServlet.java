@@ -49,7 +49,9 @@ public class NotificationServlet extends HttpServlet {
 
 		if (messages.size() > 0) {
 			for (MessageBean message : messages) {
-				reponseJson += "\"message"+count+"\":{\"title\":\"" + message.getTitle() + "\",";
+				reponseJson += "\"message"+count+"\":{";
+				reponseJson += "\"id\":\"" + message.getId() + "\",";
+				reponseJson += "\"title\":\"" + message.getTitle() + "\",";
 				reponseJson += "\"content\":\"" + message.getContent() + "\"}";
 				count++;
 
