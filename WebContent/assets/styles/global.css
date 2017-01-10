@@ -15,7 +15,7 @@ h1 {
 }
 
 body, #body {
-	background: #ccc;
+	background: lightblue;
 	width: 100%;
 	min-height: 400px;
 	text-align: center;
@@ -37,7 +37,7 @@ body, #body {
 }
 
 #main-header {
-	background: salmon;
+	background: #d05409;
 	border: 1px solid grey;
 	min-height: 130px;
 	border-radius: 40px 40px 0px 0px;
@@ -50,7 +50,7 @@ body, #body {
 }
 
 #main-content {
-	background: #9f93d9;
+	background: #296b21;
 	min-height: 500px;
 	padding: 3px;
 }
@@ -60,7 +60,7 @@ body, #body {
 	border-radius: 0px 0px 40px 40px;
 	-moz-border-radius: 0px 0px 40px 40px;
 	-webkit-border-radius: 0px 0px 40px 40px;
-	background: palegoldenrod;
+	background: #d05409;
 	min-height: 100px;
 	height: 135px;
 }

@@ -1,13 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html >
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/enclosureManagement.css" />
-<title>Enclosure_management</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/parts/header.jsp" %>
+<div id="main-content">
 <h1>Building menu</h1>
 <br>
 <h2>Status</h2>
@@ -58,10 +50,5 @@
 		<div class="error"></div>
 	</div>
 </form>
-
-
-</body>
-	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
-</html>
+</div>
+<%@ include file="/WEB-INF/parts/footer.jsp" %>
