@@ -69,6 +69,30 @@
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
 
+	// Fonction pour afficher les employes de l'enclos
+	function showGauges() {
+		var statusG = "okG";
+
+		var callback = function(donnees) {
+			$(".hungry").attr("value", donnees.hungry);
+			$(".health").attr("value", donnees.health);
+			$(".cleanness").attr("value", donnees.cleanness);
+			
+			console.log("hungry"+donnees.hungry);
+			console.log("health"+donnees.health);
+			console.log("cleanness"+donnees.cleanness);
+			
+			$(".food_gauge").prepend(donnees.hungry);
+			$(".health_gauge").prepend(donnees.health);
+			$(".cleanness_gauge").prepend(donnees.cleanness);
+		};
+		
+		var object = {
+			"statusG" : statusG
+		};
+		server.monAjax(object, "enclosureManagment", callback, 'POST');
+	}
+	
 	// Fonction d'affichage des prix
 	function showAEPrice() {
 		var statusAP = "okAP";
@@ -105,7 +129,6 @@
 				"statusAPrices" : statusAP
 			};
 			server.monAjax(object, "enclosureManagment", callback, 'POST');
-
 		});
 		
 		$('#resale_all').on('click', function() {
@@ -179,6 +202,7 @@
 	$(document).ready(function() {
 		showAnimals();
 		showEmployees();
+		showGauges();
 		showAEPrice();
 		purshaseResale();
 	})

@@ -66,12 +66,14 @@ public class EnclosureManagment extends HttpServlet {
 			
 			String statSA = request.getParameter("statusSA");
 			String statSE = request.getParameter("statusSE");
+			String statG = request.getParameter("statusG");
 			String statAP = request.getParameter("statusAPrices");
 			String statEP = request.getParameter("statusEPrices");
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			
-			System.out.println("statusEPrices: "+statEP);
+			
+			System.out.println("statusG: "+statG);
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -94,7 +96,7 @@ public class EnclosureManagment extends HttpServlet {
 
 				response.getWriter().append(reponseJson);
 				
-				/**Permettre affichage des employ�s dans l'enclos,showEmployees() en JS	**/
+				/**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
 			} else if ((statSE != null) && statSE.equals("okSE")) {
 				// Recuperation de l'id de l'enclos selectionne et de ses employ�s
 				int enclosure_id = enclosure.getId();
@@ -126,7 +128,39 @@ public class EnclosureManagment extends HttpServlet {
 					response.getWriter().append(reponseJson);
 				}
 				
-			}/**permettre affichage des prix**/
+			}/**permettre affichage des jauges**/
+			else if ((statG != null) && statG.equals("okG")) {
+				//Recuperation de la jauge cleanness (dans enclosure)
+				int cleanness= enclosure.getCleanliness_gauge();
+				
+				//Recuperation des jauges hungry/health (dans animals)
+				AnimalsDAO andao= new AnimalsDAO();
+				List<AnimalBean> animals = andao.getAnimalsByEnclosure(enclosure.getId());
+				
+				int totalHungry=0;
+				int totalHealth=0;
+				int hungry=0;
+				int health=0;
+				System.out.println("animal.size():"+animals.size());
+				if(animals.size() != 0){
+					for (AnimalBean animal : animals) {
+						totalHungry += animal.getHungry_gauge();
+						totalHealth += animal.getHealth_gauge();
+						System.out.println("totalHungry"+totalHungry);
+						System.out.println("totalHealth"+totalHealth);
+					}
+					
+					//moyenne des jauges
+					hungry= totalHungry/animals.size();
+					health= totalHealth/animals.size();
+				}
+
+				//Envoie au format Json dans la reponse pour la fonction showGauges() en JS
+				String reponseJson = "{\"cleanness\":"+cleanness+", \"hungry\":"+hungry +", \"health\":"+health+"}";
+				response.getWriter().append(reponseJson);
+				System.out.println("gauges: "+reponseJson);
+			}
+			/**permettre affichage des prix**/
 			else if ((statAP != null) ||(statEP != null)) {
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();

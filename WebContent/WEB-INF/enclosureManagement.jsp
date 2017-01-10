@@ -29,19 +29,19 @@
 
 <div id="food_status">
 <span class="food_img"><img src="${pageContext.request.contextPath}/assets/images/meet.png" alt="logo" /></span>
-<span class="food_gauge"><meter low="25" high="75" max="100" min="0" value="10"></meter></span>
+<meter low="25" high="100" max="100" min="0" value="10" class="hungry"></meter><span class="food_gauge"></span>
 </div>
 <br>
 
 <div id="health_status">
 <span class="health_img"><img src="${pageContext.request.contextPath}/assets/images/health.png" alt="logo" /></span>
-<span class="health_gauge"><meter low="25" high="75" max="100" min="0" value="50"></meter></span>
+<meter low="25" high="100" max="100" min="0" value="50" class="health"></meter><span class="health_gauge"></span>
 </div>
 <br>
 
 <div id="cleanness_status">
 <span class="cleanness_img"><img src="${pageContext.request.contextPath}/assets/images/cleanness.png" alt="logo" /></span>
-<span class="cleanness_gauge"><meter low="25" high="75" max="100" min="0" value="80"></meter></span>
+<meter low="25" high="100" max="100" min="0" value="100" class="cleanness"></meter><span class="cleanness_gauge"></span>
 </div>
 <br>
 
