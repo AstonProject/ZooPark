@@ -29,7 +29,7 @@
 
 <div id="food_status">
 <span class="food_img"><img src="${pageContext.request.contextPath}/assets/images/meet.png" alt="logo" /></span>
-<meter low="25" high="100" max="100" min="0" value="10" class="hungry"></meter><span class="food_gauge"></span>
+<meter low="0" high="75" max="100" min="0" value="10" class="hungry"></meter><span class="food_gauge"></span>
 </div>
 <br>
 
