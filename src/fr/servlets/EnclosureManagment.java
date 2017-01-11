@@ -197,7 +197,7 @@ public class EnclosureManagment extends HttpServlet {
 				}// Recuperation des prix de l'enclos et de tous les animaux
 				 // en cas de revente d'enclos
 				else if(statAP == null && statEP.equals("okEP")){
-					long enclosure_price= (long) prices.get("enclosureCosts_"+name);
+					long enclosure_price= ((long) prices.get("enclosureCosts_"+name)*(enclosure.getCapacity()/5));
 					long animal_price= ((long)prices.get(name+"Costs"))*enclosure.getAnimal_quantity();
 					long total_priceEAP= (long) ((enclosure_price + animal_price)*(0.75));
 
