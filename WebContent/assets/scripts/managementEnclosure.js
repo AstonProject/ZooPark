@@ -103,6 +103,9 @@
 		var animals_quantity = 0;
 		var animals_price = 0;
 
+		//Stockage du prix dans la session
+		sessionStorage.setItem("animals_price", animals_price);
+		
 		$('#a_quantity').on('click', function() {
 			// Reinitialise le contenu du blockPrice si un radio EnclosureType
 			// est selectionne
@@ -117,10 +120,12 @@
 			var callback = function(donnees) {
 				if(animals_quantity < 0){
 					animals_price = (((donnees.unit_price) * animals_quantity) * (-1)*(0.75));
+					sessionStorage.setItem("animals_price", animals_price);
 					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
 				}else{
 					animals_price = (((donnees.unit_price) * animals_quantity) * (-1));
 					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
+					sessionStorage.setItem("animals_price", animals_price);
 				}
 				
 			};
@@ -134,16 +139,21 @@
 		$('#resale_all').on('click', function() {
 			// Reinitialise le contenu du blockPrice si un radio EnclosureType
 			// est selectionne
+			
 			$blockAnimalPrice.empty();
 			
-			var callback = function(donnees) {
-				$blockAnimalPrice.prepend("<div>"+ donnees.total_price + "</div>");
-			};
-
-			var object = {
-				"statusEPrices" : statusEP
-			};
-			server.monAjax(object, "enclosureManagment", callback, 'POST');
+			if ($('#resale_all').is(':checked')) {
+				var callback = function(donnees) {
+					$blockAnimalPrice.prepend("<div>"+ donnees.total_price + "</div>");
+				};
+	
+				var object = {
+					"statusEPrices" : statusEP
+				};
+				server.monAjax(object, "enclosureManagment", callback, 'POST');
+			} else{
+				$blockAnimalPrice.prepend("<div>"+ sessionStorage.getItem("animals_price") + "</div>");		
+			}
 		});
 
 	}
