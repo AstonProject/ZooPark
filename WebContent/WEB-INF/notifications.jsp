@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 <!DOCTYPE html>
-<html lang="fr">
-
+<html>
 <head>
 <meta charset="utf-8">
-<title>ZooPark</title>
+<title>Notifications</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/global.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/notifs.css">
 </head>
-
 <body>
 	<div id="body">
 		<div id="main-wrapper">
@@ -26,7 +24,7 @@
 								<li>Money : ${ sessionScope.user.money } Z</li>
 								<li>Visitors : 0</li>
 								<li><a href="#">Satisfaction</a></li>
-								<li><a href="notifications">Messages</a></li>
+								<li><a href="#">Messages</a></li>
 								<li>
 									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 
 									<span id="gamedate">
@@ -39,18 +37,7 @@
 					</div>
 				</header>
 				<div id="main-content">
-					<h1>ZooPark</h1>
-					<div id="zoo-container">
-					<%-- Parcours abscisse i + ordonnée j --%>
-						<c:forEach var="i" begin="1" end="5">
-							<c:forEach var="j" begin="1" end="5">
-								<%-- 1 emplacement du zoo --%>
-								<span class="zoo-site" id="zoo-site-${ i }-${ j }">
-								</span>
-							</c:forEach>
-							<br>
-						</c:forEach>
-					</div>
+					
 				</div>
 				<footer id="bottom-menu">
 					<button name="construction" id="construction">Build</button>
@@ -67,47 +54,7 @@
 					<div id="page-header"></div>
 				</header>
 				<div id="main-content">
-					<h1>ZooPark</h1>
-					<div id="zoo-container">
-						<div id="register">
-						<h2>Inscription</h2>
-							<form method="post" id="register_form" action="user?action=register">
-								<ul>
-									<li> ${ valid.resultat } </li>
-									<li><label for="reg_pseudo">Pseudo :</label></li>
-									<li><input type="text" name="reg_pseudo" id="reg_pseudo">
-									<br><span>${valid.erreurs['pseudo']}</span></li>
-
-									<li><label for="reg_password">Password :</label></li>
-									<li><input type="text" name="reg_password" id="reg_password">
-									<br><span>${valid.erreurs['password']}</span></li>
-
-									<li><label for="reg_confirmation">Confirm password :</label></li>
-									<li><input type="text" name="reg_confirmation" id="reg_confirmation">
-									<br><span>${valid.erreurs['confirmation']}</span></li>
-		
-									<li><label for="reg_email">Email :</label></li>
-									<li><input type="text" name="reg_email" id="reg_email">
-									<br><span>${valid.erreurs['email']}</span></li>
-		
-									<li><input type="submit" value="inscription"></li>
-								</ul>
-							</form>
-						</div>
-						<div id="connect">
-						<h2>Connexion</h2>
-							<form method="post" id="connection_form" action="user?action=connect">
-								<ul>
-									<li>${ erreur }</li>
-									<li><label for="con_pseudo">Pseudo :</label></li>
-									<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
-									<li><label for="con_password">Password :</label></li>
-									<li><input type="text" name="con_password" id="con_password"></li>
-									<li><input type="submit" value="connexion"></li>
-								</ul>
-							</form>
-						</div>
-					</div>
+					
 				</div>
 				<footer id="bottom-menu"> 
 				</footer>
@@ -116,8 +63,8 @@
 	</div>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/time.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/notifs.js"></script>
 </body>
 
 </html>
