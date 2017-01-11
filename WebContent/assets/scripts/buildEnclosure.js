@@ -21,13 +21,13 @@
 								$blockDescription.prepend("<div>"+ donnees.description3 + "</div>");	
 							}
 					};
-					 var monObjet ={"statusDescriptions":statusD};
-					 server.monAjax(monObjet, "createEnclosure", callback1, 'POST');
+					 var object ={"statusDescriptions":statusD};
+					 server.monAjax(object, "createEnclosure", callback1, 'POST');
 		});
 	}
 	
 	// Fonction d'affichage des prix
-	function showPrice($selectedRadioEnclosure, $selectedRadioSize){
+	function showEnclosurePrice($selectedRadioEnclosure, $selectedRadioSize){
 		//attribution d'une variable selectionnant la div d'affichage des prix
 		var $blockPrice=$('.price');
     	var statusP = "okP";
@@ -57,17 +57,17 @@
 					 $blockPrice.empty();
 					
 					if(($('#size_1').is(':checked'))){
-						 $blockPrice.prepend("<div>"+ EnclosurePrice + "</div>");
+						 $blockPrice.prepend("<div>"+ (EnclosurePrice*(-1)) + "</div>");
 					} else if (($('#size_2').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*2 + "</div>");
+						$blockPrice.prepend("<div>"+ (EnclosurePrice*(-2)) + "</div>");
 					}
 					 else if (($('#size_3').is(':checked'))){
-						$blockPrice.prepend("<div>"+ EnclosurePrice*3 + "</div>");	
+						$blockPrice.prepend("<div>"+ (EnclosurePrice*(-3)) + "</div>");	
 					}
 				 };
 				 
-				 var monObjet ={"statusPrices":statusP};
-				 server.monAjax(monObjet, "createEnclosure", callback2, 'POST');
+				 var object ={"statusPrices":statusP};
+				 server.monAjax(object, "createEnclosure", callback2, 'POST');
 			 });
 		 });
 		
@@ -118,19 +118,19 @@
 			var callback=function(donnees){
 				if(donnees.code == "OK"){
 					 window.location.href = "home";
-                }else if (donnees.code == "ERROR"){
+                }else {
                 	 failed();
                 }
 			};
 			
 			//Remplissage de l'objet a envoyer
-			var monObjet ={
+			var object ={
 					"specie_id":specie_id,
 					"capacity":capacity,
 					"statusForm":statusF
 			};
 			if(specie_id = null || capacity != null){
-				server.monAjax(monObjet, "createEnclosure", callback, 'POST');
+				server.monAjax(object, "createEnclosure", callback, 'POST');
 			}else{
 				$blockError.empty();
 				$blockError.prepend("<h2> Please, select a type and a size to bluid an enclosure... </h2>");
@@ -165,21 +165,21 @@
 				
 				// Execution des fonctions d'affichage des prix des
 				// enclos selon les selections des radios EnclosureType et EnclosureSize
-				showPrice($radioE1, $radioS1);
-				showPrice($radioE1, $radioS2);
-				showPrice($radioE1, $radioS3);
+				showEnclosurePrice($radioE1, $radioS1);
+				showEnclosurePrice($radioE1, $radioS2);
+				showEnclosurePrice($radioE1, $radioS3);
 				
-				showPrice($radioE2, $radioS1);
-				showPrice($radioE2, $radioS2);
-				showPrice($radioE2, $radioS3);
+				showEnclosurePrice($radioE2, $radioS1);
+				showEnclosurePrice($radioE2, $radioS2);
+				showEnclosurePrice($radioE2, $radioS3);
 				
-				showPrice($radioE3, $radioS1);
-				showPrice($radioE3, $radioS2);
-				showPrice($radioE3, $radioS3);
+				showEnclosurePrice($radioE3, $radioS1);
+				showEnclosurePrice($radioE3, $radioS2);
+				showEnclosurePrice($radioE3, $radioS3);
 				
-				showPrice($radioE4, $radioS1);
-				showPrice($radioE4, $radioS2);
-				showPrice($radioE4, $radioS3);
+				showEnclosurePrice($radioE4, $radioS1);
+				showEnclosurePrice($radioE4, $radioS2);
+				showEnclosurePrice($radioE4, $radioS3);
 				
 				//Execution de la fonction de recuperation des données d'enclos 
 				//pour sa création depuis le controleur BuildEnclosureMenu

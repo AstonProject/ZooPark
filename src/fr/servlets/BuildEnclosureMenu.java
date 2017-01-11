@@ -56,16 +56,13 @@ public class BuildEnclosureMenu extends HttpServlet {
 			/** Affichage des prix dans la jsp buildEnclosure **/
 
 			// Recuperation des parametres status envoyes par les fonctions ajax
-			// showPrice() et getForm()
+			// showDescription() showPrice() et getForm()
 			// pour effectuer des redirections dans ce doPost
+			String statDescriptions = request.getParameter("statusDescriptions");
 			String statPrices = request.getParameter("statusPrices");
 			String statForm = request.getParameter("statusForm");
-			String statDescriptions = request.getParameter("statusDescriptions");
-			System.out.println("statPrices " + statPrices);
-			System.out.println("statForm " + statForm);
-			System.out.println("statDescription " + statDescriptions);
 
-			// Recuperation des description d'enclos vie SpecieDAZO lorsque
+			// Recuperation des description d'enclos via SpecieDAO lorsque
 			// showDescription() est appelee (buildEnclosure.js)
 			if ((statDescriptions != null) && statDescriptions.equals("okD")) {
 				// Recuperation des descriptions via SpecieDAO dans une
@@ -88,8 +85,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 					}
 				}
 				reponseJson += "}";
-
-				System.out.println(reponseJson);
 
 				response.getWriter().append(reponseJson);
 			}
@@ -117,18 +112,20 @@ public class BuildEnclosureMenu extends HttpServlet {
 				int locate_x = (int) session.getAttribute("current_locate_x");
 				int locate_y = (int) session.getAttribute("current_locate_y");
 
-				System.out.println("locate " + locate_x + " " + locate_y);
 				// - les attributs du joueurs connecte (doPost de PlayerServlet)
 
-				// Creation d'un objet local enclosure
+				//Recuperation de l'enclo de la bdd
+				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean enclosure = new EnclosureBean();
-
+				
+				int player_id = player.getId();
+				enclosure = ecdao.getEnclosureByLocation(locate_x, locate_y, player_id);
+				
 				// recuperation des donnees json envoyees en Ajax via getForm()
 				// dans buildEnclosure.js
 				int specieId = Integer.parseInt(request.getParameter("specie_id"));
 				int enclosureCapacity = Integer.parseInt(request.getParameter("capacity"));
 
-				System.out.println("sp_id " + specieId + " enclosureCapacity" + enclosureCapacity);
 				// Creation des objets dao (EnclosuresDAO, PlayersDAO) pour
 				// acceder aux methodes updates
 				EnclosuresDAO edao = new EnclosuresDAO();
@@ -138,33 +135,25 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// CalculateEnclosurePrice
 				long finalPrice = CalculateEnclosurePrice.CalEP(request);
 
-				System.out.println("finalPrice " + finalPrice);
-				// Recuperation de l'id et du solde du joueur
-				int playerId = player.getId();
+				// Recuperation du solde du joueur
 				long money = player.getMoney();
-				System.out.println("playerId " + playerId);
-				System.out.println("money " + money);
+
 				// Modification de money du player dans la BBD
 				player.setMoney(money - finalPrice);
 
 				pdao.updatePlayer(player);
 
-				money = player.getMoney();
-				System.out.println("moneyAUpdate " + money);
+				
 
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
 				enclosure.setSpecie_id(specieId);
-				enclosure.setPlayer_id(playerId);
-				enclosure.setLocate_x(locate_x);
-				enclosure.setLocate_y(locate_y);
 
-				edao.buyEnclosure(enclosure);
-				System.out.println("enclosure " + enclosure);
+				edao.updateEnclosure(enclosure);
 
 				// mise a jour des donnees du joeur en session
 				session.setAttribute("user", player);
-				System.out.println("player: " + player);
+
 				// Puis redirection vers la servlet home via le callback de
 				// getForm()
 

@@ -3,8 +3,8 @@
   "enclosureCosts_giraffe":500,
   "enclosureCosts_elephant":1000,
   "enclosureCosts_camel":500,
-  "lionCosts":20,
-  "giraffeCosts":30,
+  "lionCosts":35,
+  "giraffeCosts":40,
   "elephantCosts":50,
-  "camelCosts":15
+  "camelCosts":30
 }
