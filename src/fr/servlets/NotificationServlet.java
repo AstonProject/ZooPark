@@ -39,29 +39,42 @@ public class NotificationServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		//Recupere l'utilisateur en session si il y en a un
 		PlayerBean user = (PlayerBean) session.getAttribute("user");
-		MessagesDAO mdao = new MessagesDAO();
-		List<MessageBean> messages = new ArrayList<>();
-		System.out.println(user.getId());
-		messages = mdao.getMessagesByPlayerId(user.getId());
-		String reponseJson = "{";
-		int lengthList = messages.size();
-		int count = 0;
-
-		if (messages.size() > 0) {
-			for (MessageBean message : messages) {
-				reponseJson += "\"message"+count+"\":{";
-				reponseJson += "\"id\":\"" + message.getId() + "\",";
-				reponseJson += "\"title\":\"" + message.getTitle() + "\",";
-				reponseJson += "\"content\":\"" + message.getContent() + "\"}";
-				count++;
-
-				if (count != (lengthList)) {
-					reponseJson += ",";
-				}
+		String action = request.getParameter("action");
+		if(action != null){
+			if(action.equals("delete")){
+				int id = Integer.parseInt(request.getParameter("id"));
+				MessagesDAO mdao = new MessagesDAO();
+				mdao.deleteMessage(id);
+				response.sendRedirect("notifications");
 			}
-			reponseJson += "}";
-			response.setContentType("application/json");
-			response.getWriter().append(reponseJson);
+		}
+		else
+		{
+			MessagesDAO mdao = new MessagesDAO();
+			List<MessageBean> messages = new ArrayList<>();
+			System.out.println(user.getId());
+			messages = mdao.getMessagesByPlayerId(user.getId());
+			String reponseJson = "{";
+			int lengthList = messages.size();
+			int count = 0;
+	
+			if (messages.size() > 0) {
+				for (MessageBean message : messages) {
+					reponseJson += "\"message"+count+"\":{";
+					reponseJson += "\"id\":\"" + message.getId() + "\",";
+					reponseJson += "\"title\":\"" + message.getTitle() + "\",";
+					reponseJson += "\"content\":\"" + message.getContent() + "\"}";
+					count++;
+	
+					if (count != (lengthList)) {
+						reponseJson += ",";
+					}
+				}
+				reponseJson += "}";
+				response.setContentType("application/json");
+				response.getWriter().append(reponseJson);
+				
+			}
 		}
 	}
 
