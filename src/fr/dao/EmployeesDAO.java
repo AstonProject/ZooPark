@@ -96,7 +96,7 @@ public class EmployeesDAO {
 	public void updateEmployee(EmployeeBean employee) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"UPDATE employee SET type=?, health_gauge=?, description=?, enclosure_id=?, player_id=?, WHERE id=?");
+					"UPDATE employee SET type=?, health_gauge=?, description=?, enclosure_id=?, player_id=? WHERE id=?");
 			preparedStatement.setString(1, employee.getType());
 			preparedStatement.setInt(2, employee.getHealth_gauge());
 			preparedStatement.setString(3, employee.getDescription());

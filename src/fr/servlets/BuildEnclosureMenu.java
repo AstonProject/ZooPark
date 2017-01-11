@@ -134,22 +134,17 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// recuperation du prix de l'enclos via la classe
 				// CalculateEnclosurePrice
 				long finalPrice = CalculateEnclosurePrice.CalEP(request);
-				System.out.println("finalPrice " +finalPrice); 
 				
 				// Recuperation du solde du joueur
 				long money = player.getMoney();
 
-				System.out.println("money av achat enclos"+ money);
 				// Modification de money du player dans la BBD
 				player.setMoney(money - finalPrice);
 
 				pdao.updatePlayer(player);
 
 				money = player.getMoney();
-
-				System.out.println("money ap achat enclos"+money);
 				
-
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
 				enclosure.setSpecie_id(specieId);
@@ -164,8 +159,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			} 
-
 		}
 	}
-
 }

@@ -73,8 +73,6 @@ public class EnclosureManagment extends HttpServlet {
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			
-			
-			System.out.println("statusG: "+statG);
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -142,13 +140,11 @@ public class EnclosureManagment extends HttpServlet {
 				int totalHealth=0;
 				int hungry=0;
 				int health=0;
-				System.out.println("animal.size():"+animals.size());
+
 				if(animals.size() != 0){
 					for (AnimalBean animal : animals) {
 						totalHungry += animal.getHungry_gauge();
 						totalHealth += animal.getHealth_gauge();
-						System.out.println("totalHungry"+totalHungry);
-						System.out.println("totalHealth"+totalHealth);
 					}
 					
 					//moyenne des jauges
@@ -159,7 +155,6 @@ public class EnclosureManagment extends HttpServlet {
 				//Envoie au format Json dans la reponse pour la fonction showGauges() en JS
 				String reponseJson = "{\"cleanness\":"+cleanness+", \"hungry\":"+hungry +", \"health\":"+health+"}";
 				response.getWriter().append(reponseJson);
-				System.out.println("gauges: "+reponseJson);
 			}
 			/** fixer la valeur de l'input number **/
 			 else if ((statSQ != null) && statSQ.equals("okSQ")) {
@@ -173,7 +168,6 @@ public class EnclosureManagment extends HttpServlet {
 					
 					
 					String responseJson = "{\"rest\":" + rest +",\"min\":"+min+"}";
-					System.out.println(responseJson);
 					response.getWriter().append(responseJson);
 			 }
 			/**permettre affichage des prix**/
@@ -206,7 +200,6 @@ public class EnclosureManagment extends HttpServlet {
 					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
 					String reponseJson = "{\"total_price\":"+total_priceEAP+"}";
 					response.getWriter().append(reponseJson);
-					System.out.println("total_price json: "+reponseJson);
 					
 				}
 				
@@ -226,7 +219,6 @@ public class EnclosureManagment extends HttpServlet {
 				//MAj du nb d'animaux dans l'enclos dans la bdd
 				enclosure.setAnimal_quantity(animal_quantity+quantity);
 				ecdao.updateEnclosure(enclosure);
-				System.out.println("ajout dans l'enclos");
 				
 				// Recuperation des prix unitaire d'un animal du type indique 
 				// via CostsDAO dans un objet Json
@@ -242,7 +234,6 @@ public class EnclosureManagment extends HttpServlet {
 				//MAJ du solde du player dans la BDD et en session
 				long finalPrice= unit_price*quantity;
 				long money = player.getMoney();
-				System.out.println("solde AV achat/revente: "+ money);
 				
 				if(quantity < 0){
 				player.setMoney((long) (money - (finalPrice)*(0.75)));
@@ -253,15 +244,12 @@ public class EnclosureManagment extends HttpServlet {
 				session.setAttribute("user", player);
 				
 				money = player.getMoney();
-				System.out.println("solde AP achat/revente: "+ money);
 				
 				/**Creation des des animaux si achat ou revente**/
 				AnimalsDAO andao= new AnimalsDAO();
 				
 				//si achat
 				if(quantity > 0 && quantity <= (enclosure_capacity-animal_quantity)){
-					System.out.println("entree boucle create animal");
-
 					//Creation des animaux achetes
 					for (int i=0; i < quantity; i++){
 						
@@ -275,12 +263,10 @@ public class EnclosureManagment extends HttpServlet {
 						
 						//Ajout dans la BDD des animaux achetes
 						andao.createAnimal(animal);
-						System.out.println("animal" + (i+1) +" create sur: " + quantity);
 					}
 				
 				}//si revente
 				else if(quantity < 0 && quantity <= (animal_quantity)){
-					System.out.println("entree boucle delete animal");
 					//Recuperation de la liste des animaux de l'enclos selectionne
 					List<AnimalBean> animals = andao.getAnimalsByEnclosure(enclosure_id);
 					
@@ -288,9 +274,8 @@ public class EnclosureManagment extends HttpServlet {
 					for (AnimalBean animal : animals) {
 						//Recuperation de l'id des animaux a delete
 						andao.deleteAnimal(animal.getId());
-						
 						count++;
-						System.out.println("animal_id: "+animal.getId()+" a ete delete");
+						
 						//Arret lorsque le bon nombre est atteint
 						if (count == (quantity*(-1))) {
 							break;
@@ -309,14 +294,11 @@ public class EnclosureManagment extends HttpServlet {
 				long total_priceEAP = (long) session.getAttribute("total_priceEAP");
 				long money = player.getMoney();
 				
-				System.out.println("solde AV achat/revente: "+ money);
 				player.setMoney(money + total_priceEAP);
 				
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
 				
-				money = player.getMoney();
-				System.out.println("solde AP achat/revente: "+ money);
 				//Delete de l'enclos
 				enclosure.setCapacity(0);
 				enclosure.setAnimal_quantity(0);
@@ -324,18 +306,35 @@ public class EnclosureManagment extends HttpServlet {
 				enclosure.setEmployee_quantity(0);//A modifier quand les enployes seront crees
 				
 				ecdao.updateEnclosure(enclosure);
+				
+				//Recuperation de l'id de l'enclos selectionne et de ses employees pour deplacement dans l'enclos(0,0)
+				int enclosure_id = enclosure.getId();
+
+				EmployeesDAO epdao = new EmployeesDAO();
+				List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
+				employees = epdao.getEmployeesByEnclosure(enclosure_id);
+
+				int lengthList = employees.size();
+				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				
+				if (lengthList > 0) {
+					for (EmployeeBean employee : employees) {
+						employee.setEnclosure_id(e0.getId());
+						epdao.updateEmployee(employee);
+						e0.setEmployee_quantity(e0.getEmployee_quantity() + 1);
+						ecdao.updateEnclosure(e0);
+					}
+				}
+
 				//Delete des animaux
 				AnimalsDAO andao= new AnimalsDAO();
 				List<AnimalBean> animals = andao.getAnimalsByEnclosure(enclosure.getId());
 
 				for (AnimalBean animal : animals) {
 					//Recuperation de l'id des animaux a delete
-					andao.deleteAnimal(animal.getId());
-	
-					System.out.println("animal_id: "+animal.getId()+" a ete delete");	
-				}
-				
-				//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)
+					andao.deleteAnimal(animal.getId());	
+				}				
+				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
 		}
