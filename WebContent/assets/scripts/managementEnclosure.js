@@ -36,6 +36,20 @@
 		};
 		server.monAjax(monObj, "enclosureManagment", callback, 'POST');
 	}
+	
+	// Fonction pour afficher les animaux de l'enclos
+	function showEmployeesList() {
+		var statusSEL = "okSEL";
+
+		var callback = function(donnees) {
+		
+		};
+		
+		var monObj = {
+			"statusSEL" : statusSEL
+		};
+		server.monAjax(monObj, "enclosureManagment", callback, 'POST');
+	}
 
 	// Fonction pour afficher les employes de l'enclos
 	function showEmployees() {
@@ -69,7 +83,9 @@
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
 
-	// Fonction pour afficher les employes de l'enclos
+	
+	
+	// Fonction pour afficher les jauges de l'enclos
 	function showGauges() {
 		var statusG = "okG";
 

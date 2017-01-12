@@ -30,18 +30,14 @@
 			</span>
 			<span class="slot1">
 				<select name="employee1" size="1" class="selectEmployee">
-				 	<option value="e0">None</option>
-				 	<option value="e1">e1</option>
-				 	<option value="e2">e2</option>
-				 	<option value="e3">e3</option>
+				 	<option value="e0"></option>
+				 	
 				</select>
 			</span>
 			<span class="slot2">
 				<select name="employee2" size="1" class="selectEmployee">
-				 	<option value="e0">None</option>
-				 	<option value="e1">e1</option>
-				 	<option value="e2">e2</option>
-				 	<option value="e3">e3</option>
+				 	<option value="e0"></option>
+				 	
 				</select>
 			</span>
 		</form>

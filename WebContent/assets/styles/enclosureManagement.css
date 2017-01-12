@@ -23,6 +23,26 @@ cursor: pointer;
 outline: 0;
 }
 
+.slot1{
+	border: 3px solid black;
+	min-width: 50px;
+	min-height: 50px;
+	display: inline-block;;
+	position: relative;
+}
+
+.slot2{
+	border: 3px solid black;
+	min-width: 50px;
+	min-height: 50px;
+	display: inline-block;
+	position: relative;
+}
+
+.staff_img{
+	
+}
+
 input[type="number"] {
     height: 30px;
     width: 40px;
