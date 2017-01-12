@@ -65,7 +65,7 @@ public class EnclosureManagment extends HttpServlet {
 		if (session != null && player != null) {
 			
 			String statSA = request.getParameter("statusSA");
-			String statSEL = request.getParameter("statSEL");
+			String statSLE = request.getParameter("statusSLE");
 			String statSE = request.getParameter("statusSE");
 			String statSQ = request.getParameter("statusSQ");
 			String statG = request.getParameter("statusG");
@@ -74,6 +74,7 @@ public class EnclosureManagment extends HttpServlet {
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			
+			System.out.println("SLE: "+statSLE ); 
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -98,9 +99,9 @@ public class EnclosureManagment extends HttpServlet {
 				
 				
 			} /**visualiser les employes assignables a l'enclos	**/
-			else if ((statSEL != null) && statSEL.equals("okSEL")) {
+			else if ((statSLE != null) && statSLE.equals("okSLE")) {
 				//Recuperation des employees de l'enclos(0,0)
-				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player_id);
 				
 				EmployeesDAO epdao = new EmployeesDAO();
 				List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
@@ -113,7 +114,7 @@ public class EnclosureManagment extends HttpServlet {
 				boolean isCleaner= false;
 				boolean isSecurity= false;
 				
-				
+				System.out.println("employees "+ employees);
 				if (lengthList > 0) {
 					for (EmployeeBean employee : employees) {
 						if (employee.getType() == "healer"){
@@ -126,12 +127,12 @@ public class EnclosureManagment extends HttpServlet {
 					}
 				}
 				
-				String reponseJson = "{\"isHealer\":\"" + isHealer + "\", \"isCleaner\":\"" + isCleaner  + "\", \"isSecurity\":\"" + isSecurity  +"\", \"employeeQty\":\"" + employeeQty+ "}";
-				
-				System.out.println("showEmployeesList"+ reponseJson);
+				String reponseJson = "{\"isHealer\":\"" + isHealer + "\", \"isCleaner\":\"" + isCleaner
+						+ "\", \"isSecurity\":\"" + isSecurity + "\", \"employeeQty\":" + employeeQty + "}";
+
+				System.out.println("showEmployeesList" + reponseJson);
 				response.getWriter().append(reponseJson);
-				
-				
+
 			} /**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
 			else if ((statSE != null) && statSE.equals("okSE")) {
 				// Recuperation de l'id de l'enclos selectionne et de ses employ�s

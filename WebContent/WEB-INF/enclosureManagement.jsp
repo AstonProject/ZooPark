@@ -23,24 +23,20 @@
 	<br>
 
 	<div id="staff_status">
-		<form action="enclosureManagement" method="post">
+	
 			<span class="staff_img"><img
 			src="${pageContext.request.contextPath}/assets/images/worker.png"
 			alt="logo" />	
 			</span>
-			<span class="slot1">
-				<select name="employee1" size="1" class="selectEmployee">
-				 	<option value="e0"></option>
-				 	
-				</select>
-			</span>
+			<span class="slot1"></span>
 			<span class="slot2">
-				<select name="employee2" size="1" class="selectEmployee">
-				 	<option value="e0"></option>
+			</span>
+			<span class="EmployeeSlot2">
+				<select name="employee" size="1" class="selectEmployee">
+				 	<option value=1 >Assign / Remove</option>
 				 	
 				</select>
 			</span>
-		</form>
 		
 	</div>
 	<br>
