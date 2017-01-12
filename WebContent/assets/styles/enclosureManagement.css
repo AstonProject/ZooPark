@@ -10,6 +10,19 @@ cursor: pointer;
 outline: 0;
 }
 
+.validate_img2{
+background-image: url(../images/validate.png);
+background-position: 0px 25px;
+background-repeat: no-repeat;
+width: 53px;
+height: 40px;
+border: none;
+background-size: 30%;
+background-color: white !important;
+cursor: pointer;
+outline: 0;
+}
+
 input[type="number"] {
     height: 30px;
     width: 40px;
