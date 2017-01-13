@@ -43,14 +43,27 @@
 		var $selectE = $('.selectEmployee');
 		
 		var callback = function(donnees) {
-		if (donnees.employeeQty != 0) {
-				if(donnees.isHealer == true){
-					$selectE.append('<option value=1>Add healer</option>');
-				} else if(donnees.isCleaner == true){
-					$selectE.append('<option value=1>Add cleaner</option>');
-				} else if(donnees.isSecurity == true){
-					$selectE.append('<option value=1>Add security</option>');
-				}						
+			if(donnees.employeeQty != 2){
+					if(donnees.isHealerOut == "true"){
+						$selectE.append('<option value=1>Add healer</option>');
+					} 
+					if(donnees.isCleanerOut == "true"){
+						$selectE.append('<option value=1>Add cleaner</option>');
+					} 
+					if(donnees.isSecurityOut == "true"){
+						$selectE.append('<option value=1>Add security</option>');
+					}
+			}
+			if (donnees.employeeQty != 0){
+				if(donnees.isHealerIn == "true"){
+					$selectE.append('<option value=1>Del healer</option>');
+				}
+				if(donnees.isCleanerIn == "true"){
+					$selectE.append('<option value=1>Del cleaner</option>');
+				} 
+				if(donnees.isSecurityIn == "true"){
+					$selectE.append('<option value=1>Del security</option>');
+				}
 			}
 		};
 			var monObj = {
@@ -100,10 +113,6 @@
 			$(".hungry").attr("value", donnees.hungry);
 			$(".health").attr("value", donnees.health);
 			$(".cleanness").attr("value", donnees.cleanness);
-
-			console.log("hungry" + donnees.hungry);
-			console.log("health" + donnees.health);
-			console.log("cleanness" + donnees.cleanness);
 
 			$(".food_gauge").prepend(donnees.hungry);
 			$(".health_gauge").prepend(donnees.health);

@@ -109,26 +109,46 @@ public class EnclosureManagment extends HttpServlet {
 				
 				int employeeQty = enclosure.getEmployee_quantity();
 				
-				int lengthList = employees.size();
-				boolean isHealer= false;
-				boolean isCleaner= false;
-				boolean isSecurity= false;
+				boolean isHealerOut= false;
+				boolean isCleanerOut= false;
+				boolean isSecurityOut= false;
+				boolean isHealerIn= false;
+				boolean isCleanerIn= false;
+				boolean isSecurityIn= false;
 				
-				System.out.println("employees "+ employees);
-				if (lengthList > 0) {
-					for (EmployeeBean employee : employees) {
-						if (employee.getType() == "healer"){
-							isHealer= true;
-						} else if(employee.getType() == "cleaner"){
-							isCleaner= true;
-						} else if(employee.getType() == "security"){
-							isSecurity= true;
+				if (employees.size() > 0) {
+					for (EmployeeBean employeeO : employees) {
+						if (employeeO.getType().equals("healer")){
+							isHealerOut= true;
+						} else if(employeeO.getType().equals("cleaner")){
+							isCleanerOut= true;
+						} else if(employeeO.getType().equals("security")){
+							isSecurityOut= true;
 						}
 					}
 				}
 				
-				String reponseJson = "{\"isHealer\":\"" + isHealer + "\", \"isCleaner\":\"" + isCleaner
-						+ "\", \"isSecurity\":\"" + isSecurity + "\", \"employeeQty\":" + employeeQty + "}";
+				//Recuperation des employees de l'enclos selectionne
+				List<EmployeeBean> employees2 = new ArrayList<EmployeeBean>();
+				employees2 = epdao.getEmployeesByEnclosure(enclosure.getId());
+				
+				if (employees2.size() > 0) {
+					for (EmployeeBean employeeI : employees2) {
+						if (employeeI.getType().equals("healer")){
+							isHealerIn= true;
+						} else if(employeeI.getType().equals("cleaner")){
+							isCleanerIn= true;
+						} else if(employeeI.getType().equals("security")){
+							isSecurityIn= true;
+						}
+					}
+				}
+				
+				//envoie des donnees en Json
+				
+				String reponseJson = "{\"isHealerOut\":\"" + isHealerOut + "\", \"isCleanerOut\":\"" + isCleanerOut
+						+ "\", \"isSecurityOut\":\"" + isSecurityOut + "\", \"employeeQty\":" + employeeQty + ", \"isHealerIn\":\"" + isHealerIn + "\", \"isCleanerIn\":\"" + isCleanerIn
+						+ "\", \"isSecurityIn\":\"" + isSecurityIn + "\"}";
 
 				System.out.println("showEmployeesList" + reponseJson);
 				response.getWriter().append(reponseJson);
