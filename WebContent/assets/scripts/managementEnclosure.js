@@ -72,6 +72,16 @@
 			server.monAjax(monObj, "enclosureManagment", callback, 'POST');
 		
 	}
+	
+	// Fonction pour retirer/ajoutter un employee a l'enclos
+	
+function mooveEmployees(){
+	$('.selectEmployee').on('change', function () {
+		
+		//Apres deplacment recharger la nouvelle liste d'employes
+		showListEmployees();
+	});
+}
 
 	// Fonction pour afficher les employes de l'enclos
 	function showEmployees() {
@@ -283,6 +293,7 @@
 	$(document).ready(function() {
 		showAnimals();
 		showListEmployees();
+		mooveEmployees();
 		showEmployees();
 		setRestQuantity();
 		showGauges();
