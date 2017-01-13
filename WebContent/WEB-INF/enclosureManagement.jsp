@@ -33,7 +33,7 @@
 			</span>
 			<span class="EmployeeSlot">
 				<select name="employee" size="1" class="selectEmployee">
-				 	<option value=1 >Assign / Remove</option>
+				 	<option value=1 class="listE1">Assign / Remove</option>
 				 	
 				</select>
 			</span>

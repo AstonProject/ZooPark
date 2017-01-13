@@ -45,24 +45,24 @@
 		var callback = function(donnees) {
 			if(donnees.employeeQty != 2){
 					if(donnees.isHealerOut == "true"){
-						$selectE.append('<option value=1>Add healer</option>');
+						$selectE.append('<option value=1 class="listE2">Add healer</option>');
 					} 
 					if(donnees.isCleanerOut == "true"){
-						$selectE.append('<option value=1>Add cleaner</option>');
+						$selectE.append('<option value=1 class="listE3">Add cleaner</option>');
 					} 
 					if(donnees.isSecurityOut == "true"){
-						$selectE.append('<option value=1>Add security</option>');
+						$selectE.append('<option value=1 class="listE4">Add security</option>');
 					}
 			}
 			if (donnees.employeeQty != 0){
 				if(donnees.isHealerIn == "true"){
-					$selectE.append('<option value=1>Del healer</option>');
+					$selectE.append('<option value=1 class="listE5">Del healer</option>');
 				}
 				if(donnees.isCleanerIn == "true"){
-					$selectE.append('<option value=1>Del cleaner</option>');
+					$selectE.append('<option value=1 class="listE6">Del cleaner</option>');
 				} 
 				if(donnees.isSecurityIn == "true"){
-					$selectE.append('<option value=1>Del security</option>');
+					$selectE.append('<option value=1 class="listE7">Del security</option>');
 				}
 			}
 		};
@@ -77,8 +77,20 @@
 	
 function mooveEmployees(){
 	$('.selectEmployee').on('change', function () {
+		var statusME = "okME";
+
+		var callback = function(donnees) {
+		};
 		
-		//Apres deplacment recharger la nouvelle liste d'employes
+		var object = {
+			"statusME" : statusME
+		};
+		server.monAjax(object, "enclosureManagment", callback, 'POST');
+	
+		
+		
+		
+		//Apres deplacement recharger la nouvelle liste d'employes
 		showListEmployees();
 	});
 }
