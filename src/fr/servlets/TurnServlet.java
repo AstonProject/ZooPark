@@ -20,7 +20,13 @@ public class TurnServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		// Recuperation de la session actuelle et du joueur connecte
+		HttpSession session = request.getSession(false);
+		PlayerBean player = (PlayerBean) session.getAttribute("user");
+		String[] turn = new String[2];
+		turn = player.getTurn().split(",");
+		String reponseJson = "{\"hour\": "+turn[0]+", \"day\": "+turn[1]+"}";
+		response.getWriter().append(reponseJson);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
