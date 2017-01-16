@@ -159,6 +159,9 @@ public class EnclosureManagment extends HttpServlet {
 				EmployeesDAO epdao = new EmployeesDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player_id);
 
+				//Booleen pour permettre l'execution du code si un type d'employee est trouve
+				//dans les liste
+				boolean isOK = false;
 				//Type d'employee selectionne
 				if(actionME >1 ){
 					String type ="";
@@ -171,16 +174,13 @@ public class EnclosureManagment extends HttpServlet {
 					}if(actionME == 4 || actionME == 7){
 						type ="security";
 					}
+					
 					//Si il faut ajouter un employee a l'enclos actuel
 					if(actionME < 5){
-						//Maj de la quantite d'employees dans l'enclos l'enclos selectionne
-						enclosure.setEmployee_quantity((employeeQty1+1));
-						ecdao.updateEnclosure(enclosure);
-						
 						//Recuperation des employees de l'enclos(0,0)
 						List<EmployeeBean> employees0 = new ArrayList<EmployeeBean>();
 						employees0 = epdao.getEmployeesByEnclosure(e0.getId());
-						
+
 						//Maj de Enclosure_id de l'employee selectionne dans l'enclos(0,0)
 						for (EmployeeBean employee0 : employees0) {
 							
@@ -188,21 +188,21 @@ public class EnclosureManagment extends HttpServlet {
 								
 								employee0.setEnclosure_id(enclosure.getId());
 								epdao.updateEmployee(employee0);
-								
+								isOK = true;
 								break;
 							}
 						}
-						//Maj de la quantite d'employees dans l'enclos(0,0)
-						e0.setEmployee_quantity(employeeQty0-1);
-						ecdao.updateEnclosure(e0);
-						
-						response.getWriter().append("{\"code\" : \"OK\"}");
+						if(isOK==true){
+							//Maj de la quantite d'employees dans l'enclos l'enclos selectionne
+							enclosure.setEmployee_quantity((employeeQty1+1));
+							ecdao.updateEnclosure(enclosure);
+							
+							//Maj de la quantite d'employees dans l'enclos(0,0)
+							e0.setEmployee_quantity(employeeQty0-1);
+							ecdao.updateEnclosure(e0);
+						}
 					}//Si il faut supprimer des employees de l'enclos actuel
-					else if(actionME > 4){
-						//Maj de la quantite d'employes dans l'enclos selectionne
-						enclosure.setEmployee_quantity((employeeQty1-1));
-						ecdao.updateEnclosure(enclosure);
-						
+					else if(actionME > 4){	
 						//Recuperation des employees de l'enclos selectionne
 						List<EmployeeBean> employees1 = new ArrayList<EmployeeBean>();
 						employees1 = epdao.getEmployeesByEnclosure(enclosure.getId());
@@ -215,16 +215,21 @@ public class EnclosureManagment extends HttpServlet {
 								employee1.setEnclosure_id(e0.getId());
 								epdao.updateEmployee(employee1);
 								
+								isOK = true;
 								break;
 							}
 						}
-						//Maj de la quantite d'employees dans l'enclos(0,0)
-						e0.setEmployee_quantity(employeeQty0+1);
-						ecdao.updateEnclosure(e0);
-						
-						response.getWriter().append("{\"code\" : \"OK\"}");
+						if(isOK==true){
+							//Maj de la quantite d'employes dans l'enclos selectionne
+							enclosure.setEmployee_quantity((employeeQty1-1));
+							ecdao.updateEnclosure(enclosure);
+							
+							//Maj de la quantite d'employees dans l'enclos(0,0)
+							e0.setEmployee_quantity(employeeQty0+1);
+							ecdao.updateEnclosure(e0);
+						}
 					}
-					
+					response.getWriter().append("{\"code\" : \"OK\"}");
 				}
 				
 			}/**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
