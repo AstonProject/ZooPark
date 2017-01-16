@@ -10,12 +10,12 @@ html {
 
 h1 {
 	font-family: fantasy;
-	margin-bottom: 50px;
-	margin-top: 40px;
+	margin-bottom: 30px;
+	margin-top: 30px;
 }
 
 body, #body {
-	background: lightblue;
+	background: #6adaff;
 	width: 100%;
 	min-height: 400px;
 	text-align: center;
@@ -30,14 +30,14 @@ body, #body {
 	-webkit-border-radius: 40px 40px 40px 40px;
 	background: #aaa;
 	min-height: 400px;
-	width: 60%;
+	width: 85%;
 	display: inline-block;
 	position: relative;
 	margin-top: 10px;
 }
 
 #main-header {
-	background: #d05409;
+	background: #ff8100;
 	border: 1px solid grey;
 	min-height: 130px;
 	border-radius: 40px 40px 0px 0px;
@@ -50,7 +50,7 @@ body, #body {
 }
 
 #main-content {
-	background: #296b21;
+	background: #c8ffd1;
 	min-height: 500px;
 	padding: 3px;
 }
@@ -60,13 +60,13 @@ body, #body {
 	border-radius: 0px 0px 40px 40px;
 	-moz-border-radius: 0px 0px 40px 40px;
 	-webkit-border-radius: 0px 0px 40px 40px;
-	background: #d05409;
+	background: #ff8100;
 	min-height: 100px;
 	height: 135px;
 }
 
 #bottom-menu button {
-	width: 170px;
+	width: 120px;
 	height: 100px;
 	margin-top: 5px;
 }
