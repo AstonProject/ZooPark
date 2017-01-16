@@ -101,17 +101,21 @@ public class FinancesDAO {
 		return finance;
 	}
 	
-	public FinanceBean getFinanceByPlayerId(int player_id) {
+	public List<FinanceBean> getFinancesByPlayer(int player_id) {
+		List<FinanceBean> finances = new ArrayList<FinanceBean>();
+		
 		PreparedStatement st = null;
-		ResultSet rs = null;		
-		FinanceBean finance = new FinanceBean();
+		ResultSet rs = null;
 		
 		try {
 			st = connection.prepareStatement("SELECT * FROM finance WHERE player_id=?");
 			st.setInt(1, player_id);
 			rs = st.executeQuery();
+			
 
-			if (rs.next()) {
+			while (rs.next()) {
+				FinanceBean finance = new FinanceBean();
+
 				finance.setId(rs.getInt("id"));
 				finance.setType_action(rs.getString("type_action"));
 				finance.setSomme(rs.getInt("somme"));
@@ -121,14 +125,17 @@ public class FinancesDAO {
 				finance.setPlayer_id(rs.getInt("player_id"));
 				finance.setSpecie_id(rs.getInt("specie_id"));
 				finance.setEnclosure_id(rs.getInt("enclosure_id"));
+
+				finances.add(finance);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally { 
 			
 			if (rs != null) {
 				try {
-					rs.close();
+					rs.close(); 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -142,8 +149,7 @@ public class FinancesDAO {
 				}
 			}
 		}
-		
-		return finance;
+		return finances;
 	}
 	
 	public List<FinanceBean> getAllFinances() {

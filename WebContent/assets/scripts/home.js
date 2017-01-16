@@ -46,8 +46,15 @@
 		var monObjet = {};
 		server.monAjax(monObjet, "home", callback, 'POST');
 	}
+	
+	function showFinances() {
+		$('#finances').on('click', function() {
+			window.location.replace("financeManagement");
+		});
+	}
 
 	$(document).ready(function() {
 		showEnclosures();
+		showFinances();
 	})
 })(jQuery);
