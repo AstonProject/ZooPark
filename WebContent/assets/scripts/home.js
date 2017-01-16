@@ -47,7 +47,15 @@
 		server.monAjax(monObjet, "home", callback, 'POST');
 	}
 
+	function showEmployeeMangement(){
+		$('#enclosureManagement').on('click', function(){
+			window.location.replace("employeesManagement");
+		});
+	}
+	
+	
 	$(document).ready(function() {
 		showEnclosures();
+		showEmployeeMangement();
 	})
 })(jQuery);
