@@ -83,7 +83,6 @@ function mooveEmployees(){
 		var statusME = "okME";
 
 		var actionME = $('.selectEmployee').val();
-		console.log(actionME);
 		
 		var callback = function(donnees) {
 			if(donnees.code == "OK"){
@@ -304,7 +303,6 @@ function mooveEmployees(){
 		var statusSQ = "okSQ";
 
 		var callback = function(donnees) {
-			console.log(donnees);
 
 			var $inputQuantity = $(".mod");
 			$inputQuantity.attr("max", donnees.rest);

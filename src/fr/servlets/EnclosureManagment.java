@@ -155,7 +155,6 @@ public class EnclosureManagment extends HttpServlet {
 			} /**Permettre le deplacement des employes dans l'enclos, moveEmployees() en JS	**/
 			else if ((statME != null) && statME.equals("okME")) {
 				int actionME= Integer.parseInt(request.getParameter("actionME"));
-				System.out.println("actionME: "+actionME);
 				
 				EmployeesDAO epdao = new EmployeesDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player_id);
@@ -177,33 +176,33 @@ public class EnclosureManagment extends HttpServlet {
 						//Maj de la quantite d'employees dans l'enclos l'enclos selectionne
 						enclosure.setEmployee_quantity((employeeQty1+1));
 						ecdao.updateEnclosure(enclosure);
-						System.out.println("ADD Maj de la quantite d'employees dans l'enclos l'enclos selectionne");
+						
 						//Recuperation des employees de l'enclos(0,0)
 						List<EmployeeBean> employees0 = new ArrayList<EmployeeBean>();
 						employees0 = epdao.getEmployeesByEnclosure(e0.getId());
 						
 						//Maj de Enclosure_id de l'employee selectionne dans l'enclos(0,0)
 						for (EmployeeBean employee0 : employees0) {
-							System.out.println("employee0.getType() "+employee0.getType()+ ", type: " + type);
+							
 							if (employee0.getType().equals(type)){
-								System.out.println("j'entre dans (employee0.getType() == type)");
+								
 								employee0.setEnclosure_id(enclosure.getId());
 								epdao.updateEmployee(employee0);
-								System.out.println("ADD Maj enclosure_id de l'employee selectionne dans l'enclos(0,0) ");
+								
 								break;
 							}
 						}
 						//Maj de la quantite d'employees dans l'enclos(0,0)
 						e0.setEmployee_quantity(employeeQty0-1);
 						ecdao.updateEnclosure(e0);
-						System.out.println("ADD Maj de la quantite d'employees dans l'enclos(0,0)");
+						
 						response.getWriter().append("{\"code\" : \"OK\"}");
 					}//Si il faut supprimer des employees de l'enclos actuel
 					else if(actionME > 4){
 						//Maj de la quantite d'employes dans l'enclos selectionne
 						enclosure.setEmployee_quantity((employeeQty1-1));
 						ecdao.updateEnclosure(enclosure);
-						System.out.println("//DEL Maj de la quantite d'employes dans l'enclos selectionne");
+						
 						//Recuperation des employees de l'enclos selectionne
 						List<EmployeeBean> employees1 = new ArrayList<EmployeeBean>();
 						employees1 = epdao.getEmployeesByEnclosure(enclosure.getId());
@@ -212,17 +211,17 @@ public class EnclosureManagment extends HttpServlet {
 						for (EmployeeBean employee1 : employees1) {
 							
 							if (employee1.getType().equals(type)){
-								System.out.println("employee1.getType()"+employee1.getType()+ "type" + type);
+								
 								employee1.setEnclosure_id(e0.getId());
 								epdao.updateEmployee(employee1);
-								System.out.println("//DEL Maj de Enclosure_id de l'employee selectionne de l'enclos actuel");
+								
 								break;
 							}
 						}
 						//Maj de la quantite d'employees dans l'enclos(0,0)
 						e0.setEmployee_quantity(employeeQty0+1);
 						ecdao.updateEnclosure(e0);
-						System.out.println("//DEL //Maj de la quantite d'employees dans l'enclos(0,0)");
+						
 						response.getWriter().append("{\"code\" : \"OK\"}");
 					}
 					
@@ -230,7 +229,6 @@ public class EnclosureManagment extends HttpServlet {
 				
 			}/**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
 			else if ((statSE != null) && statSE.equals("okSE")) {
-				System.out.println("on entre okSE");
 				// Recuperation de l'id de l'enclos selectionne et de ses employ�s
 				int enclosure_id = enclosure.getId();
 
@@ -333,8 +331,7 @@ public class EnclosureManagment extends HttpServlet {
 					session.setAttribute("total_priceEAP", total_priceEAP);
 					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
 					String reponseJson = "{\"total_price\":"+total_priceEAP+"}";
-					response.getWriter().append(reponseJson);
-					
+					response.getWriter().append(reponseJson);					
 				}
 				
 			}/**permettre achat ou revente des animaux**/
@@ -363,7 +360,6 @@ public class EnclosureManagment extends HttpServlet {
 				SpecieBean specie= spdao.getSpecieById(specie_id);
 				String name= specie.getName();
 				long unit_price= (long) prices.get(name+"Costs");
-				System.out.println("price= "+ unit_price);
 				
 				//MAJ du solde du player dans la BDD et en session
 				long finalPrice= unit_price*quantity;
