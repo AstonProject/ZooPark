@@ -41,28 +41,31 @@
 	function showListEmployees() {
 		var statusSLE = "okSLE";
 		var $selectE = $('.selectEmployee');
-		
+		$selectE.empty();
+		$selectE.append('<option value=1>Assign / Remove</option>');
 		var callback = function(donnees) {
+			
+			
 			if(donnees.employeeQty != 2){
 					if(donnees.isHealerOut == "true"){
-						$selectE.append('<option value=1 class="listE2">Add healer</option>');
+						$selectE.append('<option value=2>Assign healer</option>');
 					} 
 					if(donnees.isCleanerOut == "true"){
-						$selectE.append('<option value=1 class="listE3">Add cleaner</option>');
+						$selectE.append('<option value=3>Assign cleaner</option>');
 					} 
 					if(donnees.isSecurityOut == "true"){
-						$selectE.append('<option value=1 class="listE4">Add security</option>');
+						$selectE.append('<option value=4>Assign security</option>');
 					}
 			}
 			if (donnees.employeeQty != 0){
 				if(donnees.isHealerIn == "true"){
-					$selectE.append('<option value=1 class="listE5">Del healer</option>');
+					$selectE.append('<option value=5>Remove healer</option>');
 				}
 				if(donnees.isCleanerIn == "true"){
-					$selectE.append('<option value=1 class="listE6">Del cleaner</option>');
+					$selectE.append('<option value=6>Remove cleaner</option>');
 				} 
 				if(donnees.isSecurityIn == "true"){
-					$selectE.append('<option value=1 class="listE7">Del security</option>');
+					$selectE.append('<option value=7>Remove security</option>');
 				}
 			}
 		};
@@ -79,45 +82,57 @@ function mooveEmployees(){
 	$('.selectEmployee').on('change', function () {
 		var statusME = "okME";
 
+		var actionME = $('.selectEmployee').val();
+		console.log(actionME);
+		
 		var callback = function(donnees) {
+			if(donnees.code == "OK"){
+				//Apres deplacement recharger la nouvelle liste d'employes 
+				//et affichage des employees actuellement dans l'enclos
+				showListEmployees();
+				showEmployees();
+           }else {
+           	 failed();
+           }	
 		};
 		
 		var object = {
-			"statusME" : statusME
+			"statusME" : statusME,
+			"actionME" : actionME
 		};
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
-	
 		
-		
-		
-		//Apres deplacement recharger la nouvelle liste d'employes
-		showListEmployees();
 	});
 }
 
 	// Fonction pour afficher les employes de l'enclos
 	function showEmployees() {
 		var statusSE = "okSE";
-
+		//Initialisation des slot 1 et 2
+		$(".slot1").empty();
+		$(".slot2").empty();
+		
 		var callback = function(donnees) {
-
+			//Si il ya des employees, leur nombre est determine
 			for (var i = 1; i < ((Object.keys(donnees).length) + 1); i++) {
 				var type = null;
-
+				//L'employee i sera assigne au slot i
 				var img = "<img src=/zoopark/assets/images/";
 				var $block_slot = $(".slot" + i);
-				$block_slot.empty();
-
+				
+				//Determiner le type de l'employee i pour reconstituer la source 
+				//de l'image correspondante
 				type = "type" + i;
 
 				if (donnees[type] == "healer") {
-					img += "healer.png alt=\"logo\" />"
+					img += "healer"
 				} else if (donnees[type] == "security") {
-					img += "security.png alt=\"logo\" />"
+					img += "security"
 				} else if (donnees[type] == "cleaner") {
-					img += "cleaner.png alt=\"logo\" />"
+					img += "cleaner"
 				}
-
+				
+				img += ".png alt=\"logo\" class=\"current_employees\"/>"
 				$block_slot.prepend(img);
 			}
 		};

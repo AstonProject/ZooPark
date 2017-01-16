@@ -23,25 +23,23 @@ cursor: pointer;
 outline: 0;
 }
 
-.slot1{
+#slotE{
 	border: 3px solid black;
-	min-width: 50px;
-	min-height: 50px;
+	width: 50px;
+	height: 50px;
 	display: inline-block;;
 	position: relative;
 }
 
-.slot2{
-	border: 3px solid black;
-	min-width: 50px;
-	min-height: 50px;
-	display: inline-block;
-	position: relative;
+.current_employees{
+    width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+    right: 0;
+    bottom: 0;
 }
 
-.staff_img{
-	
-}
 
 input[type="number"] {
     height: 30px;

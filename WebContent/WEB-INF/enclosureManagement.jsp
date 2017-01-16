@@ -28,12 +28,12 @@
 			src="${pageContext.request.contextPath}/assets/images/worker.png"
 			alt="logo" />	
 			</span>
-			<span class="slot1"></span>
-			<span class="slot2">
+			<span id="slotE" class="slot1"></span>
+			<span id="slotE" class="slot2">
 			</span>
 			<span class="EmployeeSlot">
 				<select name="employee" size="1" class="selectEmployee">
-				 	<option value=1 class="listE1">Assign / Remove</option>
+				 	<option value=1>Assign / Remove</option>
 				 	
 				</select>
 			</span>

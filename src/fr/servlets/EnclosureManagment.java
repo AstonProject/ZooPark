@@ -66,6 +66,7 @@ public class EnclosureManagment extends HttpServlet {
 			
 			String statSA = request.getParameter("statusSA");
 			String statSLE = request.getParameter("statusSLE");
+			String statME = request.getParameter("statusME");
 			String statSE = request.getParameter("statusSE");
 			String statSQ = request.getParameter("statusSQ");
 			String statG = request.getParameter("statusG");
@@ -74,7 +75,6 @@ public class EnclosureManagment extends HttpServlet {
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			
-			System.out.println("SLE: "+statSLE ); 
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
 			int locate_x = (int) session.getAttribute("current_locate_x");
@@ -150,11 +150,87 @@ public class EnclosureManagment extends HttpServlet {
 						+ "\", \"isSecurityOut\":\"" + isSecurityOut + "\", \"employeeQty\":" + employeeQty + ", \"isHealerIn\":\"" + isHealerIn + "\", \"isCleanerIn\":\"" + isCleanerIn
 						+ "\", \"isSecurityIn\":\"" + isSecurityIn + "\"}";
 
-				System.out.println("showEmployeesList" + reponseJson);
 				response.getWriter().append(reponseJson);
 
-			} /**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
+			} /**Permettre le deplacement des employes dans l'enclos, moveEmployees() en JS	**/
+			else if ((statME != null) && statME.equals("okME")) {
+				int actionME= Integer.parseInt(request.getParameter("actionME"));
+				System.out.println("actionME: "+actionME);
+				
+				EmployeesDAO epdao = new EmployeesDAO();
+				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player_id);
+
+				//Type d'employee selectionne
+				if(actionME >1 ){
+					String type ="";
+					int employeeQty0 = e0.getEmployee_quantity();
+					int employeeQty1 = enclosure.getEmployee_quantity();
+					if(actionME == 2 || actionME == 5){
+						type ="healer";
+					}if(actionME == 3 || actionME == 6){
+						type ="cleaner";
+					}if(actionME == 4 || actionME == 7){
+						type ="security";
+					}
+					//Si il faut ajouter un employee a l'enclos actuel
+					if(actionME < 5){
+						//Maj de la quantite d'employees dans l'enclos l'enclos selectionne
+						enclosure.setEmployee_quantity((employeeQty1+1));
+						ecdao.updateEnclosure(enclosure);
+						System.out.println("ADD Maj de la quantite d'employees dans l'enclos l'enclos selectionne");
+						//Recuperation des employees de l'enclos(0,0)
+						List<EmployeeBean> employees0 = new ArrayList<EmployeeBean>();
+						employees0 = epdao.getEmployeesByEnclosure(e0.getId());
+						
+						//Maj de Enclosure_id de l'employee selectionne dans l'enclos(0,0)
+						for (EmployeeBean employee0 : employees0) {
+							System.out.println("employee0.getType() "+employee0.getType()+ ", type: " + type);
+							if (employee0.getType().equals(type)){
+								System.out.println("j'entre dans (employee0.getType() == type)");
+								employee0.setEnclosure_id(enclosure.getId());
+								epdao.updateEmployee(employee0);
+								System.out.println("ADD Maj enclosure_id de l'employee selectionne dans l'enclos(0,0) ");
+								break;
+							}
+						}
+						//Maj de la quantite d'employees dans l'enclos(0,0)
+						e0.setEmployee_quantity(employeeQty0-1);
+						ecdao.updateEnclosure(e0);
+						System.out.println("ADD Maj de la quantite d'employees dans l'enclos(0,0)");
+						response.getWriter().append("{\"code\" : \"OK\"}");
+					}//Si il faut supprimer des employees de l'enclos actuel
+					else if(actionME > 4){
+						//Maj de la quantite d'employes dans l'enclos selectionne
+						enclosure.setEmployee_quantity((employeeQty1-1));
+						ecdao.updateEnclosure(enclosure);
+						System.out.println("//DEL Maj de la quantite d'employes dans l'enclos selectionne");
+						//Recuperation des employees de l'enclos selectionne
+						List<EmployeeBean> employees1 = new ArrayList<EmployeeBean>();
+						employees1 = epdao.getEmployeesByEnclosure(enclosure.getId());
+						
+						//Maj de Enclosure_id de l'employee selectionne de l'enclos actuel
+						for (EmployeeBean employee1 : employees1) {
+							
+							if (employee1.getType().equals(type)){
+								System.out.println("employee1.getType()"+employee1.getType()+ "type" + type);
+								employee1.setEnclosure_id(e0.getId());
+								epdao.updateEmployee(employee1);
+								System.out.println("//DEL Maj de Enclosure_id de l'employee selectionne de l'enclos actuel");
+								break;
+							}
+						}
+						//Maj de la quantite d'employees dans l'enclos(0,0)
+						e0.setEmployee_quantity(employeeQty0+1);
+						ecdao.updateEnclosure(e0);
+						System.out.println("//DEL //Maj de la quantite d'employees dans l'enclos(0,0)");
+						response.getWriter().append("{\"code\" : \"OK\"}");
+					}
+					
+				}
+				
+			}/**Permettre affichage des employes dans l'enclos,showEmployees() en JS	**/
 			else if ((statSE != null) && statSE.equals("okSE")) {
+				System.out.println("on entre okSE");
 				// Recuperation de l'id de l'enclos selectionne et de ses employ�s
 				int enclosure_id = enclosure.getId();
 
