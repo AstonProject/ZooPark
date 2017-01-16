@@ -37,29 +37,101 @@
 		server.monAjax(monObj, "enclosureManagment", callback, 'POST');
 	}
 
+	// Fonction pour afficher les employee assignables a l'enclos
+	function showListEmployees() {
+		var statusSLE = "okSLE";
+		var $selectE = $('.selectEmployee');
+		$selectE.empty();
+		$selectE.append('<option value=1>Assign / Remove</option>');
+		var callback = function(donnees) {
+			
+			
+			if(donnees.employeeQty != 2){
+					if(donnees.isHealerOut == "true"){
+						$selectE.append('<option value=2>Assign healer</option>');
+					} 
+					if(donnees.isCleanerOut == "true"){
+						$selectE.append('<option value=3>Assign cleaner</option>');
+					} 
+					if(donnees.isSecurityOut == "true"){
+						$selectE.append('<option value=4>Assign security</option>');
+					}
+			}
+			if (donnees.employeeQty != 0){
+				if(donnees.isHealerIn == "true"){
+					$selectE.append('<option value=5>Remove healer</option>');
+				}
+				if(donnees.isCleanerIn == "true"){
+					$selectE.append('<option value=6>Remove cleaner</option>');
+				} 
+				if(donnees.isSecurityIn == "true"){
+					$selectE.append('<option value=7>Remove security</option>');
+				}
+			}
+		};
+			var monObj = {
+					"statusSLE" : statusSLE
+			};
+			server.monAjax(monObj, "enclosureManagment", callback, 'POST');
+		
+	}
+	
+	// Fonction pour retirer/ajoutter un employee a l'enclos
+	
+function mooveEmployees(){
+	$('.selectEmployee').on('change', function () {
+		var statusME = "okME";
+
+		var actionME = $('.selectEmployee').val();
+		
+		var callback = function(donnees) {
+			if(donnees.code == "OK"){
+				//Apres deplacement recharger la nouvelle liste d'employes 
+				//et affichage des employees actuellement dans l'enclos
+				showListEmployees();
+				showEmployees();
+           }else {
+           	 failed();
+           }	
+		};
+		
+		var object = {
+			"statusME" : statusME,
+			"actionME" : actionME
+		};
+		server.monAjax(object, "enclosureManagment", callback, 'POST');
+		
+	});
+}
+
 	// Fonction pour afficher les employes de l'enclos
 	function showEmployees() {
 		var statusSE = "okSE";
-
+		//Initialisation des slot 1 et 2
+		$(".slot1").empty();
+		$(".slot2").empty();
+		
 		var callback = function(donnees) {
-
+			//Si il ya des employees, leur nombre est determine
 			for (var i = 1; i < ((Object.keys(donnees).length) + 1); i++) {
 				var type = null;
-
+				//L'employee i sera assigne au slot i
 				var img = "<img src=/zoopark/assets/images/";
 				var $block_slot = $(".slot" + i);
-				$block_slot.empty();
-
+				
+				//Determiner le type de l'employee i pour reconstituer la source 
+				//de l'image correspondante
 				type = "type" + i;
 
 				if (donnees[type] == "healer") {
-					img += "healer.png alt=\"logo\" />"
+					img += "healer"
 				} else if (donnees[type] == "security") {
-					img += "security.png alt=\"logo\" />"
+					img += "security"
 				} else if (donnees[type] == "cleaner") {
-					img += "cleaner.png alt=\"logo\" />"
+					img += "cleaner"
 				}
-
+				
+				img += ".png alt=\"logo\" class=\"current_employees\"/>"
 				$block_slot.prepend(img);
 			}
 		};
@@ -69,7 +141,7 @@
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
 
-	// Fonction pour afficher les employes de l'enclos
+	// Fonction pour afficher les jauges de l'enclos
 	function showGauges() {
 		var statusG = "okG";
 
@@ -77,22 +149,18 @@
 			$(".hungry").attr("value", donnees.hungry);
 			$(".health").attr("value", donnees.health);
 			$(".cleanness").attr("value", donnees.cleanness);
-			
-			console.log("hungry"+donnees.hungry);
-			console.log("health"+donnees.health);
-			console.log("cleanness"+donnees.cleanness);
-			
+
 			$(".food_gauge").prepend(donnees.hungry);
 			$(".health_gauge").prepend(donnees.health);
 			$(".cleanness_gauge").prepend(donnees.cleanness);
 		};
-		
+
 		var object = {
 			"statusG" : statusG
 		};
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
-	
+
 	// Fonction d'affichage des prix
 	function showAEPrice() {
 		var statusAP = "okAP";
@@ -103,48 +171,79 @@
 		var animals_quantity = 0;
 		var animals_price = 0;
 
-		$('#a_quantity').on('click', function() {
-			// Reinitialise le contenu du blockPrice si un radio EnclosureType
-			// est selectionne
-			$blockAnimalPrice.empty();
-			
-			//Deselectionne la checkbox permettant la revente d'enclos
-			$('input:checkbox[name=ecl_resale]').each(function () { $(this).prop('checked', false); });
-			
-			// Recuperation de la quantite d'animaux choisie
-			animals_quantity = $('input[name=quantity]').val();
+		// Stockage du prix dans la session
+		sessionStorage.setItem("animals_price", animals_price);
 
-			var callback = function(donnees) {
-				if(animals_quantity < 0){
-					animals_price = (((donnees.unit_price) * animals_quantity) * (-1)*(0.75));
-					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
-				}else{
-					animals_price = (((donnees.unit_price) * animals_quantity) * (-1));
-					$blockAnimalPrice.prepend("<div>"+ animals_price + "</div>");
-				}
-				
-			};
+		$('#a_quantity')
+				.on(
+						'click',
+						function() {
+							// Reinitialise le contenu du blockPrice si un radio
+							// EnclosureType
+							// est selectionne
+							$blockAnimalPrice.empty();
 
-			var object = {
-				"statusAPrices" : statusAP
-			};
-			server.monAjax(object, "enclosureManagment", callback, 'POST');
-		});
-		
-		$('#resale_all').on('click', function() {
-			// Reinitialise le contenu du blockPrice si un radio EnclosureType
-			// est selectionne
-			$blockAnimalPrice.empty();
-			
-			var callback = function(donnees) {
-				$blockAnimalPrice.prepend("<div>"+ donnees.total_price + "</div>");
-			};
+							// Deselectionne la checkbox permettant la revente
+							// d'enclos
+							$('input:checkbox[name=ecl_resale]').each(
+									function() {
+										$(this).prop('checked', false);
+									});
 
-			var object = {
-				"statusEPrices" : statusEP
-			};
-			server.monAjax(object, "enclosureManagment", callback, 'POST');
-		});
+							// Recuperation de la quantite d'animaux choisie
+							animals_quantity = $('input[name=quantity]').val();
+
+							var callback = function(donnees) {
+								if (animals_quantity < 0) {
+									animals_price = (((donnees.unit_price) * animals_quantity)
+											* (-1) * (0.75));
+									sessionStorage.setItem("animals_price",
+											animals_price);
+									$blockAnimalPrice.prepend("<div>"
+											+ animals_price + "</div>");
+								} else {
+									animals_price = (((donnees.unit_price) * animals_quantity) * (-1));
+									$blockAnimalPrice.prepend("<div>"
+											+ animals_price + "</div>");
+									sessionStorage.setItem("animals_price",
+											animals_price);
+								}
+
+							};
+
+							var object = {
+								"statusAPrices" : statusAP
+							};
+							server.monAjax(object, "enclosureManagment",
+									callback, 'POST');
+						});
+
+		$('#resale_all').on(
+				'click',
+				function() {
+					// Reinitialise le contenu du blockPrice si un radio
+					// EnclosureType
+					// est selectionne
+
+					$blockAnimalPrice.empty();
+
+					if ($('#resale_all').is(':checked')) {
+						var callback = function(donnees) {
+							$blockAnimalPrice.prepend("<div>"
+									+ donnees.total_price + "</div>");
+						};
+
+						var object = {
+							"statusEPrices" : statusEP
+						};
+						server.monAjax(object, "enclosureManagment", callback,
+								'POST');
+					} else {
+						$blockAnimalPrice.prepend("<div>"
+								+ sessionStorage.getItem("animals_price")
+								+ "</div>");
+					}
+				});
 
 	}
 
@@ -160,9 +259,9 @@
 			// Bypass du submit pour la fonction callback
 			event.preventDefault();
 
-			//Si il faut revendre l'enclos
+			// Si il faut revendre l'enclos
 			if ($('#resale_all').is(':checked')) {
-				
+
 				var callback = function(donnees) {
 					if (donnees.code == "OK") {
 						window.location.href = "home";
@@ -174,11 +273,11 @@
 				var object = {
 					"statusRE" : statusRE
 				};
-				
+
 				server.monAjax(object, "enclosureManagment", callback, 'POST');
-			
-			}//Si il faut revendre ou acheter des animaux
-			else{
+
+			}// Si il faut revendre ou acheter des animaux
+			else {
 
 				quantity = $('input[name=quantity]').val();
 
@@ -198,25 +297,28 @@
 			}
 		});
 	}
-	//fonction pour afficher la quantite d'animaux pouvant encore rentrer dans l'enclos
-	function setRestQuantity(){
-		var statusSQ="okSQ";
-		
-		var callback = function(donnees){
-			console.log(donnees);
-			
+	// fonction pour afficher la quantite d'animaux pouvant encore rentrer dans
+	// l'enclos
+	function setRestQuantity() {
+		var statusSQ = "okSQ";
+
+		var callback = function(donnees) {
+
 			var $inputQuantity = $(".mod");
 			$inputQuantity.attr("max", donnees.rest);
 			$inputQuantity.attr("min", donnees.min);
 		};
-		
-		var monObj = {"statusSQ":statusSQ};
-        server.monAjax(monObj, "enclosureManagment", callback,'POST');
-		
+
+		var monObj = {
+			"statusSQ" : statusSQ
+		};
+		server.monAjax(monObj, "enclosureManagment", callback, 'POST');
 	}
 
 	$(document).ready(function() {
 		showAnimals();
+		showListEmployees();
+		mooveEmployees();
 		showEmployees();
 		setRestQuantity();
 		showGauges();

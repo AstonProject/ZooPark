@@ -1,0 +1,10 @@
+#img_containers{
+	margin-left: 150px;
+}
+
+.img_container{
+	
+	width: 200px;
+	display: inline-block;
+	
+}

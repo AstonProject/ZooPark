@@ -134,7 +134,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// recuperation du prix de l'enclos via la classe
 				// CalculateEnclosurePrice
 				long finalPrice = CalculateEnclosurePrice.CalEP(request);
-
+				
 				// Recuperation du solde du joueur
 				long money = player.getMoney();
 
@@ -143,8 +143,8 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 				pdao.updatePlayer(player);
 
+				money = player.getMoney();
 				
-
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
 				enclosure.setSpecie_id(specieId);
@@ -159,8 +159,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			} 
-
 		}
 	}
-
 }
