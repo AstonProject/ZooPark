@@ -1,10 +1,33 @@
-#img_containers{
-	margin-left: 150px;
+.ec1{
+	margin-left: 195px;
+}
+
+.ec2{
+	margin-left: 50px;
+	
 }
 
 .img_container{
-	
-	width: 200px;
 	display: inline-block;
-	
+}
+
+#employees_container > span{
+	width: 50px;
+  	height: 50px;
+}
+
+.ec1 > span {
+	margin-right:145px;
+}
+
+.ec2 > span {
+	line-height:50px;
+	margin-left:150px;
+	text-align: center;
+	display: inline-block;;
+	position: relative;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
