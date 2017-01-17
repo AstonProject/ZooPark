@@ -3,8 +3,11 @@
 }
 
 .ec2{
-	margin-left: 50px;
-	
+	margin-left: 50px;	
+}
+
+.ec3{
+	margin-left: 205px;
 }
 
 .img_container{
@@ -30,4 +33,74 @@
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+}
+
+.ec3 > span {
+	margin-right:155px;
+}
+
+
+input[type="number"] {
+    height: 30px;
+    width: 40px;
+    font-size: 18px;
+    position: relative;
+    background-color: transparent;
+    border: none;
+    -moz-appearance: textfield;
+}   
+input[type="number"].mod::-webkit-outer-spin-button,
+input[type="number"].mod::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    background: transparent url("../images/increase_decrease.png") no-repeat center center;
+    width: 16px;
+    height: 100%;
+    opacity: 1; /* shows Spin Buttons per default (Chrome >= 39) */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+input[type="number"].mod::-moz-inner-spin-button:hover,
+input[type="number"].mod::-moz-inner-spin-button:active{
+    border: none;
+}
+
+.showPrice {
+	width: 100px;
+	height: 30px;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.emp_price {
+	text-align: center;
+	padding: 7px;
+}
+
+.validate_img{
+background-image: url(../images/validate.png);
+background-position:  0px 0px;
+background-repeat: no-repeat;
+width: 53px;
+height: 33px;
+border: none;
+background-color: white !important;
+cursor: pointer;
+outline: 0;
+}
+
+.validate_img2{
+background-image: url(../images/validate.png);
+background-position: 0px 25px;
+background-repeat: no-repeat;
+width: 53px;
+height: 40px;
+border: none;
+background-size: 30%;
+background-color: white !important;
+cursor: pointer;
+outline: 0;
 }

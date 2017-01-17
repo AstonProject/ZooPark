@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+
 import fr.beans.EmployeeBean;
 import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
+import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
 
@@ -46,8 +49,11 @@ public class EmployeesManagement extends HttpServlet {
 
 		if (session != null && player != null) {
 			String statSEA = request.getParameter("statusSEA");
-			System.out.println("statSEA: "+ statSEA);
+			String statEmP = request.getParameter("statusEmP");
 			
+			System.out.println("statEmP " + statEmP);
+			
+			/**Permettre l'affichage des employees du joueurs**/
 			if ((statSEA != null) && statSEA.equals("okSEA")) {
 				//Recuperation de la liste de tous les employees du joueur
 				EmployeesDAO epdao = new EmployeesDAO();
@@ -96,6 +102,17 @@ public class EmployeesManagement extends HttpServlet {
 				
 				//Envoie dans la reponse pour recuperation par showEmployeesAssignment() en JS
 				response.getWriter().append(reponseJson);
+			} /**Permettre l'affichage des prix de recrutement**/
+			else if ((statEmP != null) && statEmP.equals("okEmP")) {
+				// Recuperation des prix via CostsDAO dans un objet Json
+				CostsDAO cdao = new CostsDAO();
+				JSONObject prices = cdao.getCosts();
+
+				System.out.println("prices "+prices);
+				// Envoie des prix dans la reponse pour etre recupere dans la
+				// fonction showPrice() dans employeesManagement.js
+				response.setContentType("application/json");
+				response.getWriter().append(prices.toString());
 			}
 		}
 	}
