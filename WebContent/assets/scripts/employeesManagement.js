@@ -126,6 +126,45 @@
 		});
 	}
 	
+	function engageDismiss() {
+		var statusEmED = 'okEmED';
+		$('#FormEngageDismiss').on('submit', function(event) {
+			// Bypass du submit pour la fonction callback
+			event.preventDefault();
+			var priceEmED = 0;
+			var healerQty = 0;
+			var cleanerQty = 0;
+			var securityQty = 0;
+			
+			// Recuperation des valeurs des 3 imputs
+			healerQty = $('input[name=quantityHeal]').val();
+			cleanerQty = $('input[name=quantityClean]').val();
+			securityQty = $('input[name=quantitySecurity]').val();
+			try{
+				priceEmED = sessionStorage.getItem("employees_price");
+			}catch(err){
+				
+			}
+			
+			var callback = function(donnees) {
+				if (donnees.code == "OK") {
+					window.location.href = "home";
+				} else {
+					failed();
+				}
+			};
+			
+			var object = {
+				"statusEmED" : statusEmED,
+				"priceEmED" : priceEmED,
+				"healerQty" : healerQty,
+				"cleanerQty" : cleanerQty,
+				"securityQty" : securityQty
+			};
+
+			server.monAjax(object, "enclosureManagment", callback, 'POST');
+		});
+	}
 	
 	$(document).ready(function() {
 		var $heal_button= $('#heal_quantity');
@@ -140,5 +179,6 @@
 		setRestMinEmQty($heal_button);
 		setRestMinEmQty($cleaner_button);
 		setRestMinEmQty($security_button);
+		engageDismiss();
 	})
 })(jQuery);

@@ -19,6 +19,7 @@ import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.PlayersDAO;
 
 /**
  * Servlet implementation class EmployeesManagement
@@ -51,6 +52,7 @@ public class EmployeesManagement extends HttpServlet {
 			String statSEA = request.getParameter("statusSEA");
 			String statEmP = request.getParameter("statusEmP");
 			String statSEQ = request.getParameter("statusSEQ");
+			String statEmED = request.getParameter("statusEmED");
 			
 			//Recuperation de la liste de tous les employees du joueur
 			EmployeesDAO epdao = new EmployeesDAO();
@@ -111,8 +113,7 @@ public class EmployeesManagement extends HttpServlet {
 				
 				String responseJson = "{\"maxQty\":" + maxQty +",\"employeesQty\":"+employeesQty+"}";
 				response.getWriter().append(responseJson);
-			}
-			/**Permettre l'affichage des prix de recrutement**/
+			}/**Permettre l'affichage des prix de recrutement**/
 			else if ((statEmP != null) && statEmP.equals("okEmP")) {
 				// Recuperation des prix via CostsDAO dans un objet Json
 				CostsDAO cdao = new CostsDAO();
@@ -122,6 +123,16 @@ public class EmployeesManagement extends HttpServlet {
 				// fonction showPrice() dans employeesManagement.js
 				response.setContentType("application/json");
 				response.getWriter().append(prices.toString());
+			}/**Permettre recrutement / licenciement**/
+			else if ((statEmED != null) && statEmED.equals("okEmED")) {
+				int priceEmED = Integer.parseInt(request.getParameter("priceEmED"));
+				int healerQty = Integer.parseInt(request.getParameter("healerQty"));
+				int cleanerQty = Integer.parseInt(request.getParameter("cleanerQty"));
+				int securityQty = Integer.parseInt(request.getParameter("securityQty"));
+				
+				PlayersDAO pdao = new PlayersDAO();
+				//Recuperation de la quantite d'animaux demande
+				int quantity = Integer.parseInt(request.getParameter("quantity"));
 			}
 		}
 	}
