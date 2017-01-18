@@ -7,7 +7,7 @@
 }
 
 .ec3{
-	margin-left: 205px;
+	margin-left: 200px;
 }
 
 .img_container{
@@ -36,13 +36,13 @@
 }
 
 .ec3 > span {
-	margin-right:155px;
+	margin-right:145px;
 }
 
 
 input[type="number"] {
     height: 30px;
-    width: 40px;
+    width: 50px;
     font-size: 18px;
     position: relative;
     background-color: transparent;

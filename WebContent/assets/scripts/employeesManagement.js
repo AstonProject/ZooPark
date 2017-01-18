@@ -72,11 +72,8 @@
 			var object = {
 					"statusSEQ" : statusSEQ
 				};
-				console.log('AjaxObject'+ object);
-				server.monAjax(object, "employeesManagement", callback, 'POST');
-			
-		});
-		
+				server.monAjax(object, "employeesManagement", callback, 'POST');		
+		});		
 	}
 	
 	
@@ -125,7 +122,6 @@
 			var object = {
 				"statusEmP" :  statusEmP
 			};
-			console.log('AjaxObject'+ object);
 			server.monAjax(object, "employeesManagement", callback, 'POST');
 		});
 	}

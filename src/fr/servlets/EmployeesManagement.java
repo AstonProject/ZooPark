@@ -52,7 +52,6 @@ public class EmployeesManagement extends HttpServlet {
 			String statEmP = request.getParameter("statusEmP");
 			String statSEQ = request.getParameter("statusSEQ");
 			
-			System.out.println("statSEQ " + statSEQ);
 			//Recuperation de la liste de tous les employees du joueur
 			EmployeesDAO epdao = new EmployeesDAO();
 			List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
@@ -112,8 +111,6 @@ public class EmployeesManagement extends HttpServlet {
 				
 				String responseJson = "{\"maxQty\":" + maxQty +",\"employeesQty\":"+employeesQty+"}";
 				response.getWriter().append(responseJson);
-				System.out.println("employeesQty: "+ employeesQty);
-				System.out.println("responseJson: "+ responseJson);
 			}
 			/**Permettre l'affichage des prix de recrutement**/
 			else if ((statEmP != null) && statEmP.equals("okEmP")) {
