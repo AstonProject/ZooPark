@@ -50,15 +50,16 @@ public class EmployeesManagement extends HttpServlet {
 		if (session != null && player != null) {
 			String statSEA = request.getParameter("statusSEA");
 			String statEmP = request.getParameter("statusEmP");
+			String statSEQ = request.getParameter("statusSEQ");
 			
-			System.out.println("statEmP " + statEmP);
-			
+			System.out.println("statSEQ " + statSEQ);
+			//Recuperation de la liste de tous les employees du joueur
+			EmployeesDAO epdao = new EmployeesDAO();
+			List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
+			employees = epdao.getEmployeesByPlayer(player.getId());
+					
 			/**Permettre l'affichage des employees du joueurs**/
 			if ((statSEA != null) && statSEA.equals("okSEA")) {
-				//Recuperation de la liste de tous les employees du joueur
-				EmployeesDAO epdao = new EmployeesDAO();
-				List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
-				employees = epdao.getEmployeesByPlayer(player.getId());
 				//Recuperation de l'enclos(0,0) pour determiner quels sont les 
 				//employees "libres"
 				EnclosuresDAO ecdao = new EnclosuresDAO();
@@ -102,13 +103,24 @@ public class EmployeesManagement extends HttpServlet {
 				
 				//Envoie dans la reponse pour recuperation par showEmployeesAssignment() en JS
 				response.getWriter().append(reponseJson);
-			} /**Permettre l'affichage des prix de recrutement**/
+			} /**fixer les valeurs Min Max des input number**/
+			else if ((statSEQ != null) && statSEQ.equals("okSEQ")) {
+				EnclosuresDAO ecdao = new EnclosuresDAO();
+				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				int maxQty= e0.getEmployee_slot();
+				int employeesQty= employees.size();
+				
+				String responseJson = "{\"maxQty\":" + maxQty +",\"employeesQty\":"+employeesQty+"}";
+				response.getWriter().append(responseJson);
+				System.out.println("employeesQty: "+ employeesQty);
+				System.out.println("responseJson: "+ responseJson);
+			}
+			/**Permettre l'affichage des prix de recrutement**/
 			else if ((statEmP != null) && statEmP.equals("okEmP")) {
 				// Recuperation des prix via CostsDAO dans un objet Json
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
 
-				System.out.println("prices "+prices);
 				// Envoie des prix dans la reponse pour etre recupere dans la
 				// fonction showPrice() dans employeesManagement.js
 				response.setContentType("application/json");

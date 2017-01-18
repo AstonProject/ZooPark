@@ -297,9 +297,9 @@ function mooveEmployees(){
 			}
 		});
 	}
-	// fonction pour afficher la quantite d'animaux pouvant encore rentrer dans
-	// l'enclos
-	function setRestQuantity() {
+	// fonction pour afficher la quantite d'animaux (Max) pouvant encore rentrer dans
+	// l'enclos et le maximum pouvant être revendus (Min)
+	function setRestMinQuantity() {
 		var statusSQ = "okSQ";
 
 		var callback = function(donnees) {
@@ -320,7 +320,7 @@ function mooveEmployees(){
 		showListEmployees();
 		mooveEmployees();
 		showEmployees();
-		setRestQuantity();
+		setRestMinQuantity();
 		showGauges();
 		showAEPrice();
 		purshaseResale();

@@ -16,6 +16,10 @@
 			$('.total_healer').prepend(donnees.countHealer_total);
 			$('.total_cleaner').prepend(donnees.countCleaner_total);
 			$('.total_security').prepend(donnees.countSecurity_total);
+			
+			sessionStorage.setItem("countHlT", donnees.countHealer_total);
+			sessionStorage.setItem("countClT", donnees.countCleaner_total);
+			sessionStorage.setItem("countSeT", donnees.countSecurity_total);
 		};
 		var monObj = {
 			"statusSEA" : statusSEA
@@ -23,16 +27,64 @@
 		server.monAjax(monObj, "employeesManagement", callback, 'POST');	
 	}
 	
+	// fonction pour afficher la quantite d'employees (Max) pouvant etre recrutes
+	// et le maximum pouvant etre licencies (Min)
+	function setRestMinEmQty($selectedEmQty) {
+		var statusSEQ = 'okSEQ'
+		$($selectedEmQty).on('click', function() {
+			var $inputQuantity = $(".mod");
+			var $imputHl = $('#heal_quantity');
+			var $imputCl = $('#clean_quantity');
+			var $imputSe = $('#secu_quantity');
+			var countHlT = 0;
+			var countClT = 0;
+			var countSeT = 0;
+			var total_SlE = 0; 
+			
+			var healerQty = 0;
+			var cleanerQty = 0;
+			var securityQty = 0;
+			
+			// Recuperation des valeurs des 3 imputs
+			healerQty = $('input[name=quantityHeal]').val();
+			cleanerQty = $('input[name=quantityClean]').val();
+			securityQty = $('input[name=quantitySecurity]').val();
+			
+			total_SlE = healerQty + cleanerQty + securityQty;
+			
+			try{
+				countHlT = sessionStorage.getItem("countHlT");
+				countClT = sessionStorage.getItem("countClT");
+				countSeT = sessionStorage.getItem("countSeT");
+			}catch (err) {
+				console.log(err);
+			}
+			
+			var callback = function(donnees) {
+				$inputQuantity.attr("max", (donnees.maxQty - donnees.employeesQty - total_SlE));
+				$imputHl.attr("max", donnees.maxQty - donnees.employeesQty - cleanerQty - securityQty);
+				$imputCl.attr("max", donnees.maxQty - donnees.employeesQty - healerQty - securityQty);
+				$imputSe.attr("max", donnees.maxQty - donnees.employeesQty - healerQty - cleanerQty);
+				$imputHl.attr("min", (countHlT * (-1)));
+				$imputCl.attr("min", (countClT * (-1)));
+				$imputSe.attr("min", (countSeT * (-1)));
+			};
+			var object = {
+					"statusSEQ" : statusSEQ
+				};
+				console.log('AjaxObject'+ object);
+				server.monAjax(object, "employeesManagement", callback, 'POST');
+			
+		});
+		
+	}
+	
+	
 	function showEmployeePrice($selectedEmQty){
 		var statusEmP = "okEmP";
-		// attribution d'une variable selectionnant la div d'affichage des prix
-
 		var $blockEmPrice = $('.emp_price');
 		var employees_quantity = 0;
 		var employeeType;
-		
-		
-		
 
 		$($selectedEmQty).on('click', function() {
 			// Reinitialise le contenu du blockPrice
@@ -47,7 +99,10 @@
 			cleanerQty = $('input[name=quantityClean]').val();
 			securityQty = $('input[name=quantitySecurity]').val();
 			
+			var total_SlE = healerQty + cleanerQty + securityQty;
 			var employees_price = 0;
+			
+			sessionStorage.setItem("total_SlE", total_SlE);	
 			sessionStorage.setItem("employees_price", employees_price);
 			
 			var callback = function(donnees) {
@@ -81,10 +136,13 @@
 		var $cleaner_button = $('#clean_quantity');
 		var $security_button = $('#secu_quantity');
 		
+		//Attention cet ordre d'appel est important
 		showEmployeesAssignment();
-		
 		showEmployeePrice($heal_button);
 		showEmployeePrice($cleaner_button);
 		showEmployeePrice($security_button);
+		setRestMinEmQty($heal_button);
+		setRestMinEmQty($cleaner_button);
+		setRestMinEmQty($security_button);
 	})
 })(jQuery);

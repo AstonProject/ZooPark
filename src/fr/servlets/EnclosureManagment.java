@@ -293,7 +293,7 @@ public class EnclosureManagment extends HttpServlet {
 				String reponseJson = "{\"cleanness\":"+cleanness+", \"hungry\":"+hungry +", \"health\":"+health+"}";
 				response.getWriter().append(reponseJson);
 			}
-			/** fixer la valeur de l'input number **/
+			/** fixer les valeurs Min Max de l'input number **/
 			 else if ((statSQ != null) && statSQ.equals("okSQ")) {
 					//recuperation capacity et animal_quantity
 					int capacity = enclosure.getCapacity();
