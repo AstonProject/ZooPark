@@ -12,7 +12,7 @@
 	<body>
 		<h1>Finances menu</h1><br>
 		
-		<div id="finance_status">
+		<div id="finance-status">
 			<div>
 				<h2>Current money :</h2><br>
 				<span class="money"><img src="${pageContext.request.contextPath}/assets/images/coins.png" alt="logo" /></span>
@@ -20,17 +20,19 @@
 			</div>
 			<div>
 				<h2>Current loan :</h2><br>
+				<span class="money"><img src="${pageContext.request.contextPath}/assets/images/coins.png" alt="logo" /></span>
+				<span class="currentLoan"><!-- current loan -->Z</span>
+			</div>
+			<div>
+				<h2>Want to loan ?</h2><br>
 				<span><img src="${pageContext.request.contextPath}/assets/images/loan.png" alt="logo" /></span>
-				<span class="loan"><input type="number" min="0" max="1000000" step="10000" name ="loan_value" class="mod"/></span>
+				<span class="newLoan"><input type="number" min="0" max="1000000" step="10000" name ="loanValue" class="mod"/></span>
 			</div>
 		</div>
 		
-		<div id="transaction_details">
+		<div id="transactions-details">
 			<h2>Transactions Details</h2><br>
 			<div id="transactions-list"> <!-- zone d'affichage des transactions -->
-				<c:forEach items="${finances}" var="finance">
-					<span> Le ${ finance.date}, ${ finance.type_action} de ${ finance.somme} pour ${ finance.libelle}</span><br>
-				</c:forEach>
 			</div>
 		</div>
 		
@@ -51,5 +53,6 @@
 	
 	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/scripts/financeManagement.js"></script>
 
 </html>

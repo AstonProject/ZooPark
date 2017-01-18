@@ -33,7 +33,7 @@ public class PlayerServlet extends HttpServlet {
 			if (session != null) {
 				session.removeAttribute("user");
 				session.invalidate();
-				response.sendRedirect( VUE );
+				response.sendRedirect( "home" );
 				System.out.println("ici deconnect");
 			}
 		}
@@ -96,7 +96,7 @@ public class PlayerServlet extends HttpServlet {
 			request.setAttribute("user", player);
 			request.setAttribute("isValide", valid.isValide);
 			
-			this.getServletContext().getRequestDispatcher("/WEB-INF/"+ VUE +".jsp" ).forward( request, response );
+			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp" ).forward( request, response );
 			
 			System.out.println("j'ai redirigé");
 			
@@ -118,17 +118,17 @@ public class PlayerServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			System.out.println("joueur :" + player);
+			System.out.println("connection joueur :" + player);
 			
 			if (player != null) {
 				System.out.println("player non null");
 				HttpSession session = request.getSession();
 				session.setAttribute("user", player);
-				response.sendRedirect( VUE );
+				response.sendRedirect( "home" );
 			} else {
 				
 				request.setAttribute("erreur", "Pseudo ou Password incorrect");
-				RequestDispatcher rs = request.getRequestDispatcher( VUE );
+				RequestDispatcher rs = request.getRequestDispatcher( "/WEB-INF/home.jsp" );
 				rs.forward(request, response);
 				
 				
@@ -138,7 +138,7 @@ public class PlayerServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
 			
-			response.sendRedirect( VUE );
+			response.sendRedirect( "home" );
 			
 		}
 	}

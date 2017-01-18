@@ -23,37 +23,57 @@ public class FinanceManagement extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		PlayerBean player = (PlayerBean) session.getAttribute("user");
-
-		if (session != null && player != null) {
-			
-			FinancesDAO fdao = new FinancesDAO();
-			List<FinanceBean> finances = new ArrayList<>();
-			
-			finances = fdao.getFinancesByPlayer(player.getId());
-			
-			request.setAttribute("finances", finances);
+		
 			// redirection vers la JSP financeManagement
 			this.getServletContext().getRequestDispatcher("/WEB-INF/financeManagement.jsp").forward(request, response);
-		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 		if (session != null && player != null) {
+			String statGT = request.getParameter("statusGT");
+			System.out.println(statGT);
 			
-			long current_money = player.getMoney();
-			
-			//recuperation de la valeur du pret
-			//???
-			
-			// player.setMoney(current_money + /*valleur du pret */);
-			
+			if ((statGT != null) && statGT.equals("okGT")) {
+				// creation de la liste des transactions
+				FinancesDAO fdao = new FinancesDAO();
+				String reponseJson = "{\"data\": [";
+				int player_id = player.getId();
+				Integer lastIdFinance = (Integer) session.getAttribute("lastIdFinance");
+				
+				if (lastIdFinance == null) {
+					lastIdFinance = 0;
+				}
+				
+				List<FinanceBean> finances = fdao.getFinancesFromIdByPlayer(lastIdFinance, player_id);
+				int lengthList = finances.size();
+				int count = 0;
+				
+				for (FinanceBean finance : finances) {
+					reponseJson += "{\"date\":\"" + finance.getDate() + "\",";
+					reponseJson += "\"type_action\":\"" + finance.getType_action() + "\",";
+					reponseJson += "\"libelle\":\"" + finance.getLibelle() + "\",";
+					reponseJson += "\"somme\":\"" + finance.getSomme() + "\"}";
+					count++;
+					
+					System.out.println(finance);
+					System.out.println(reponseJson);
+					
+					if (count != lengthList) {
+						reponseJson += ",";
+					} else {
+						session.setAttribute("lastIdFinance", finance.getId());
+					}
+				}
+				
+				reponseJson += "] }";
+				
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().append(reponseJson);
+			}
 		}
 	}
-
 }
