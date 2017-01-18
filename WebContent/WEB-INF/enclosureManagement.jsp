@@ -104,4 +104,6 @@
 <script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
 <script
 	src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/scripts/enclosureMTime.js"></script>
 </html>
