@@ -18,6 +18,9 @@
 				$(".health").attr("value", donnees.health);
 				$(".cleanness").attr("value", donnees.clean);
 
+				$(".food_gauge").empty();
+				$(".health_gauge").empty();
+				$(".cleanness_gauge").empty();
 				$(".food_gauge").prepend(donnees.hungry);
 				$(".health_gauge").prepend(donnees.health);
 				$(".cleanness_gauge").prepend(donnees.clean);
