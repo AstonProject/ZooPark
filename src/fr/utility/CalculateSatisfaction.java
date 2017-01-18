@@ -24,6 +24,7 @@ public class CalculateSatisfaction {
 			cleanliness += enclosure.getCleanliness_gauge();
 		}
 		int moyCleanliness = cleanliness/enclosures.size();
-		return 0;
+		int totalSatisfaction = (moyCleanliness/100 + nbrAnimals/375)*100;
+		return totalSatisfaction;
 	}
 }
