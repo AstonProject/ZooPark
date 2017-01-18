@@ -17,9 +17,9 @@
 			$('.total_cleaner').prepend(donnees.countCleaner_total);
 			$('.total_security').prepend(donnees.countSecurity_total);
 			
-			sessionStorage.setItem("countHlT", donnees.countHealer_total);
-			sessionStorage.setItem("countClT", donnees.countCleaner_total);
-			sessionStorage.setItem("countSeT", donnees.countSecurity_total);
+			sessionStorage.setItem("countHlT", donnees.countHealer_e0);
+			sessionStorage.setItem("countClT", donnees.countCleaner_e0);
+			sessionStorage.setItem("countSeT", donnees.countSecurity_e0);
 		};
 		var monObj = {
 			"statusSEA" : statusSEA
@@ -162,7 +162,7 @@
 				"securityQty" : securityQty
 			};
 
-			server.monAjax(object, "enclosureManagment", callback, 'POST');
+			server.monAjax(object, "employeesManagement", callback, 'POST');
 		});
 	}
 	

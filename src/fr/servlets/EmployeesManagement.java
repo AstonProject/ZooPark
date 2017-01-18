@@ -54,10 +54,7 @@ public class EmployeesManagement extends HttpServlet {
 			String statSEQ = request.getParameter("statusSEQ");
 			String statEmED = request.getParameter("statusEmED");
 			
-			//Recuperation de la liste de tous les employees du joueur
-			EmployeesDAO epdao = new EmployeesDAO();
-			List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
-			employees = epdao.getEmployeesByPlayer(player.getId());
+			
 					
 			/**Permettre l'affichage des employees du joueurs**/
 			if ((statSEA != null) && statSEA.equals("okSEA")) {
@@ -65,6 +62,11 @@ public class EmployeesManagement extends HttpServlet {
 				//employees "libres"
 				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				
+				//Recuperation de la liste de tous les employees du joueur
+				EmployeesDAO epdao = new EmployeesDAO();
+				List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
+				employees = epdao.getEmployeesByPlayer(player.getId());
 				
 				//Definition des compteurs par type d'employee de l'enclos(0,0)
 				int countHealer_e0 = 0;
@@ -108,6 +110,12 @@ public class EmployeesManagement extends HttpServlet {
 			else if ((statSEQ != null) && statSEQ.equals("okSEQ")) {
 				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				
+				//Recuperation de la liste de tous les employees du joueur
+				EmployeesDAO epdao = new EmployeesDAO();
+				List<EmployeeBean> employees = new ArrayList<EmployeeBean>();
+				employees = epdao.getEmployeesByPlayer(player.getId());
+				
 				int maxQty= e0.getEmployee_slot();
 				int employeesQty= employees.size();
 				
@@ -129,10 +137,133 @@ public class EmployeesManagement extends HttpServlet {
 				int healerQty = Integer.parseInt(request.getParameter("healerQty"));
 				int cleanerQty = Integer.parseInt(request.getParameter("cleanerQty"));
 				int securityQty = Integer.parseInt(request.getParameter("securityQty"));
+				int quantity =  healerQty + cleanerQty + securityQty;
 				
+				//Recuperation des employees de l'enclos(0,0)
+				EnclosuresDAO ecdao = new EnclosuresDAO();
+				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+				List<EmployeeBean> employees0 = new ArrayList<EmployeeBean>();
+				EmployeesDAO epdao = new EmployeesDAO();
+				employees0 = epdao.getEmployeesByEnclosure(e0.getId());
+				
+				//MAJ du solde joueur
 				PlayersDAO pdao = new PlayersDAO();
-				//Recuperation de la quantite d'animaux demande
-				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				long money = player.getMoney();
+				player.setMoney(money + priceEmED);
+				pdao.updatePlayer(player);
+				session.setAttribute("user", player);
+				System.out.println("money: "+ money);
+				System.out.println("playerAUP: "+ player);
+				
+				//MAJ de enclosure_id des employees si licenciement
+				if(healerQty < 0 || cleanerQty < 0 || securityQty < 0){
+					int countHl = 0;
+					int countCl = 0;
+					int countSe = 0;
+					boolean isDeleted= false;
+					
+					for (EmployeeBean employee0 : employees0) {
+						if(employee0.getType().equals("healer")){
+							
+							if(countHl < ((healerQty)*(-1))){
+								epdao.deleteEmployee(employee0.getId());
+								System.out.println("employeeHealerID " + employee0.getId() +"a ete delete");
+							}
+							countHl++;
+						}
+						if(employee0.getType().equals("cleaner")){
+							
+							if(countCl < ((cleanerQty)*(-1))){
+								epdao.deleteEmployee(employee0.getId());
+								System.out.println("employeeCleanerID " + employee0.getId() +"a ete delete");
+							}
+							countCl++;
+						} 
+						if(employee0.getType().equals("security")){
+							
+							if(countSe < ((securityQty)*(-1))){
+								epdao.deleteEmployee(employee0.getId());
+								System.out.println("employeeSecurityID " + employee0.getId() +"a ete delete");
+							}
+							countSe++;
+						} 
+						
+						if(countHl==healerQty && countCl==cleanerQty && countSe == securityQty){
+							isDeleted= true;
+						}	
+					}
+					e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+					int eQty = e0.getEmployee_quantity();
+					//Si les employees ont ete delete, MAJ de l'enclos(0,0)
+					if(isDeleted == true){
+						e0.setEmployee_quantity(eQty - quantity);
+						ecdao.updateEnclosure(e0);
+						System.out.println("e0 MAJ");
+					}
+				} 
+				if(healerQty > 0 || cleanerQty > 0 || securityQty > 0){
+					int hl=0;
+					int cl=0;
+					int se=0;
+					int quantityE=0;
+					boolean isCreate = false;
+					
+					if(healerQty > 0){
+						for (hl=0 ; hl < healerQty; hl++){
+							EmployeeBean emp= new EmployeeBean();
+							emp.setType("healer");
+							emp.setHealth_gauge(100);
+							emp.setDescription("medium");
+							emp.setEnclosure_id(e0.getId());
+							emp.setPlayer_id(player.getId());
+							epdao.createEmployee(emp);
+							quantityE++;
+							System.out.println("employeeHealer ADD ");
+						}
+					}
+					
+					if(cleanerQty > 0){
+						for (cl=0 ; cl < cleanerQty; cl++){
+							EmployeeBean emp= new EmployeeBean();
+							emp.setType("cleaner");
+							emp.setHealth_gauge(100);
+							emp.setDescription("medium");
+							emp.setEnclosure_id(e0.getId());
+							emp.setPlayer_id(player.getId());
+							epdao.createEmployee(emp);
+							quantityE++;
+							System.out.println("employeeCleaner ADD ");
+						}
+					}
+					
+					if(securityQty > 0){
+						for (se=0 ; se < cleanerQty; se++){
+							EmployeeBean emp= new EmployeeBean();
+							emp.setType("security");
+							emp.setHealth_gauge(100);
+							emp.setDescription("medium");
+							emp.setEnclosure_id(e0.getId());
+							emp.setPlayer_id(player.getId());
+							epdao.createEmployee(emp);
+							quantityE++;
+							System.out.println("employeeSecurity ADD ");
+						}
+					}
+					
+					if(hl==healerQty && cl==cleanerQty && se == securityQty){
+						isCreate= true;
+					}
+					e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
+					int QtyE = e0.getEmployee_quantity();
+					
+					if(isCreate == true){
+						e0.setEmployee_quantity(QtyE + quantityE);
+						ecdao.updateEnclosure(e0);
+						System.out.println("e0 MAJ");
+					}
+				}
+				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
+				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
 		}
 	}
