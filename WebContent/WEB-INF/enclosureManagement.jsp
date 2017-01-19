@@ -83,6 +83,9 @@
 			Resale enclosure? <input type="checkbox" name="ecl_resale"
 				id="resale_all">
 		</div>
+		<div id="enclosure_upgrade">
+			Upgrade enclosure? <input type="checkbox" name="ecl_upgrade" id="upgrade_ecl">
+		</div>
 		<br>
 		<h3>Price</h3>
 		<div class="showPrice">

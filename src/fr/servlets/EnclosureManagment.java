@@ -70,10 +70,14 @@ public class EnclosureManagment extends HttpServlet {
 			String statSE = request.getParameter("statusSE");
 			String statSQ = request.getParameter("statusSQ");
 			String statG = request.getParameter("statusG");
+			String statER= request.getParameter("statusER");
 			String statAP = request.getParameter("statusAPrices");
 			String statEP = request.getParameter("statusEPrices");
+			String statusEUP = request.getParameter("statusEUP");
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
+			String statUE = request.getParameter("statusUE");
+			System.out.println("statusEUP "+statusEUP);
 			
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
@@ -306,9 +310,16 @@ public class EnclosureManagment extends HttpServlet {
 					
 					String responseJson = "{\"rest\":" + rest +",\"min\":"+min+"}";
 					response.getWriter().append(responseJson);
+			 } /**permettre un resize**/
+			 else if ((statER != null) && statER.equals("okER")) {
+				 int capacity = enclosure.getCapacity();
+				 
+				 String responseJson = "{\"capacity\":" + capacity +"}";
+				 System.out.println(capacity);
+					response.getWriter().append(responseJson);
 			 }
 			/**permettre affichage des prix**/
-			else if ((statAP != null) ||(statEP != null)) {
+			else if ((statAP != null) ||(statEP != null) || (statusEUP != null)) {
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
 				
@@ -319,7 +330,7 @@ public class EnclosureManagment extends HttpServlet {
 				
 				// Recuperation des prix unitaire d'un animal de type"name"
 				// via CostsDAO 
-				if( statEP == null && statAP.equals("okAP")){
+				if( statusEUP == null && statEP == null && statAP.equals("okAP")){
 					long unit_price= (long) prices.get(name+"Costs");
 
 					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
@@ -327,7 +338,7 @@ public class EnclosureManagment extends HttpServlet {
 					response.getWriter().append(reponseJson);
 				}// Recuperation des prix de l'enclos et de tous les animaux
 				 // en cas de revente d'enclos
-				else if(statAP == null && statEP.equals("okEP")){
+				else if(statusEUP == null && statAP == null && statEP.equals("okEP")){
 					long enclosure_price= ((long) prices.get("enclosureCosts_"+name)*(enclosure.getCapacity()/5));
 					long animal_price= ((long)prices.get(name+"Costs"))*enclosure.getAnimal_quantity();
 					long total_priceEAP= (long) ((enclosure_price + animal_price)*(0.75));
@@ -337,6 +348,16 @@ public class EnclosureManagment extends HttpServlet {
 					//Envoie au format Json dans la reponse pour la fonction showAEPrice() en JS
 					String reponseJson = "{\"total_price\":"+total_priceEAP+"}";
 					response.getWriter().append(reponseJson);					
+				} else if(statEP == null && statAP == null && statusEUP.equals("okEUP")){
+					long upgrade_price=0;
+					if(enclosure.getCapacity() == 5){
+						upgrade_price= ((long) prices.get("enclosureCosts_"+name)*2);
+					} else if(enclosure.getCapacity() == 10){
+						upgrade_price= ((long) prices.get("enclosureCosts_"+name)*3);
+					}
+					session.setAttribute("upgrade_price", upgrade_price);
+					String reponseJson = "{\"totalEUP_price\":"+upgrade_price+"}";
+					response.getWriter().append(reponseJson);
 				}
 				
 			}/**permettre achat ou revente des animaux**/
@@ -469,6 +490,28 @@ public class EnclosureManagment extends HttpServlet {
 					//Recuperation de l'id des animaux a delete
 					andao.deleteAnimal(animal.getId());	
 				}				
+				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
+				response.getWriter().append("{\"code\" : \"OK\"}");
+			}
+			/**permettre un resize**/
+			else if ((statUE != null) && statUE.equals("okUE")) {
+				long upgradeE_price = (long) session.getAttribute("upgrade_price");
+				
+				//MAJ du solde du player dans la BDD et en session
+				PlayersDAO pdao = new PlayersDAO();
+				long money = player.getMoney();
+				player.setMoney(money - upgradeE_price);
+				
+				pdao.updatePlayer(player);
+				session.setAttribute("user", player);
+				
+				//MAJ de la capacity de l'enclos selectionne
+				if(enclosure.getCapacity() == 5){
+					enclosure.setCapacity(10);
+				}else if(enclosure.getCapacity() == 5){
+					enclosure.setCapacity(15);
+				}
+				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
