@@ -82,13 +82,12 @@
 		});
 	}
 	
-	function showEmployeePrice($selectedEmQty){
+	function showEmployeePrice(){
 		var statusEmP = "okEmP";
 		var $blockEmPrice = $('.emp_price');
 		var employees_quantity = 0;
 		var employeeType;
 
-		$($selectedEmQty).on('click', function() {
 			// Reinitialise le contenu du blockPrice
 			$blockEmPrice.empty();
 			
@@ -128,6 +127,11 @@
 				"statusEmP" :  statusEmP
 			};
 			server.monAjax(object, "employeesManagement", callback, 'POST');
+	}
+	
+	function refreshPriceOnChange($selectedEmQty){
+		$($selectedEmQty).on('change', function() {
+			showEmployeePrice();
 		});
 	}
 	
@@ -141,14 +145,25 @@
 			var cleanerQty = 0;
 			var securityQty = 0;
 			
-			// Recuperation des valeurs des 3 imputs
+			// Recuperation des valeurs des 3 imputs et du prix (session)
 			healerQty = $('input[name=quantityHeal]').val();
 			cleanerQty = $('input[name=quantityClean]').val();
 			securityQty = $('input[name=quantitySecurity]').val();
-			try{
-				priceEmED = sessionStorage.getItem("employees_price");
-			}catch(err){
-				
+			priceEmED = sessionStorage.getItem("employees_price");
+			console.log(priceEmED);
+			if(healerQty == ""){
+				healerQty = 0;
+			}
+			if(cleanerQty == ""){
+				cleanerQty = 0;
+			}
+			if(securityQty == ""){
+				securityQty = 0;
+			}
+			if(priceEmED == 0){
+				healerQty = 0;
+				cleanerQty = 0;
+				securityQty = 0;
 			}
 			
 			var callback = function(donnees) {
@@ -178,12 +193,15 @@
 		
 		//Attention cet ordre d'appel est important
 		showEmployeesAssignment();
-		showEmployeePrice($heal_button);
-		showEmployeePrice($cleaner_button);
-		showEmployeePrice($security_button);
+		
+		refreshPriceOnChange($heal_button);
+		refreshPriceOnChange($cleaner_button);
+		refreshPriceOnChange($security_button);
+	
 		setRestMinEmQty($heal_button);
 		setRestMinEmQty($cleaner_button);
 		setRestMinEmQty($security_button);
+		
 		engageDismiss();
 		refreshRestMinEmQty($heal_button);
 		refreshRestMinEmQty($cleaner_button);
