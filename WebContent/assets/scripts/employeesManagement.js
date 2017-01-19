@@ -76,7 +76,7 @@
 				
 	}
 	
-	function refreshRestMinEmQty(){
+	function refreshRestMinEmQty($selectedEmQty){
 		$($selectedEmQty).on('click', function() {
 			setRestMinEmQty($selectedEmQty);
 		});
@@ -185,6 +185,8 @@
 		setRestMinEmQty($cleaner_button);
 		setRestMinEmQty($security_button);
 		engageDismiss();
-		refreshRestMinEmQty();
+		refreshRestMinEmQty($heal_button);
+		refreshRestMinEmQty($cleaner_button);
+		refreshRestMinEmQty($security_button);
 	})
 })(jQuery);
