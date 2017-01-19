@@ -15,14 +15,11 @@ import fr.beans.PlayerBean;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
 import fr.utility.ValidationDonnees;
-import sun.security.krb5.internal.EncAPRepPart;
 
 @WebServlet("/user")
 public class PlayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String VUE = "home";
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 
@@ -86,9 +83,16 @@ public class PlayerServlet extends HttpServlet {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-			}
+				
+				System.out.println("je vais rediriger avec joueur");
+
+				// creation de la session et redirection
+				session.setAttribute("user", player);
+				response.sendRedirect( "home" );
+				
+			} else {
 			
-			System.out.println("je vais rediriger");
+			System.out.println("je vais rediriger sans joueur");
 			// transmission a la home.jsp
 			
 			System.out.println("erreurs d'inscription 2 : " + valid.erreurs);
@@ -100,6 +104,7 @@ public class PlayerServlet extends HttpServlet {
 			
 			System.out.println("j'ai redirigé");
 			
+			}
 			
 		} else if (action.equals("connect")) {
 			

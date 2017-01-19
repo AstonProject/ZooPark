@@ -1,7 +1,6 @@
 package fr.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,14 +24,14 @@ public class FinancesDAO {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("INSERT INTO finance (type_action, somme, libelle, date, animals_number, player_id, specie_id, enclosure_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			st = connection.prepareStatement("INSERT INTO finance (type_action, somme, libelle, turn, animals_number, player_id, specie_id, enclosure_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, finance.getType_action());
 			st.setInt(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
-			st.setDate(4, (Date) finance.getDate());
+			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
 			st.setInt(6, finance.getPlayer_id());
-			st.setInt(7, finance.getSpecie_id());
+			st.setInt(7, finance.getPayMonthly());
 			st.setInt(8, finance.getEnclosure_id());
 			
 			st.executeUpdate();
@@ -71,10 +70,10 @@ public class FinancesDAO {
 				finance.setType_action(rs.getString("type_action"));
 				finance.setSomme(rs.getInt("somme"));
 				finance.setLibelle(rs.getString("libelle"));
-				finance.setDate(rs.getDate("date"));
+				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
 				finance.setPlayer_id(rs.getInt("player_id"));
-				finance.setSpecie_id(rs.getInt("specie_id"));
+				finance.setPayMonthly(rs.getInt("payMonthly"));
 				finance.setEnclosure_id(rs.getInt("enclosure_id"));
 			}
 		} catch (SQLException e) {
@@ -120,10 +119,10 @@ public class FinancesDAO {
 				finance.setType_action(rs.getString("type_action"));
 				finance.setSomme(rs.getInt("somme"));
 				finance.setLibelle(rs.getString("libelle"));
-				finance.setDate(rs.getDate("date"));
+				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
 				finance.setPlayer_id(rs.getInt("player_id"));
-				finance.setSpecie_id(rs.getInt("specie_id"));
+				finance.setPayMonthly(rs.getInt("payMonthly"));
 				finance.setEnclosure_id(rs.getInt("enclosure_id"));
 				// sauvegarde de la transaction dans la liste
 				finances.add(finance);
@@ -170,10 +169,10 @@ public class FinancesDAO {
 				finance.setType_action(rs.getString("type_action"));
 				finance.setSomme(rs.getInt("somme"));
 				finance.setLibelle(rs.getString("libelle"));
-				finance.setDate(rs.getDate("date"));
+				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
 				finance.setPlayer_id(rs.getInt("player_id"));
-				finance.setSpecie_id(rs.getInt("specie_id"));
+				finance.setPayMonthly(rs.getInt("payMonthly"));
 				finance.setEnclosure_id(rs.getInt("enclosure_id"));
 
 				finances.add(finance);
@@ -210,10 +209,10 @@ public class FinancesDAO {
 			st.setString(1, finance.getType_action());
 			st.setInt(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
-			st.setDate(4, (Date) finance.getDate());
+			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
 			st.setInt(6, finance.getPlayer_id());
-			st.setInt(7, finance.getSpecie_id());
+			st.setInt(7, finance.getPayMonthly());
 			st.setInt(8, finance.getEnclosure_id());
 			st.setInt(9, finance.getId());
 

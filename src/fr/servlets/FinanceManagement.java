@@ -1,7 +1,6 @@
 package fr.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -53,7 +52,7 @@ public class FinanceManagement extends HttpServlet {
 				int count = 0;
 				
 				for (FinanceBean finance : finances) {
-					reponseJson += "{\"date\":\"" + finance.getDate() + "\",";
+					reponseJson += "{\"turn\":\"" + finance.getTurn() + "\",";
 					reponseJson += "\"type_action\":\"" + finance.getType_action() + "\",";
 					reponseJson += "\"libelle\":\"" + finance.getLibelle() + "\",";
 					reponseJson += "\"somme\":\"" + finance.getSomme() + "\"}";

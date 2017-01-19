@@ -10,9 +10,8 @@
 	</head>
 	
 	<body>
-		<h1>Finances menu</h1><br>
-		
-		<div id="finance-status">
+		<div id="finance_status">
+			<h1>Finances menu</h1><br>
 			<div>
 				<h2>Current money :</h2><br>
 				<span class="money"><img src="${pageContext.request.contextPath}/assets/images/coins.png" alt="logo" /></span>
@@ -23,32 +22,32 @@
 				<span class="money"><img src="${pageContext.request.contextPath}/assets/images/coins.png" alt="logo" /></span>
 				<span class="currentLoan"><!-- current loan -->Z</span>
 			</div>
-			<div>
-				<h2>Want to loan ?</h2><br>
-				<span><img src="${pageContext.request.contextPath}/assets/images/loan.png" alt="logo" /></span>
-				<span class="newLoan"><input type="number" min="0" max="1000000" step="10000" name ="loanValue" class="mod"/></span>
-			</div>
-		</div>
-		
-		<div id="transactions-details">
-			<h2>Transactions Details</h2><br>
-			<div id="transactions-list"> <!-- zone d'affichage des transactions -->
-			</div>
-		</div>
-		
-		<h2>Validate / Cancel</h2>
-		<form action="financeManagement" method="post" id="FinanceValidation">
-			<div class= "decision_menu">
-				<span id="decision">
-					<input type="submit" value="" class="validate_img">
-					<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>
-				</span>
-				<div class="error">
 			
+			<form action="financeManagement" method="post" id="FormFinanceValidation">
+				<div>
+					<h2>Want to loan ?</h2><br>
+					<span><img src="${pageContext.request.contextPath}/assets/images/loan.png" alt="logo" /></span>
+					<span class="newLoan"><input type="number" min="0" max="1000000" step="10000" name ="loanValue" class="mod"/></span>
 				</div>
-			</div>
-		</form>
-		
+				<div id="transactions_details">
+					<h2>Transactions Details</h2><br>
+					<div id="transactions-list"> <!-- zone d'affichage des transactions -->
+					</div>
+				</div>
+				<div>
+					<h2>Validate / Cancel</h2>
+					<div class= "decision_menu">
+						<span id="decision">
+							<input type="submit" value="" class="validate_img">
+							<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>
+						</span>
+					</div>
+					<div class="error">
+						
+					</div>
+				</div>
+			</form>
+		</div>
 	</body>
 	
 	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>

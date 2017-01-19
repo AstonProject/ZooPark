@@ -38,7 +38,6 @@ public class ValidationDonnees {
 		player.setPseudo(pseudo);
 		player.setPassword(password);
 		player.setEmail(email);
-		player.setMoney(10000);
 		
 		// verification des donnees saisies
 		try {
