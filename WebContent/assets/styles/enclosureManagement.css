@@ -1,5 +1,5 @@
 .validate_img{
-background-image: url(../images/validate.png);
+background-image: url(../images/validate.png) !important;
 background-position:  0px 0px;
 background-repeat: no-repeat;
 width: 53px;

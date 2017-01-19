@@ -14,7 +14,7 @@
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/buildEnclosure.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/buildEnclosure.css" />
 </c:if>
-<c:if test="${ pageContext.request.servletPath == '/WEB-INF/managementEnclosure.jsp' }">
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/enclosureManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/enclosureManagement.css" />
 </c:if>
 </head>

@@ -23,7 +23,7 @@
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/buildEnclosure.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/buildEnclosure.js"></script>
 	</c:if>
-	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/managementEnclosure.jsp' }">
+	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/enclosureManagement.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
 	</c:if>
 </body>
