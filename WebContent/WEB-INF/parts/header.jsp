@@ -39,7 +39,7 @@
 									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 
 									<span id="gamedate">
 										<c:set var="ht" value="${fn:split(sessionScope.user.turn, ',')}" />
-										HEURE : ${ ht[0] } JOUR : ${ ht[1] }
+										HEURE : <span id="heure">${ ht[0] }</span> JOUR : <span id="jour">${ ht[1] }</span>
 									</span>
 								</li>
 							</ul>

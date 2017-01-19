@@ -48,7 +48,7 @@
 	}
 
 	function showEmployeeMangement(){
-		$('#enclosureManagement').on('click', function(){
+		$('#employeesManagement').on('click', function(){
 			window.location.replace("employeesManagement");
 		});
 	}

@@ -1,11 +1,8 @@
 <c:if test="${ !empty sessionScope.user }">
 	<footer id="bottom-menu">
-		<button name="construction" id="construction">Build</button>
-		<button name="gestion_personnel" id="gestion_personnel">Staff</button>
+		<button name="gestion_personnel" id="employeesManagement">Staff</button>
 		<button name="consommables" id="consommables">Consumables</button>
 		<button name="finances" id="finances">Finances</button>
-		<button name="detail_enclos" id="detail_enclos">Enclosures details</button>
-		<button name="aide" id="aide">Help</button>
 	</footer>
 </c:if>
 <c:if test="${ empty sessionScope.user }">
