@@ -22,9 +22,9 @@
 <h2>Engage / Dismiss</h2>
 <form action="" method="post" id="FormEngageDismiss">
 	<div id="employees_container" class="ec3">
-		<span><input type="number" max="5" min="-5" value="0" name="quantityHeal" class="mod" id="heal_quantity" /></span>
-		<span><input type="number" max="5" min="-5" value="0" name="quantityClean" class="mod" id="clean_quantity" /></span>
-		<span><input type="number" max="5" min="-5" value="0" name="quantitySecurity" class="mod" id="secu_quantity" /></span>
+		<span><input type="number" max="0" min="0" value="0" name="quantityHeal" class="mod" id="heal_quantity" /></span>
+		<span><input type="number" max="0" min="0" value="0" name="quantityClean" class="mod" id="clean_quantity" /></span>
+		<span><input type="number" max="0" min="0" value="0" name="quantitySecurity" class="mod" id="secu_quantity" /></span>
 	</div>
 	
 	<br>

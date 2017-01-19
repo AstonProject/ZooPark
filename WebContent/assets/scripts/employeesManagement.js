@@ -31,7 +31,7 @@
 	// et le maximum pouvant etre licencies (Min)
 	function setRestMinEmQty($selectedEmQty) {
 		var statusSEQ = 'okSEQ'
-		$($selectedEmQty).on('click', function() {
+		
 			var $inputQuantity = $(".mod");
 			var $imputHl = $('#heal_quantity');
 			var $imputCl = $('#clean_quantity');
@@ -73,9 +73,14 @@
 					"statusSEQ" : statusSEQ
 				};
 				server.monAjax(object, "employeesManagement", callback, 'POST');		
-		});		
+				
 	}
 	
+	function refreshRestMinEmQty(){
+		$($selectedEmQty).on('click', function() {
+			setRestMinEmQty($selectedEmQty);
+		});
+	}
 	
 	function showEmployeePrice($selectedEmQty){
 		var statusEmP = "okEmP";
@@ -180,5 +185,6 @@
 		setRestMinEmQty($cleaner_button);
 		setRestMinEmQty($security_button);
 		engageDismiss();
+		refreshRestMinEmQty();
 	})
 })(jQuery);
