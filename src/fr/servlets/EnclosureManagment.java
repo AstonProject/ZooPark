@@ -77,7 +77,6 @@ public class EnclosureManagment extends HttpServlet {
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			String statUE = request.getParameter("statusUE");
-			System.out.println("statUE "+statUE);
 			
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
@@ -315,7 +314,7 @@ public class EnclosureManagment extends HttpServlet {
 				 int capacity = enclosure.getCapacity();
 				 
 				 String responseJson = "{\"capacity\":" + capacity +"}";
-				 System.out.println(capacity);
+				 
 					response.getWriter().append(responseJson);
 			 }
 			/**permettre affichage des prix**/
@@ -494,7 +493,7 @@ public class EnclosureManagment extends HttpServlet {
 			/**permettre un resize**/
 			else if ((statUE != null) && statUE.equals("okUE")) {
 				long upgradeE_price = (long) session.getAttribute("upgrade_price");
-				System.out.println("player av update " + player);
+
 				//MAJ du solde du player dans la BDD et en session
 				PlayersDAO pdao = new PlayersDAO();
 				long money = player.getMoney();
@@ -502,9 +501,8 @@ public class EnclosureManagment extends HttpServlet {
 				
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
-				System.out.println("player ap update " + player);
+
 				//MAJ de la capacity de l'enclos selectionne
-				System.out.println("enclosure av update " + enclosure);
 				if(enclosure.getCapacity() == 5){
 					enclosure.setCapacity(10);
 				}else if(enclosure.getCapacity() == 10){
@@ -512,7 +510,7 @@ public class EnclosureManagment extends HttpServlet {
 				}
 				ecdao.updateEnclosure(enclosure);
 				ecdao.updateEnclosure(enclosure);
-				System.out.println("enclosure ap update " + enclosure);
+				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}

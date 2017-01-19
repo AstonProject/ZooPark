@@ -233,7 +233,6 @@ function mooveEmployees(){
 						});
 
 		$('#resale_all').on('click', function() {
-			console.log('resale_all');
 					// Reinitialise le contenu du blockPrice et du checkbox resize
 					$blockAnimalPrice.empty();
 					$('input:checkbox[name=ecl_upgrade]').each(function() {$(this).prop('checked', false);});
@@ -258,14 +257,11 @@ function mooveEmployees(){
 				});
 
 		$('#upgrade_ecl').on('click', function() {
-					console.log('upgrade_ecl');
 					// Reinitialise le contenu du blockPrice et du checkbox ecl_resale
 					$blockAnimalPrice.empty();
 					$('input:checkbox[name=ecl_resale]').each(function() {$(this).prop('checked', false);});
-					console.log('avant le if upgrade_ecl');
 					
 					if ($('#upgrade_ecl').is(':checked')) {
-						console.log('dans le if upgrade_ecl');
 						var callback = function(donnees) {
 							$blockAnimalPrice.prepend("<div>"
 									+ donnees.totalEUP_price * (-1)+ "</div>");
@@ -274,7 +270,7 @@ function mooveEmployees(){
 						var object = {
 							"statusEUP" : statusEUP
 						};
-						console.log("statusEUP:" + object)
+						
 						server.monAjax(object, "enclosureManagment", callback,'POST');
 					} else {
 						$blockAnimalPrice.prepend("<div>"
