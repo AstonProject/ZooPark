@@ -316,7 +316,7 @@ function mooveEmployees(){
 				server.monAjax(object, "enclosureManagment", callback, 'POST');
 
 			} //Si resize
-			else if ($('#upgate_ecl').is(':checked')) {
+			else if ($('#upgrade_ecl').is(':checked')) {
 				
 				var callback = function(donnees) {
 					if (donnees.code == "OK") {

@@ -77,7 +77,7 @@ public class EnclosureManagment extends HttpServlet {
 			String statPRA = request.getParameter("statusPRA");
 			String statRE = request.getParameter("statusRE");
 			String statUE = request.getParameter("statusUE");
-			System.out.println("statusEUP "+statusEUP);
+			System.out.println("statUE "+statUE);
 			
 			// Recuperation de donnees enregistrees dans la session:
 			// - les coordonnees d'enclos(ce doGet)
@@ -350,11 +350,9 @@ public class EnclosureManagment extends HttpServlet {
 					response.getWriter().append(reponseJson);					
 				} else if(statEP == null && statAP == null && statusEUP.equals("okEUP")){
 					long upgrade_price=0;
-					if(enclosure.getCapacity() == 5){
-						upgrade_price= ((long) prices.get("enclosureCosts_"+name)*2);
-					} else if(enclosure.getCapacity() == 10){
-						upgrade_price= ((long) prices.get("enclosureCosts_"+name)*3);
-					}
+					if(enclosure.getCapacity() < 15){
+						upgrade_price= ((long) prices.get("enclosureCosts_"+name));
+					} 
 					session.setAttribute("upgrade_price", upgrade_price);
 					String reponseJson = "{\"totalEUP_price\":"+upgrade_price+"}";
 					response.getWriter().append(reponseJson);
@@ -496,7 +494,7 @@ public class EnclosureManagment extends HttpServlet {
 			/**permettre un resize**/
 			else if ((statUE != null) && statUE.equals("okUE")) {
 				long upgradeE_price = (long) session.getAttribute("upgrade_price");
-				
+				System.out.println("player av update " + player);
 				//MAJ du solde du player dans la BDD et en session
 				PlayersDAO pdao = new PlayersDAO();
 				long money = player.getMoney();
@@ -504,14 +502,17 @@ public class EnclosureManagment extends HttpServlet {
 				
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
-				
+				System.out.println("player ap update " + player);
 				//MAJ de la capacity de l'enclos selectionne
+				System.out.println("enclosure av update " + enclosure);
 				if(enclosure.getCapacity() == 5){
 					enclosure.setCapacity(10);
-				}else if(enclosure.getCapacity() == 5){
+				}else if(enclosure.getCapacity() == 10){
 					enclosure.setCapacity(15);
 				}
-				
+				ecdao.updateEnclosure(enclosure);
+				ecdao.updateEnclosure(enclosure);
+				System.out.println("enclosure ap update " + enclosure);
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
