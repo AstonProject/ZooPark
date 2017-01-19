@@ -83,6 +83,9 @@
 			Resale enclosure? <input type="checkbox" name="ecl_resale"
 				id="resale_all">
 		</div>
+		<div id="enclosure_upgrade">
+			Upgrade enclosure? <input type="checkbox" name="ecl_upgrade" id="upgrade_ecl">
+		</div>
 		<br>
 		<h3>Price</h3>
 		<div class="showPrice">
@@ -98,10 +101,9 @@
 			<div class="error"></div>
 		</div>
 	</form>
-</body>
-<script
-	src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
-<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-<script
-	src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
+
+		<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
+	</body>
 </html>

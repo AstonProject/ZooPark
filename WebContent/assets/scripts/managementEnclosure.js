@@ -160,11 +160,31 @@ function mooveEmployees(){
 		};
 		server.monAjax(object, "enclosureManagment", callback, 'POST');
 	}
+	
+	//Fonction pour permettre un resize
+	function enclosureResize(){
+		var statusER = "okER";
+		
+		var callback = function(donnees) {
+			
+			if(donnees.capacity == 15){
+				$('#enclosure_upgrade').css('display','none');
+			}
+		};
+
+		var object = {
+			"statusER" : statusER
+		};
+		
+		server.monAjax(object, "enclosureManagment", callback, 'POST');
+	}
+	
 
 	// Fonction d'affichage des prix
 	function showAEPrice() {
 		var statusAP = "okAP";
 		var statusEP = "okEP";
+		var statusEUP = "okEUP";
 		// attribution d'une variable selectionnant la div d'affichage des prix
 
 		var $blockAnimalPrice = $('.ae_price');
@@ -174,21 +194,15 @@ function mooveEmployees(){
 		// Stockage du prix dans la session
 		sessionStorage.setItem("animals_price", animals_price);
 
-		$('#a_quantity')
-				.on(
-						'click',
-						function() {
+		$('#a_quantity').on('change', function() {
 							// Reinitialise le contenu du blockPrice si un radio
 							// EnclosureType
 							// est selectionne
 							$blockAnimalPrice.empty();
 
-							// Deselectionne la checkbox permettant la revente
-							// d'enclos
-							$('input:checkbox[name=ecl_resale]').each(
-									function() {
-										$(this).prop('checked', false);
-									});
+							// Deselectionne les checkbox 
+							$('input:checkbox[name=ecl_resale]').each(function() {$(this).prop('checked', false);});
+							$('input:checkbox[name=ecl_upgrade]').each(function() {$(this).prop('checked', false);});
 
 							// Recuperation de la quantite d'animaux choisie
 							animals_quantity = $('input[name=quantity]').val();
@@ -218,15 +232,12 @@ function mooveEmployees(){
 									callback, 'POST');
 						});
 
-		$('#resale_all').on(
-				'click',
-				function() {
-					// Reinitialise le contenu du blockPrice si un radio
-					// EnclosureType
-					// est selectionne
-
+		$('#resale_all').on('click', function() {
+					// Reinitialise le contenu du blockPrice et du checkbox resize
 					$blockAnimalPrice.empty();
-
+					$('input:checkbox[name=ecl_upgrade]').each(function() {$(this).prop('checked', false);});
+					
+					
 					if ($('#resale_all').is(':checked')) {
 						var callback = function(donnees) {
 							$blockAnimalPrice.prepend("<div>"
@@ -245,12 +256,36 @@ function mooveEmployees(){
 					}
 				});
 
+		$('#upgrade_ecl').on('click', function() {
+					// Reinitialise le contenu du blockPrice et du checkbox ecl_resale
+					$blockAnimalPrice.empty();
+					$('input:checkbox[name=ecl_resale]').each(function() {$(this).prop('checked', false);});
+					
+					if ($('#upgrade_ecl').is(':checked')) {
+						var callback = function(donnees) {
+							$blockAnimalPrice.prepend("<div>"
+									+ donnees.totalEUP_price * (-1)+ "</div>");
+						};
+
+						var object = {
+							"statusEUP" : statusEUP
+						};
+						
+						server.monAjax(object, "enclosureManagment", callback,'POST');
+					} else {
+						$blockAnimalPrice.prepend("<div>"
+								+ sessionStorage.getItem("animals_price")
+								+ "</div>");
+					}
+		});
+
 	}
 
 	// Fonction achat des animaux
 	function purshaseResale() {
 		var statusPRA = "okPRA";
 		var statusRE = "okRE";
+		var statusUE = "okUE";
 
 		var quantity = null;
 		var $formPA = $('#FormPurchaseAnimals');
@@ -276,6 +311,22 @@ function mooveEmployees(){
 
 				server.monAjax(object, "enclosureManagment", callback, 'POST');
 
+			} //Si resize
+			else if ($('#upgrade_ecl').is(':checked')) {
+				
+				var callback = function(donnees) {
+					if (donnees.code == "OK") {
+						window.location.href = "home";
+					} else {
+						failed();
+					}
+				};
+
+				var object = {
+					"statusUE" : statusUE
+				};
+
+				server.monAjax(object, "enclosureManagment", callback, 'POST');
 			}// Si il faut revendre ou acheter des animaux
 			else {
 
@@ -297,9 +348,11 @@ function mooveEmployees(){
 			}
 		});
 	}
-	// fonction pour afficher la quantite d'animaux pouvant encore rentrer dans
-	// l'enclos
-	function setRestQuantity() {
+	
+	
+	// fonction pour afficher la quantite d'animaux (Max) pouvant encore rentrer dans
+	// l'enclos et le maximum pouvant être revendus (Min)
+	function setRestMinQuantity() {
 		var statusSQ = "okSQ";
 
 		var callback = function(donnees) {
@@ -320,8 +373,9 @@ function mooveEmployees(){
 		showListEmployees();
 		mooveEmployees();
 		showEmployees();
-		setRestQuantity();
+		setRestMinQuantity();
 		showGauges();
+		enclosureResize();
 		showAEPrice();
 		purshaseResale();
 	})

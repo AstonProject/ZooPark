@@ -53,8 +53,7 @@ public class BuildEnclosureMenu extends HttpServlet {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 		if (session != null && player != null) {
-			/** Affichage des prix dans la jsp buildEnclosure **/
-
+			
 			// Recuperation des parametres status envoyes par les fonctions ajax
 			// showDescription() showPrice() et getForm()
 			// pour effectuer des redirections dans ce doPost
@@ -87,21 +86,19 @@ public class BuildEnclosureMenu extends HttpServlet {
 				reponseJson += "}";
 
 				response.getWriter().append(reponseJson);
-			}
+			} /** Affichage des prix dans la jsp buildEnclosure **/
 
 			// Recuperation des prix d'enclos via CostsDAO lorsque showPrice()
 			// est appelee (buildEnclosure.js)
-			if ((statPrices != null) && statPrices.equals("okP")) {
+			else if ((statPrices != null) && statPrices.equals("okP")) {
 				// Recuperation des prix via CostsDAO dans un objet Json
 				CostsDAO cdao = new CostsDAO();
 				JSONObject prices = cdao.getCosts();
 
 				// Envoie des prix dans la reponse pour etre recupere dans la
 				// fonction showPrice() dans buildEnclosure.js
-				if (prices != null) {
 					response.setContentType("application/json");
 					response.getWriter().append(prices.toString());
-				}
 			}
 			/** Creation d'un nouvel enclos et update du player apres achat **/
 			// Si getForm() est appelee (buildEnclosure.js)

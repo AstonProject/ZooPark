@@ -1,10 +1,16 @@
 {
-  "enclosureCosts_lion":500,
-  "enclosureCosts_giraffe":500,
-  "enclosureCosts_elephant":1000,
-  "enclosureCosts_camel":500,
-  "lionCosts":35,
-  "giraffeCosts":40,
-  "elephantCosts":50,
-  "camelCosts":30
+  "enclosureCosts_lion":250000,
+  "enclosureCosts_giraffe":300000,
+  "enclosureCosts_elephant":350000,
+  "enclosureCosts_camel":200000,
+  "lionCosts":10000,
+  "giraffeCosts":15000,
+  "elephantCosts":20000,
+  "camelCosts":12000,
+  "healerCosts": 4000,
+  "cleanerCosts": 2100,
+  "securityCosts": 3000,
+  "salaryCosts_healer": 3000,
+  "salaryCosts_cleaner": 1500,
+  "salaryCosts_security": 2000
 }
