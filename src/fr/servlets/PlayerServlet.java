@@ -15,16 +15,11 @@ import fr.beans.PlayerBean;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
 import fr.utility.ValidationDonnees;
-import sun.security.krb5.internal.EncAPRepPart;
 
 @WebServlet("/user")
 public class PlayerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String ATT_PLAYER = "player";
-	private static final String ATT_FORM = "form";
-	private static final String VUE = "home";
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 
@@ -35,7 +30,8 @@ public class PlayerServlet extends HttpServlet {
 			if (session != null) {
 				session.removeAttribute("user");
 				session.invalidate();
-				response.sendRedirect( VUE );
+				response.sendRedirect( "home" );
+				System.out.println("ici deconnect");
 			}
 		}
 	}
@@ -47,22 +43,21 @@ public class PlayerServlet extends HttpServlet {
 		if (action.equals("register")) {
 			
 			// recuperer les donnees du formulaire
-			String pseudo = request.getParameter("reg_pseudo");
-			String password = request.getParameter("reg_password");
-			String confirmation = request.getParameter("reg_confirmation");
-			String email = request.getParameter("reg_email");
+			ValidationDonnees valid = new ValidationDonnees();
 			
-			ValidationDonnees valid = new ValidationDonnees(request);
+			// appel de la methode de la requete 
+			PlayerBean player = valid.inscrirePlayer(request);
 			
-			PlayerBean player = valid.recupDonnees(pseudo, password, confirmation, email);
+			//recuperation du player
+			request.setAttribute("valid", valid);
+			request.setAttribute("player", player);
+			request.setAttribute("isValide", valid.isValide);
 			
-			System.out.println(player);
+			System.out.println("inscription joueur :" + player);
 			
-			HttpSession session = request.getSession(false);
-
 			if (player != null) {
 				
-				session = request.getSession(true);
+				HttpSession session = request.getSession(true);
 				
 				PlayersDAO objPlayer = new PlayersDAO();
 				objPlayer.createPlayer(player);
@@ -89,21 +84,32 @@ public class PlayerServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				
+				System.out.println("je vais rediriger avec joueur");
+
+				// creation de la session et redirection
 				session.setAttribute("user", player);
-				response.sendRedirect( VUE );
+				response.sendRedirect( "home" );
+				
 			} else {
-				
-				request.setAttribute("valid", valid);
-				request.setAttribute("user", player);
-				
-				response.sendRedirect( VUE );
+			
+			System.out.println("je vais rediriger sans joueur");
+			// transmission a la home.jsp
+			
+			System.out.println("erreurs d'inscription 2 : " + valid.erreurs);
+			request.setAttribute("valid", valid);
+			request.setAttribute("user", player);
+			request.setAttribute("isValide", valid.isValide);
+			
+			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp" ).forward( request, response );
+			
+			System.out.println("j'ai redirigé");
+			
 			}
 			
 		} else if (action.equals("connect")) {
 			
 			String pseudo = request.getParameter("con_pseudo");
 			String password = request.getParameter("con_password");
-			request.setAttribute("pseudo", pseudo);
 			
 			PlayersDAO objPlayer = new PlayersDAO();
 			PlayerBean player = new PlayerBean();
@@ -116,24 +122,28 @@ public class PlayerServlet extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
+			
+			System.out.println("connection joueur :" + player);
+			
 			if (player != null) {
-				
+				System.out.println("player non null");
 				HttpSession session = request.getSession();
 				session.setAttribute("user", player);
-				response.sendRedirect( VUE );
+				response.sendRedirect( "home" );
 			} else {
 				
 				request.setAttribute("erreur", "Pseudo ou Password incorrect");
-				RequestDispatcher rs = request.getRequestDispatcher( VUE );
+				RequestDispatcher rs = request.getRequestDispatcher( "/WEB-INF/home.jsp" );
 				rs.forward(request, response);
+				
+				
 			}
 		} else if (action.equals("disconnect")) {
 			
 			HttpSession session = request.getSession();
 			session.removeAttribute("user");
 			
-			response.sendRedirect( VUE );
+			response.sendRedirect( "home" );
 			
 		}
 	}

@@ -53,9 +53,16 @@
 		});
 	}
 	
+	function showFinances() {
+		$('#finances').on('click', function() {
+			window.location.replace("financeManagement");
+		});
+	}
+	
 	
 	$(document).ready(function() {
 		showEnclosures();
 		showEmployeeMangement();
+		showFinances();
 	})
 })(jQuery);

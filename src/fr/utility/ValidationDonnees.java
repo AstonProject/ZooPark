@@ -11,20 +11,35 @@ import fr.beans.PlayerBean;
 import fr.dao.PlayersDAO;
 
 public class ValidationDonnees {
-	final static String regex = "[a-zA-Z0-9]+.?[a-zA-Z0-9]+@[a-z0-9]+\\.[a-z]{2,3}";
-	public Map<String, String> erreurs = new HashMap<String, String>();
-	public static PlayerBean player = new PlayerBean();
 	
-	public ValidationDonnees(HttpServletRequest request) {
+	public boolean isValide = false;
+	
+	final static String regex = "[a-zA-Z0-9]+.?[a-zA-Z0-9]+@[a-z0-9]+\\.[a-z]{2,3}";
+	
+	public String resultat;
+	public String getResultat() {
+		return resultat;
 	}
+	
+	public Map<String, String> erreurs = new HashMap<String, String>();
+	public Map<String, String> getErreurs() {
+		return erreurs;
+	}
+	
+	public PlayerBean inscrirePlayer (HttpServletRequest request) {
 		
-	public PlayerBean recupDonnees (String ps, String pw, String cf, String em) {
+		// recuperation des donnees du formulaire
+		String pseudo = request.getParameter("reg_pseudo");
+		String password = request.getParameter("reg_password");
+		String confirmation = request.getParameter("reg_confirmation");
+		String email = request.getParameter("reg_email");
 		
-		String pseudo = ps;
-		String password = pw;
-		String confirmation = cf;
-		String email = em;
+		PlayerBean player = new PlayerBean();
+		player.setPseudo(pseudo);
+		player.setPassword(password);
+		player.setEmail(email);
 		
+		// verification des donnees saisies
 		try {
 			validationPseudo(pseudo);
 		} catch (Exception e) {
@@ -49,32 +64,17 @@ public class ValidationDonnees {
 			erreurs.put("confirmation", e.getMessage());
 		}
 		
-		System.out.println(erreurs.toString());
-		// Initialisation du résultat
+		// Initialisation du resultat
 		if (erreurs.isEmpty()) {
-			
-			player.setPseudo(pseudo);
-			player.setPassword(password);
-			player.setEmail(email);
-			player.setMoney(10000);
-			
-			return player;
-			
+			isValide = true;
 		} else {
 			resultat = "Inscription non valide";
-			return null;
+			player = null;
 		}
+		
+		return player;
 	}
 	
-	String resultat;
-	public String getResultat() {
-		return resultat;
-	}
-	
-	public Map<String, String> getErreurs() {
-		return erreurs;
-	}
-
 	public void validationEmail (String saisie) throws Exception {
 		final Pattern pattern = Pattern.compile(regex);
 		final Matcher matcher = pattern.matcher(saisie);

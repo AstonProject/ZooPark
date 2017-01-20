@@ -1,16 +1,14 @@
 package fr.beans;
 
-import java.util.Date;
-
 public class FinanceBean {
 
 	private int id;
 	private int player_id;
-	private String type_action; // ajout ou retrait
-	private int somme; // positive ou négative suivant ajout ou retrait
+	private String type_action; // achat, vente ou emprunt
+	private int somme; // positive ou négative suivant type_action
 	private String libelle; // enclos ou animal
-	private Date date;
-	private int specie_id;
+	private String turn; // tour de jeu
+	private int payMonthly; // mensualité de pret à rembourser
 	private int animals_number;
 	private int enclosure_id;
 	
@@ -57,20 +55,20 @@ public class FinanceBean {
 		this.libelle = libelle;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getTurn() {
+		return turn;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTurn(String turn) {
+		this.turn = turn;
 	}
 
-	public int getSpecie_id() {
-		return specie_id;
+	public int getPayMonthly() {
+		return payMonthly;
 	}
 
-	public void setSpecie_id(int specie_id) {
-		this.specie_id = specie_id;
+	public void setPayMonthly(int payMonthly) {
+		this.payMonthly = payMonthly;
 	}
 
 	public int getAnimals_number() {
@@ -102,10 +100,10 @@ public class FinanceBean {
 		builder.append(somme);
 		builder.append(", libelle=");
 		builder.append(libelle);
-		builder.append(", date=");
-		builder.append(date);
-		builder.append(", specie_id=");
-		builder.append(specie_id);
+		builder.append(", turn=");
+		builder.append(turn);
+		builder.append(", payMonthly=");
+		builder.append(payMonthly);
 		builder.append(", animals_number=");
 		builder.append(animals_number);
 		builder.append(", enclosure_id=");
