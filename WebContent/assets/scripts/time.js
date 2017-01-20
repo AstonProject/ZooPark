@@ -1,19 +1,19 @@
 (function($) {
 	"use strict";
-	var tick = null;
-	var phase = "day";
-	var hour = 0;
-	var day = 1;
+	let tick = null;
+	let phase = "day";
+	let hour = 0;
+	let day = 1;
 	
 	var time = function(millis){
-		var $gamedate = $("#gamedate");
+		let $heure = $(".heure");
+		let $jour = $(".jour");
 		if(tick != null){
 			clearInterval(tick);
 		}
 		tick = setInterval(function(){
-			console.log("ça tourne !");
 			hour++;
-			var callback=function(donnees){
+			let callback=function(donnees){
 			}
 			if(hour == 10){
 				hour = 0;
@@ -25,14 +25,30 @@
 				phase = "night";
 				$("#body").css("background-color","darkblue");
 			}
-			var updatePlayer = {"newTime": hour+","+day};
+			let updatePlayer = {"newTime": hour+","+day};
 			server.monAjax(updatePlayer, "newturn", callback, 'POST');
-			$gamedate.empty();
-			$gamedate.append("HEURE : "+hour+" JOUR : "+day);
+			$heure.empty();
+			$jour.empty();
+			$heure.append(hour);
+			$jour.append(day);
 		}, millis);
 	}
 
 	$(document).ready(function() {
+		let obj = {};
+		let callback = function(donnees){
+			hour = parseInt(donnees.hour);
+			day = parseInt(donnees.day);
+			if(hour >= 5) {
+				phase = "night";
+				$("body, #body").css("background-color","darkblue");
+			}
+			else {
+				phase = "day";
+				$("body, #body").css("background-color","lightblue");
+			}
+		};
+		server.monAjax(obj, "newturn", callback, 'GET');
 		$("#play").on("click", function(){
 			time(60000);
 		});
@@ -41,7 +57,6 @@
 		});
 		$("#pause").on("click", function(){
 			if(tick != null){
-				console.log("ça s'arrête !");
 				clearInterval(tick);
 			}
 		});

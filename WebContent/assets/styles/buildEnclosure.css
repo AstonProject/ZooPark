@@ -1,7 +1,7 @@
 .enclosureDescription {
 	width: 400px;
 	height: 400px;
-	background: orange;
+	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -34,7 +34,7 @@
 .showPrice {
 	width: 100px;
 	height: 30px;
-	background: orange;
+	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;

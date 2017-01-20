@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,36 @@ public class EmployeesDAO {
 	public EmployeesDAO() {
 		connection = ConnectionDB.getConnection();
 	}
+	
+	public boolean createEmployee(EmployeeBean employee) {
+		PreparedStatement st = null;
+		int res = 0; 
+		
+		try {
+			st = connection.prepareStatement("INSERT INTO employee (type, health_gauge, description, enclosure_id, player_id) VALUES (?, ?, ?, ?, ?)");
+			st.setString(1, employee.getType());
+			st.setInt(2, employee.getHealth_gauge());
+			st.setString(3, employee.getDescription());
+			st.setInt(4, employee.getEnclosure_id());
+			st.setInt(5, employee.getPlayer_id());
+
+			res = st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			
+			if (st != null) {
+				try {
+					st.close(); 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return (res > 0);
+	}
+	
 	
 	public EmployeeBean getEmployeeById(int idEmployee) {
 		EmployeeBean employee = new EmployeeBean();
@@ -96,7 +127,7 @@ public class EmployeesDAO {
 	public void updateEmployee(EmployeeBean employee) {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"UPDATE employee SET type=?, health_gauge=?, description=?, enclosure_id=?, player_id=?, WHERE id=?");
+					"UPDATE employee SET type=?, health_gauge=?, description=?, enclosure_id=?, player_id=? WHERE id=?");
 			preparedStatement.setString(1, employee.getType());
 			preparedStatement.setInt(2, employee.getHealth_gauge());
 			preparedStatement.setString(3, employee.getDescription());

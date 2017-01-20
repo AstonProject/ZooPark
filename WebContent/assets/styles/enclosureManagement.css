@@ -10,6 +10,37 @@ cursor: pointer;
 outline: 0;
 }
 
+.validate_img2{
+background-image: url(../images/validate.png);
+background-position: 0px 25px;
+background-repeat: no-repeat;
+width: 53px;
+height: 40px;
+border: none;
+background-size: 30%;
+background-color: white !important;
+cursor: pointer;
+outline: 0;
+}
+
+#slotE{
+	border: 3px solid black;
+	width: 50px;
+	height: 50px;
+	display: inline-block;;
+	position: relative;
+}
+
+.current_employees{
+    width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
 input[type="number"] {
     height: 30px;
     width: 40px;
@@ -35,3 +66,49 @@ input[type="number"].mod::-moz-inner-spin-button:hover,
 input[type="number"].mod::-moz-inner-spin-button:active{
     border: none;
 }
+
+
+.showPrice {
+	width: 100px;
+	height: 30px;
+	background: orange;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.ae_price {
+	text-align: center;
+	padding: 7px;
+}
+
+.style meter::-webkit-meter-bar {
+    background: #666;
+    -webkit-box-shadow: inset 0 0 2px 2px #555;
+    -moz-box-shadow: inset 0 0 2px 2px #555;
+    box-shadow: inset 0 0 2px 2px #555;   
+}
+
+.style meter::-webkit-meter-bar, 
+.style meter::-webkit-meter-optimum-value, 
+.style meter::-webkit-meter-suboptimum-value, 
+.style meter::-webkit-meter-even-less-good-value {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.style meter::-webkit-meter-optimum-value {
+    background: #4fa2f7;
+    border: 1px solid #1560ad;
+}
+
+.style meter::-webkit-meter-suboptimum-value {
+    background: #f7c64f;
+    border: 1px solid #b9870d;
+}
+
+.style meter::-webkit-meter-even-less-good-value {
+    background: #f76f4f;
+    border: 1px solid #bd3413;
+}​

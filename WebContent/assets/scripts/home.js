@@ -12,7 +12,7 @@
 					var $blockEnclosure = $(blockId);
 					$blockEnclosure.empty();
 					var thisData = "data" + (i + 1) + (j + 1);
-					console.log(donnees[thisData]);
+
 					if(donnees[thisData].capacity == 0) {
 						$blockEnclosure.empty();
 						$blockEnclosure.prepend("<a href=\"createEnclosure?x="+(i+1)+"&y="+(j+1)+"\"> <img src=/zoopark/assets/images/crane.png alt=\"logo\" /> </a>");
@@ -47,7 +47,15 @@
 		server.monAjax(monObjet, "home", callback, 'POST');
 	}
 
+	function showEmployeeMangement(){
+		$('#employeesManagement').on('click', function(){
+			window.location.replace("employeesManagement");
+		});
+	}
+	
+	
 	$(document).ready(function() {
 		showEnclosures();
+		showEmployeeMangement();
 	})
 })(jQuery);

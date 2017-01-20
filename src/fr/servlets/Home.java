@@ -63,7 +63,7 @@ public class Home extends HttpServlet {
 			EnclosuresDAO edao = new EnclosuresDAO();
 			//Recuperation des 25 enclos du joueur crees lors de l'inscription de celui-ci
 			enclosures = edao.getAllEnclosures(user.getId());
-			System.out.println("enclosures " + enclosures);
+
 			String reponseJson = "{"; 
 			int lengthList = enclosures.size();
 			int count = 0;
@@ -81,7 +81,7 @@ public class Home extends HttpServlet {
 				}
 			}
 			reponseJson += "}";
-			System.out.println(reponseJson);
+
 			response.getWriter().append(reponseJson);
 		}
 	}
