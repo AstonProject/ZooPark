@@ -24,15 +24,15 @@ public class FinancesDAO {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("INSERT INTO finance (type_action, somme, libelle, turn, animals_number, player_id, specie_id, enclosure_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			st = connection.prepareStatement("INSERT INTO finance (type_action, somme, libelle, turn, animals_number, player_id, enclosure_id, payMonthly) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, finance.getType_action());
 			st.setInt(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
 			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
 			st.setInt(6, finance.getPlayer_id());
-			st.setInt(7, finance.getPayMonthly());
-			st.setInt(8, finance.getEnclosure_id());
+			st.setInt(7, finance.getEnclosure_id());
+			st.setInt(8, finance.getPayMonthly());
 			
 			st.executeUpdate();
 			
@@ -100,15 +100,14 @@ public class FinancesDAO {
 		return finance;
 	}
 	
-	public List<FinanceBean> getFinancesFromIdByPlayer(int id, int player_id) {
+	public List<FinanceBean> getFinancesByPlayer(int player_id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		List<FinanceBean> finances = new ArrayList<>();
 		
 		try {
-			st = connection.prepareStatement("SELECT * FROM finance WHERE id>? AND player_id=?");
-			st.setInt(1, id);
-			st.setInt(2, player_id);
+			st = connection.prepareStatement("SELECT * FROM finance WHERE player_id=?");
+			st.setInt(1, player_id);
 			rs = st.executeQuery();
 			
 
@@ -201,19 +200,66 @@ public class FinancesDAO {
 		return finances;
 	}
 	
+	public void refundLoan (FinanceBean finance) {
+		PreparedStatement st = null;
+		
+		try {
+			st = connection.prepareStatement("UPDATE finance SET somme=? WHERE id=?");
+			st.setInt(1, finance.getSomme());
+			st.setInt(2, finance.getId());
+			
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			
+			if (st != null) {
+				try {
+					st.close(); 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public void deleteLoan (int id) {
+		PreparedStatement st = null;
+		
+		try {
+			st = connection.prepareStatement("DELETE FROM finance WHERE id=?");
+			st.setInt(1, id);
+
+			st.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			
+			if (st != null) {
+				try {
+					st.close(); 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public void updateFinances(FinanceBean finance) {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("UPDATE finance SET type_action=?, somme=?, libelle=?, date=?, animals_number=?, player_id=?, specie_id=?, enclosure_id=? WHERE id=?");
+			st = connection.prepareStatement("UPDATE finance SET type_action=?, somme=?, libelle=?, date=?, animals_number=?, player_id=?, enclosure_id=?, payMonthly=? WHERE id=?");
 			st.setString(1, finance.getType_action());
 			st.setInt(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
 			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
 			st.setInt(6, finance.getPlayer_id());
-			st.setInt(7, finance.getPayMonthly());
-			st.setInt(8, finance.getEnclosure_id());
+			st.setInt(7, finance.getEnclosure_id());
+			st.setInt(8, finance.getPayMonthly());
 			st.setInt(9, finance.getId());
 
 

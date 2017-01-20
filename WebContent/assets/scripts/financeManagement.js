@@ -1,12 +1,7 @@
-
-
-
 (function($) {
 	"use strict";
 	
-	//fonction pour decompter les interets jusqu'au remboursement final
-	
-	//fonction pour recuperer les actions de la db
+	// fonction pour recuperer les transactions de la bdd
 	function getTransactions() {
 		var statusGT = "okGT";
 		
@@ -14,10 +9,12 @@
 			console.log(donnees)
 			
 			var $blockMessages = $('#transactions-list');
+			$blockMessages.empty();
 			if (donnees.data) {
 				for (let finance of donnees.data) {
 					console.log(finance);
-					$blockMessages.prepend("<div> Tour " + finance.turn + ", " + finance.type_action + " de " + finance.libelle + " d'une valeur de " + finance.somme + " Z.</div>"); // append -> affiche en dernier ; prepend -> affiche en premier
+					// affichage : append (en dernier), prepend (en premier)
+					$blockMessages.prepend("<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " (value : " + finance.somme + " Z).</div>");
 				}
 			}
 		};
@@ -34,81 +31,71 @@
 
 	}
 
-	// fonction pour valider le pret
-	function validLoan() {
-		var statusL = "okL";
+	// fonction pour le remboursement
+	function refund() {
 		
-		var callback = function(donnees) {
-			console.log(donnees)
-			
-		}
+		// faire un retrait de la somme(payMonthly) tous les mois
+		// mettre a jour chaque pret tous les mois
+		// supprimer les prets quand ils sont rembourses
 		
-		var monObj = {
-			"statusL" : statusL
-		};
 	}
 	
-	//Fonction de récupération des données : 
-	function getForm(){
-		var $formCE = $('#FormFinanceValidation');
-		var newLoan = 0;
-		var toRefund = 0;
-		var payMonthly = 0;
+	// fonction pour vider la bdd finance tous les mois
+	function clearFinance() {
 		
-		var type= null;
-		var size= null;
-		var capacity=null;
-		var specie_id= null;
-		var statusF = "okF";
-				
-		$formCE.on('submit', function(event) {
+		// supprimer toutes les lignes SAUF les emprunts non rembourses
+		
+	}
+	
+	// fonction pour valider le pret + mise a jour compte + insertion bdd
+	function getFinanceForm() {
+		var statusGFF = "okGFF";
+		var $formLoan = $('#FormFinanceValidation');
+		
+		$formLoan.on('submit', function(event) {
 			// Bypass du submit pour la fonction callback
 			event.preventDefault();
 			
-			// Recuperation des valeurs de newLoan
-			newLoan = $('input[name=loanValue]').val();
+			// recuperation de la valeur
+			var $inputNumber = $formLoan.find('[name="loanValue"]');
 			
-			// Creation de la somme à rembourser
-			toRefund = newLoan*1.25;
-			payMonthly = toRefund/10;
+			var loan = $inputNumber.val();
+			$inputNumber.val('');
+			console.log("valeur du pret : " + loan);
 			
-			//Modification de FK_specie_id de l'enclos selon le radio EnclosureType selectionne
-			if(type == "Elephant"){
-				specie_id = 1;
-			}else if(type == "Giraffe"){
-				specie_id = 2;
-			} else if (type == "Lion"){
-				specie_id = 3;
-			}else if (type == "Camel"){
-				specie_id = 4;
-			}
+			// creation de la somme et de la mensualite
+			var somme = loan*1.25;
+			var payMonthly = somme/10;
 			
+			// redirection sur le controller home
 			var callback=function(donnees){
 				if(donnees.code == "OK"){
 					 window.location.href = "home";
-                }else if (donnees.code == "ERROR"){
-                	 failed();
-                }
+				}else if (donnees.code == "ERROR"){
+					failed();
+				}
 			};
 			
-			//Remplissage de l'objet a envoyer
-			var monObjet ={
-					"specie_id":specie_id,
-					"capacity":capacity,
-					"statusForm":statusF
+			// creation de l'objet emprunt
+			var monObj = {
+				"statusGFF": statusGFF,
+				"loan": loan,
+				"type_action": "loan",
+				"somme": somme,
+				"payMonthly": payMonthly
 			};
-			if(specie_id = null || capacity != null){
-				server.monAjax(monObjet, "createEnclosure", callback, 'POST');
-			}else{
-				$blockError.empty();
-				$blockError.prepend("<h2> Please, select a type and a size to bluid an enclosure... </h2>");
-			}
 			
+			console.log(monObj);
+			
+			server.monAjax(monObj, "financeManagement", callback, 'POST');
+			console.log("envoie des données");
 		});
-	
+	}
 	
 	$(document).ready(function() {
-		//fonctions à appeler
+		// fonctions à appeler
 		getTransactions();
+		getFinanceForm();
 	})
+	
 })(jQuery);

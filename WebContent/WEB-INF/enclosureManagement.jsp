@@ -28,7 +28,7 @@
 <br>
 
 <div id="food_status">
-<span class="food_img"><img src="${pageContext.request.contextPath}/assets/images/meet.png" alt="logo" /></span>
+<span class="food_img"><img src="${pageContext.request.contextPath}/assets/images/meat.png" alt="logo" /></span>
 <span class="food_gauge">test food gauge</span>
 </div>
 <br>

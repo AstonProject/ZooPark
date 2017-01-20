@@ -27,7 +27,7 @@
 				<div>
 					<h2>Want to loan ?</h2><br>
 					<span><img src="${pageContext.request.contextPath}/assets/images/loan.png" alt="logo" /></span>
-					<span class="newLoan"><input type="number" min="0" max="1000000" step="10000" name ="loanValue" class="mod"/></span>
+					<span class="newLoan"><input type="number" value="0" min="0" max="1000000" step="10000" name="loanValue" class="mod"/></span>
 				</div>
 				<div id="transactions_details">
 					<h2>Transactions Details</h2><br>

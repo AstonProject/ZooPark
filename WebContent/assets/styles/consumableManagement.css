@@ -12,7 +12,7 @@ outline: 0;
 
 input[type="number"] {
     height: 30px;
-    width: 85px;
+    width: 40px;
     font-size: 18px;
     position: relative;
     background-color: transparent;
@@ -32,20 +32,6 @@ input[type="number"].mod::-webkit-inner-spin-button {
     bottom: 0;
 }
 input[type="number"].mod::-moz-inner-spin-button:hover,
-input[type="number"].mod::-moz-inner-spin-button:active {
+input[type="number"].mod::-moz-inner-spin-button:active{
     border: none;
-}
-
-#transactions-list {
-	width: 400px;
-	height: 400px;
-	padding-top: 10px;
-	padding-left: 10px;
-	background: orange;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	display: inline-block;
-	margin-left: 100px;
-	overflow-y: auto;
 }

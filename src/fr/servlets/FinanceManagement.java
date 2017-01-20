@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.beans.EnclosureBean;
 import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
+import fr.dao.EnclosuresDAO;
 import fr.dao.FinancesDAO;
+import fr.dao.PlayersDAO;
 
 @WebServlet("/financeManagement")
 public class FinanceManagement extends HttpServlet {
@@ -34,6 +37,7 @@ public class FinanceManagement extends HttpServlet {
 
 		if (session != null && player != null) {
 			String statGT = request.getParameter("statusGT");
+			String statGFF = request.getParameter("statusGFF");
 			System.out.println(statGT);
 			
 			if ((statGT != null) && statGT.equals("okGT")) {
@@ -41,13 +45,8 @@ public class FinanceManagement extends HttpServlet {
 				FinancesDAO fdao = new FinancesDAO();
 				String reponseJson = "{\"data\": [";
 				int player_id = player.getId();
-				Integer lastIdFinance = (Integer) session.getAttribute("lastIdFinance");
 				
-				if (lastIdFinance == null) {
-					lastIdFinance = 0;
-				}
-				
-				List<FinanceBean> finances = fdao.getFinancesFromIdByPlayer(lastIdFinance, player_id);
+				List<FinanceBean> finances = fdao.getFinancesByPlayer(player_id);
 				int lengthList = finances.size();
 				int count = 0;
 				
@@ -63,8 +62,6 @@ public class FinanceManagement extends HttpServlet {
 					
 					if (count != lengthList) {
 						reponseJson += ",";
-					} else {
-						session.setAttribute("lastIdFinance", finance.getId());
 					}
 				}
 				
@@ -72,6 +69,48 @@ public class FinanceManagement extends HttpServlet {
 				
 				response.setCharacterEncoding("UTF-8");
 				response.getWriter().append(reponseJson);
+				
+			} else if((statGFF != null) && statGFF.equals("okGFF")) {
+				int player_id = player.getId();
+				
+				// recuperation du tour du player
+				String turn = player.getTurn();
+				
+				// recuperation de l'id de l'enclos0
+				EnclosuresDAO edao = new EnclosuresDAO();
+				EnclosureBean enclos0 = new EnclosureBean();
+				enclos0 = edao.getEnclosureByLocation(0, 0, player_id);
+				
+				// creation de la transaction à envoyer dans la bdd
+				String type_action = request.getParameter("type_action");
+				int somme = Integer.parseInt(request.getParameter("somme"));
+				int payMonthly = Integer.parseInt(request.getParameter("payMonthly"));
+				
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+				finance.setType_action(type_action);
+				finance.setSomme(somme);
+				finance.setLibelle("money");
+				finance.setTurn(turn);
+				finance.setAnimals_number(0);
+				finance.setPlayer_id(player_id);
+				finance.setEnclosure_id(enclos0.getId());
+				finance.setPayMonthly(payMonthly);
+				
+				fdao.createFinance(finance);
+				
+				// mise a jour du compte en banque
+				int loan = Integer.parseInt(request.getParameter("loan"));
+				long money = player.getMoney();
+				
+				player.setMoney( money + loan );
+				
+				session.setAttribute("user", player);
+				PlayersDAO pdao = new PlayersDAO();
+				pdao.updatePlayer(player);
+				
+				// creation de la reponse Json
+				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
 		}
 	}
