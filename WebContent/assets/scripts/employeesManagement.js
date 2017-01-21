@@ -20,11 +20,19 @@
 			sessionStorage.setItem("countHlT", donnees.countHealer_e0);
 			sessionStorage.setItem("countClT", donnees.countCleaner_e0);
 			sessionStorage.setItem("countSeT", donnees.countSecurity_e0);
+			console.log("setcountHlT: "+(sessionStorage.getItem("countHlT")));
+			console.log("setcountClT: "+(sessionStorage.getItem("countClT")));
+			console.log("setcountSeT: "+(sessionStorage.getItem("countSeT")));
+			setRestMinEmQty($('#heal_quantity'));
+			setRestMinEmQty($('#clean_quantity'));
+			setRestMinEmQty($('#secu_quantity'));
 		};
 		var monObj = {
 			"statusSEA" : statusSEA
 		};
-		server.monAjax(monObj, "employeesManagement", callback, 'POST');	
+		server.monAjax(monObj, "employeesManagement", callback, 'POST');
+		
+		
 	}
 	
 	// fonction pour afficher la quantite d'employees (Max) pouvant etre recrutes
@@ -39,7 +47,6 @@
 			var countHlT = 0;
 			var countClT = 0;
 			var countSeT = 0;
-			var total_SlE = 0; 
 			
 			var healerQty = 0;
 			var cleanerQty = 0;
@@ -50,18 +57,15 @@
 			cleanerQty = $('input[name=quantityClean]').val();
 			securityQty = $('input[name=quantitySecurity]').val();
 			
-			total_SlE = healerQty + cleanerQty + securityQty;
-			
-			try{
 				countHlT = sessionStorage.getItem("countHlT");
 				countClT = sessionStorage.getItem("countClT");
 				countSeT = sessionStorage.getItem("countSeT");
-			}catch (err) {
-				console.log(err);
-			}
+				console.log("getcountHlT: "+countHlT);
+				console.log("getcountClT: "+countClT);
+				console.log("getcountSeT: "+countSeT);
 			
 			var callback = function(donnees) {
-				$inputQuantity.attr("max", (donnees.maxQty - donnees.employeesQty - total_SlE));
+				
 				$imputHl.attr("max", donnees.maxQty - donnees.employeesQty - cleanerQty - securityQty);
 				$imputCl.attr("max", donnees.maxQty - donnees.employeesQty - healerQty - securityQty);
 				$imputSe.attr("max", donnees.maxQty - donnees.employeesQty - healerQty - cleanerQty);
@@ -189,14 +193,10 @@
 		//Attention cet ordre d'appel est important
 		showEmployeesAssignment();
 		
-		refreshPriceOnChange($heal_button);
-		refreshPriceOnChange($cleaner_button);
-		refreshPriceOnChange($security_button);
-	
-		setRestMinEmQty($heal_button);
-		setRestMinEmQty($cleaner_button);
-		setRestMinEmQty($security_button);
-		
+		refreshPriceOnChange($('#heal_quantity'));
+		refreshPriceOnChange($('#clean_quantity'));
+		refreshPriceOnChange($('#secu_quantity'));
+
 		engageDismiss();
 		refreshRestMinEmQty($heal_button);
 		refreshRestMinEmQty($cleaner_button);

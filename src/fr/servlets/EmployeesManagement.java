@@ -58,6 +58,7 @@ public class EmployeesManagement extends HttpServlet {
 					
 			/**Permettre l'affichage des employees du joueurs**/
 			if ((statSEA != null) && statSEA.equals("okSEA")) {
+				System.out.println("okSEA");
 				//Recuperation de l'enclos(0,0) pour determiner quels sont les 
 				//employees "libres"
 				EnclosuresDAO ecdao = new EnclosuresDAO();
@@ -96,6 +97,9 @@ public class EmployeesManagement extends HttpServlet {
 						}
 					}	
 				}
+				System.out.println("countHealer_e0 "+countHealer_e0);
+				System.out.println("countCleaner_e0 "+countCleaner_e0);
+				System.out.println("countSecurity_e0 "+countSecurity_e0);
 				//Mettre au format Json
 				String reponseJson = "{\"countHealer_e0\":" + countHealer_e0 + ",";
 				reponseJson += "\"countCleaner_e0\":" + countCleaner_e0 + ",";
@@ -108,6 +112,7 @@ public class EmployeesManagement extends HttpServlet {
 				response.getWriter().append(reponseJson);
 			} /**fixer les valeurs Min Max des input number**/
 			else if ((statSEQ != null) && statSEQ.equals("okSEQ")) {
+				System.out.println("okSEQ");
 				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
 				
@@ -142,6 +147,7 @@ public class EmployeesManagement extends HttpServlet {
 				System.out.println("healerQty "+healerQty);
 				System.out.println("cleanerQty "+cleanerQty);
 				System.out.println("securityQty "+securityQty);
+				System.out.println("quantity "+quantity);
 				//Recuperation des employees de l'enclos(0,0)
 				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
@@ -192,15 +198,25 @@ public class EmployeesManagement extends HttpServlet {
 							countSe++;
 						} 
 						
-						if(countHl==healerQty && countCl==cleanerQty && countSe == securityQty){
+						
+						System.out.println("countHl==healerQty: "+countHl +"=="+ healerQty);
+						System.out.println("countCl==cleanerQty: "+countCl +"=="+ cleanerQty);
+						System.out.println("countSe == securityQty: "+countSe +"=="+ securityQty);
+						
+						if(countHl==(healerQty*(-1)) && countCl==(cleanerQty*(-1)) && countSe == (securityQty*(-1))){
 							isDeleted= true;
 						}	
 					}
+					
+					System.out.println("isDeleted: "+isDeleted);
 					e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
 					int eQty = e0.getEmployee_quantity();
 					//Si les employees ont ete delete, MAJ de l'enclos(0,0)
 					if(isDeleted == true){
-						e0.setEmployee_quantity(eQty - quantity);
+						System.out.println("eQty " + eQty);
+						System.out.println("quantity " + quantity);
+						
+						e0.setEmployee_quantity(eQty + quantity);
 						ecdao.updateEnclosure(e0);
 						System.out.println("e0 MAJ");
 					}
