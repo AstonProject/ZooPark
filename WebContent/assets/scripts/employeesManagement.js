@@ -20,12 +20,8 @@
 			sessionStorage.setItem("countHlT", donnees.countHealer_e0);
 			sessionStorage.setItem("countClT", donnees.countCleaner_e0);
 			sessionStorage.setItem("countSeT", donnees.countSecurity_e0);
-			console.log("setcountHlT: "+(sessionStorage.getItem("countHlT")));
-			console.log("setcountClT: "+(sessionStorage.getItem("countClT")));
-			console.log("setcountSeT: "+(sessionStorage.getItem("countSeT")));
-			setRestMinEmQty($('#heal_quantity'));
-			setRestMinEmQty($('#clean_quantity'));
-			setRestMinEmQty($('#secu_quantity'));
+			
+			setRestMinEmQty();
 		};
 		var monObj = {
 			"statusSEA" : statusSEA
@@ -37,7 +33,7 @@
 	
 	// fonction pour afficher la quantite d'employees (Max) pouvant etre recrutes
 	// et le maximum pouvant etre licencies (Min)
-	function setRestMinEmQty($selectedEmQty) {
+	function setRestMinEmQty() {
 		var statusSEQ = 'okSEQ'
 		
 			var $inputQuantity = $(".mod");
@@ -60,9 +56,6 @@
 				countHlT = sessionStorage.getItem("countHlT");
 				countClT = sessionStorage.getItem("countClT");
 				countSeT = sessionStorage.getItem("countSeT");
-				console.log("getcountHlT: "+countHlT);
-				console.log("getcountClT: "+countClT);
-				console.log("getcountSeT: "+countSeT);
 			
 			var callback = function(donnees) {
 				
@@ -82,7 +75,7 @@
 	
 	function refreshRestMinEmQty($selectedEmQty){
 		$($selectedEmQty).on('click', function() {
-			setRestMinEmQty($selectedEmQty);
+			setRestMinEmQty();
 		});
 	}
 	
@@ -154,7 +147,7 @@
 			cleanerQty = $('input[name=quantityClean]').val();
 			securityQty = $('input[name=quantitySecurity]').val();
 			priceEmED = sessionStorage.getItem("employees_price");
-			console.log(priceEmED);
+			
 			if(healerQty == ""){
 				healerQty = 0;
 			}
