@@ -35,7 +35,7 @@
 	// et le maximum pouvant etre licencies (Min)
 	function setRestMinEmQty() {
 		var statusSEQ = 'okSEQ'
-		
+		console.log('okSEQ');
 			var $inputQuantity = $(".mod");
 			var $imputHl = $('#heal_quantity');
 			var $imputCl = $('#clean_quantity');
@@ -74,8 +74,9 @@
 	}
 	
 	function refreshRestMinEmQty($selectedEmQty){
-		$($selectedEmQty).on('click', function() {
+		$($selectedEmQty).on('mouseup', function() {
 			setRestMinEmQty();
+		
 		});
 	}
 	
