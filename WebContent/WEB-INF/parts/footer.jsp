@@ -23,6 +23,9 @@
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/enclosureManagement.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
 	</c:if>
+	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
+	<script src="${pageContext.request.contextPath}/assets/scripts/employeesManagement.js"></script>
+	</c:if>
 </body>
 
 </html>

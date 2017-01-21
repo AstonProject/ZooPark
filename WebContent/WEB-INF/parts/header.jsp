@@ -17,6 +17,9 @@
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/enclosureManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/enclosureManagement.css" />
 </c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/employeesManagement.css" />
+</c:if>
 </head>
 
 <body>

@@ -1,13 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/employeesManagement.css" />
-<title>EmployeesManagement</title>
-</head>
-<body>
+<%@ include file="/WEB-INF/parts/header.jsp" %>
+<div id="main-content">
 <h2>Your employees</h2>
 <div id="employees_container" class="ec1">
 	<span class="img_container"><img src="${pageContext.request.contextPath}/assets/images/healer.png" alt="logo" /></span>
@@ -42,9 +34,5 @@
 		<div class="error"></div>
 	</div>
 </form>
-<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
-<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-<script src="${pageContext.request.contextPath}/assets/scripts/employeesManagement.js"></script>
-</body>
-
-</html>
+</div>
+<%@ include file="/WEB-INF/parts/footer.jsp" %>
