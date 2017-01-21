@@ -139,6 +139,9 @@ public class EmployeesManagement extends HttpServlet {
 				int securityQty = Integer.parseInt(request.getParameter("securityQty"));
 				int quantity =  healerQty + cleanerQty + securityQty;
 				
+				System.out.println("healerQty "+healerQty);
+				System.out.println("cleanerQty "+cleanerQty);
+				System.out.println("securityQty "+securityQty);
 				//Recuperation des employees de l'enclos(0,0)
 				EnclosuresDAO ecdao = new EnclosuresDAO();
 				EnclosureBean e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
@@ -161,6 +164,7 @@ public class EmployeesManagement extends HttpServlet {
 					int countCl = 0;
 					int countSe = 0;
 					boolean isDeleted= false;
+					System.out.println("tentative de delete");
 					
 					for (EmployeeBean employee0 : employees0) {
 						if(employee0.getType().equals("healer")){

@@ -36,7 +36,7 @@
 							<ul>
 								<li>Money : ${ sessionScope.user.money } Z</li>
 								<li>Visitors : 0</li>
-								<li><a href="#">Satisfaction</a></li>
+								<li>Satisfaction: </li>
 								<li><a href="#">Messages</a></li>
 								<li>
 									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 

@@ -160,11 +160,6 @@
 			if(securityQty == ""){
 				securityQty = 0;
 			}
-			if(priceEmED == 0){
-				healerQty = 0;
-				cleanerQty = 0;
-				securityQty = 0;
-			}
 			
 			var callback = function(donnees) {
 				if (donnees.code == "OK") {
