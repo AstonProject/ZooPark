@@ -36,6 +36,8 @@
 
 	$(document).ready(function() {
 		let obj = {};
+		let speed = sessionStorage.getItem("speedS");
+		
 		let callback = function(donnees){
 			hour = parseInt(donnees.hour);
 			day = parseInt(donnees.day);
@@ -49,15 +51,27 @@
 			}
 		};
 		server.monAjax(obj, "newturn", callback, 'GET');
+		
+		if (speed == 10000) {
+			time(10000);
+		}else if(speed == 2000) {
+			time(2000);
+		}else if (speed == 0) {
+			clearInterval(tick);
+		}
+		
 		$("#play").on("click", function(){
-			time(60000);
+			time(10000);
+			 sessionStorage.setItem("speedS", 10000);
 		});
 		$("#speedup").on("click", function(){
-			time(10000);
+			time(2000);
+			 sessionStorage.setItem("speedS", 2000);
 		});
 		$("#pause").on("click", function(){
 			if(tick != null){
 				clearInterval(tick);
+				 sessionStorage.setItem("speedS", 0);
 			}
 		});
 	})
