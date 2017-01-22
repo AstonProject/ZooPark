@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.beans.PlayerBean;
+import fr.dao.VisitorsDAO;
 
 @WebServlet("/visitorsManagement")
 public class VisitorsManagement extends HttpServlet {
@@ -26,6 +27,13 @@ public class VisitorsManagement extends HttpServlet {
 
 		if (session != null && player != null) {
 			String statGST = request.getParameter("statusGST");
+			
+			System.out.println("statGST "+statGST);
+			if ((statGST != null) && statGST.equals("okGST")) {
+				VisitorsDAO vdao = new VisitorsDAO();
+				int visitorsQty = vdao.countVisitors(player.getId());
+				System.out.println("visitorsQty"+ visitorsQty);
+			}
 		}
 	}
 

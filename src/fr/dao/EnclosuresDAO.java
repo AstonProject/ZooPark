@@ -176,4 +176,22 @@ public class EnclosuresDAO {
 		}
 		return enclosure;
 	}
+	
+	public int getSatisfaction (int player_id) {
+		int satisfaction=0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT capacity FROM enclosure WHERE locate_x=0 AND locate_y=0 AND player_id=?");
+			preparedStatement.setInt(1, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				satisfaction = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return satisfaction;
+	}
 }

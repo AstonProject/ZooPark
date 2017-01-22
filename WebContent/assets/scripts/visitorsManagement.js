@@ -5,11 +5,10 @@
 	var speed = null;
 	var speedT = null;
 	
-	
 	speedT = sessionStorage.getItem("speedS");
 	console.log("speedT 1er chargement " +speedT)
 	
-	function getSpeedTime(millis) {
+	function getSpeedT(millis) {
 		
 			speed = setInterval(function(){ 
 				var statusGST = "okGST";
@@ -32,7 +31,7 @@
 			console.log("speedT de rappel " +speedT)
 		
 			if (speedT != 0) {
-				getSpeedTime(speedT);
+				getSpeedT(speedT);
 			} else {
 				clearInterval(speed);
 			}
@@ -44,7 +43,7 @@
 	$(document).ready(function() {
 		
 		if((speedT != 0) && (speedT !=null)){
-			getSpeedTime(speedT);
+			getSpeedT(speedT);
 		}else {
 			clearInterval(speed);
 		}

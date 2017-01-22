@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import fr.beans.EmployeeBean;
 import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
 import fr.beans.VisitorBean;
@@ -180,5 +183,23 @@ public class VisitorsDAO {
 		}
 	}
 
+	public int countVisitors(int player_id) {
+		int count = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(visitor.id) FROM visitor WHERE player_id=?");
+			preparedStatement.setInt(1, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			    }
+			
+			System.out.println("countDAO " +count);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+		
+	}
 	
 }
