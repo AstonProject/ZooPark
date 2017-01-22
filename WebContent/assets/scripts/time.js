@@ -20,9 +20,11 @@
 				$("#body").css("background-color","lightblue");
 				day++;
 				phase = "day";
+				sessionStorage.setItem("phase", phase);
 			}
 			else if(hour == 5){
 				phase = "night";
+				sessionStorage.setItem("phase", phase);
 				$("#body").css("background-color","darkblue");
 			}
 			let updatePlayer = {"newTime": hour+","+day};
@@ -43,10 +45,12 @@
 			day = parseInt(donnees.day);
 			if(hour >= 5) {
 				phase = "night";
+				sessionStorage.setItem("phase", phase);
 				$("body, #body").css("background-color","darkblue");
 			}
 			else {
 				phase = "day";
+				sessionStorage.setItem("phase", phase);
 				$("body, #body").css("background-color","lightblue");
 			}
 		};
@@ -71,8 +75,13 @@
 		$("#pause").on("click", function(){
 			if(tick != null){
 				clearInterval(tick);
-				 sessionStorage.setItem("speedS", 0);
+				sessionStorage.setItem("speedS", 0);
 			}
 		});
+		$("#disconnect").on("click", function(){
+			clearInterval(tick);
+			sessionStorage.setItem("speedS", 0);
+		});
+		
 	})
 })(jQuery);

@@ -29,7 +29,7 @@
 				<header id="main-header">
 					<div id="page-header">
 						Welcome, ${ sessionScope.user.pseudo }<br>
-						<a href="user?action=disconnect">Disconnect</a>
+						<a href="user?action=disconnect" id="disconnect">Disconnect</a>
 					</div>
 					<div id="top-menu">
 						<nav>
