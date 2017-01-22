@@ -102,14 +102,17 @@ public class VisitorsManagement extends HttpServlet {
 			
 				e0.setCapacity(globalS);
 				session.setAttribute("satisfaction", globalS);
-				String responseJson = "{\"satisfaction\":" + globalS+"}";
-				response.getWriter().append(responseJson);
+				
+				
 				
 				//Depenses des visiteurs dans le zoo
 				player.setMoney(player.getMoney() + coins);
 				pdao.updatePlayer(player);
-				session.setAttribute("user", player);				;
-	
+				session.setAttribute("user", player);	
+			
+				String responseJson = "{\"satisfaction\":" + globalS+",";
+				responseJson += "\"money\":" + player.getMoney()+"}";
+				response.getWriter().append(responseJson);
 			} else if ((statNV != null) && statNV.equals("okNV")) {	
 				vdao.deleteVisitors(player.getId());
 				

@@ -45,12 +45,8 @@ public class CalculateSatisfaction {
 		double totalSatisfaction=100;
 		totalSatisfaction=(double)((moyCleanliness/2 + moyhealth/2 - moyHangry )/100 + moyAnimal);
 	
-		System.out.println("totalSatisfaction: " + totalSatisfaction); 
-		
 		totalSatisfaction=(double)(totalSatisfaction *50);
-		System.out.println("totalSatisfaction*50: " + totalSatisfaction);
-		
-	
+
 		return totalSatisfaction;
 		
 	}

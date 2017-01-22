@@ -31,8 +31,10 @@
 				 if(hourT > 1 && hourT <7){
 					 var statusDV = "okDV";
 					 var callback = function(donnees) {
-						 $('#satisfaction').empty();
+						 $('#money').empty();
+						$('#satisfaction').empty();
 						$('#satisfaction').append("Satisfaction : " + donnees.satisfaction);
+						$('#money').append("Money : " + donnees.money + " Z");
 					 };
 						
 						object = {"statusDV" : statusDV};
