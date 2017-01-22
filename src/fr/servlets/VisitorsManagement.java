@@ -1,6 +1,8 @@
 package fr.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,11 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.beans.AnimalBean;
+import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
 import fr.beans.VisitorBean;
 import fr.dao.AnimalsDAO;
+import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
 import fr.dao.VisitorsDAO;
+import fr.utility.CalculateSatisfaction;
 
 @WebServlet("/visitorsManagement")
 public class VisitorsManagement extends HttpServlet {
@@ -32,20 +38,17 @@ public class VisitorsManagement extends HttpServlet {
 			String statGV = request.getParameter("statusGV");
 			String statDV = request.getParameter("statusDV");
 			String statNV = request.getParameter("statusNV");
-			System.out.println("statNV " +statNV);
+			
 			VisitorsDAO vdao = new VisitorsDAO();
-			//Recuperation de la satisfaction global
-			int satisfaction= (int) session.getAttribute("satisfaction");
+			EnclosuresDAO edao = new EnclosuresDAO();
+			PlayersDAO pdao = new PlayersDAO();
+			int satisfaction = edao.getSatisfaction(player.getId());
 			
 			if ((statGV != null) && statGV.equals("okGV")) {
 				AnimalsDAO andao = new AnimalsDAO();
-				PlayersDAO pdao = new PlayersDAO();
-				int animalsQty = andao.countAnimalsByPlayer(player.getId());
-				int visitorsQty = (int) Math.round((satisfaction/10)*(animalsQty/25));
 				
-				if(visitorsQty < 1){
-					visitorsQty = 1;
-				}
+				int animalsQty = andao.countAnimalsByPlayer(player.getId());
+				int visitorsQty = (int) Math.round((satisfaction + animalsQty)/10);
 				
 				int count = 0;
 				//Creation des visiteurs
@@ -64,8 +67,6 @@ public class VisitorsManagement extends HttpServlet {
 				session.setAttribute("user", player);
 				
 				money= player.getMoney();
-				
-				System.out.println("player "+player);
 				int visitors = vdao.countVisitors(player.getId());
 				
 				int visitorsA= visitors*100;
@@ -77,10 +78,40 @@ public class VisitorsManagement extends HttpServlet {
 				
 				response.getWriter().append(responseJson);
 			} else if ((statDV != null) && statDV.equals("okDV")) {
-				System.out.println("journée visiteurs");
-			} else if ((statNV != null) && statNV.equals("okNV")) {
-				System.out.println("delete visiteurs");	
-				vdao.deleteVisitor(player.getId());
+				EnclosureBean e0 =edao.getEnclosureByLocation(0, 0, player.getId());
+				//MAJ satisfaction des visiteurs
+				double satisfactionG =  CalculateSatisfaction.calcSatisfaction(request);	
+				int totalS=0;
+				int globalS=0;
+				List<VisitorBean> visitors = (vdao.getVisitorsByPlayerId(player.getId()));
+				int coins=0;
+				for(VisitorBean visitor: visitors){
+					int variation = -10 + (int) (Math.random() * ((10 - (-10))));
+					totalS= (int) (satisfactionG + (satisfactionG*variation/100));
+					globalS +=totalS;
+					visitor.setSatisfaction_gauge(totalS);
+					//si la satisfaction est seprieure 50, le visiteur depense de l'argent
+					if(totalS > 50 && visitor.getCoins()>0){
+						visitor.setCoins(visitor.getCoins() - 1000);
+						coins +=1000;
+					}		
+					vdao.updateVisitor(visitor);
+				}
+				//Maj de la satisfaction globale
+				globalS = globalS / visitors.size();
+			
+				e0.setCapacity(globalS);
+				session.setAttribute("satisfaction", globalS);
+				String responseJson = "{\"satisfaction\":" + globalS+"}";
+				response.getWriter().append(responseJson);
+				
+				//Depenses des visiteurs dans le zoo
+				player.setMoney(player.getMoney() + coins);
+				pdao.updatePlayer(player);
+				session.setAttribute("user", player);				;
+	
+			} else if ((statNV != null) && statNV.equals("okNV")) {	
+				vdao.deleteVisitors(player.getId());
 				
 				int visitorsA= 0;
 				//MAJ visiteurs dans la JSP

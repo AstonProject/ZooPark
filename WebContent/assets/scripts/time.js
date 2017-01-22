@@ -24,7 +24,7 @@
 				phase = "day";
 				sessionStorage.setItem("phase", phase);
 			}
-			else if(hour == 5){
+			else if(hour == 7){
 				phase = "night";
 				sessionStorage.setItem("phase", phase);
 				$("#body").css("background-color","darkblue");
@@ -47,7 +47,7 @@
 			hour = parseInt(donnees.hour);
 			sessionStorage.setItem("hour", hour);
 			day = parseInt(donnees.day);
-			if(hour >= 5) {
+			if(hour >= 7) {
 				phase = "night";
 				sessionStorage.setItem("phase", phase);
 				$("body, #body").css("background-color","darkblue");

@@ -6,19 +6,14 @@
 	var speedT = null;
 	var hourT = null;
 
-	speedT = sessionStorage.getItem("speedS");
-	console.log("speedT 1er chargement " +speedT)
-	
+	speedT = sessionStorage.getItem("speedS");	
 	hourT = sessionStorage.getItem("hour");
-	console.log("hourT 1er chargement " +hourT)
 	
 	function getSpeedT(millis) {
 		var object ={};
 			speed = setInterval(function(){ 
 				hourT = sessionStorage.getItem("hour");
 				
-				console.log("function gerer des visiteurs");
-				console.log("hourT 1er chargement " +hourT);
 				//Generer des visiteurs a l'heure 1
 				if(hourT == 1){
 					var statusGV = "okGV";
@@ -33,10 +28,11 @@
 					server.monAjax(object, "visitorsManagement", callback, 'POST');
 				}
 				//La journée des visiteurs
-				 if(hourT > 1 && hourT <5){
+				 if(hourT > 1 && hourT <7){
 					 var statusDV = "okDV";
 					 var callback = function(donnees) {
-						 
+						 $('#satisfaction').empty();
+						$('#satisfaction').append("Satisfaction : " + donnees.satisfaction);
 					 };
 						
 						object = {"statusDV" : statusDV};
@@ -44,7 +40,7 @@
 				 }
 				 
 				 //Le Depart des visiteurs la nuit
-				 if(hourT == 5){
+				 if(hourT == 7){
 					 var statusNV = "okNV";
 						var callback = function(donnees) {
 							$('#visitors').empty();
@@ -62,10 +58,8 @@
 		$($speedButton).on("click", function(){
 			speedT = sessionStorage.getItem("speedS"); 
 			hourT = sessionStorage.getItem("hour");
-			console.log("speedT de rappel " +speedT);
-			console.log("hourT de rappel " +hourT);
-		
-			if (speedT != 0) {
+			
+			if (speedT > 0 && (speedT !=null)) {
 				getSpeedT(speedT);
 			} else {
 				clearInterval(speed);
@@ -76,7 +70,7 @@
 	
 	$(document).ready(function() {
 		
-		if((speedT != 0) && (speedT !=null)){
+		if((speedT > 0) && (speedT !=null)){
 			getSpeedT(speedT);
 		}else {
 			clearInterval(speed);
