@@ -34,9 +34,9 @@
 					<div id="top-menu">
 						<nav>
 							<ul>
-								<li>Money : ${ sessionScope.user.money } Z</li>
-								<li>Visitors : ${ sessionScope.visitors }</li>
-								<li>Satisfaction: ${ sessionScope.satisfaction }</li>
+								<li id="money">Money : ${ sessionScope.user.money } Z</li>
+								<li id="visitors">Visitors : ${ sessionScope.visitors }</li>
+								<li id="satisfaction">Satisfaction: ${ sessionScope.satisfaction }</li>
 								<li><a href="#">Messages</a></li>
 								<li>
 									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 

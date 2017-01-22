@@ -164,7 +164,7 @@ public class VisitorsDAO {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("DELETE FROM visitor WHERE id=?");
+			st = connection.prepareStatement("DELETE  FROM visitor WHERE player_id=?");
 			st.setInt(1, player_id);
 
 			st.executeUpdate();

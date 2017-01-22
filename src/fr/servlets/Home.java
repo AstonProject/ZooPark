@@ -51,7 +51,10 @@ public class Home extends HttpServlet {
 			VisitorsDAO vdao = new VisitorsDAO();
 			int visitorsQty = vdao.countVisitors(user.getId());
 	
-			session.setAttribute("visitors", visitorsQty);
+			int visitorsA = visitorsQty*100;
+			//MAJ visiteurs dans la JSP
+			session.setAttribute("visitors", visitorsA);
+			
 			
 			//Recuperation de la satisfaction
 			

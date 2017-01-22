@@ -30,37 +30,64 @@ public class VisitorsManagement extends HttpServlet {
 
 		if (session != null && player != null) {
 			String statGV = request.getParameter("statusGV");
-			
+			String statDV = request.getParameter("statusDV");
+			String statNV = request.getParameter("statusNV");
+			System.out.println("statNV " +statNV);
 			VisitorsDAO vdao = new VisitorsDAO();
 			//Recuperation de la satisfaction global
 			int satisfaction= (int) session.getAttribute("satisfaction");
-			System.out.println("satisfaction "+satisfaction);
+			
 			if ((statGV != null) && statGV.equals("okGV")) {
 				AnimalsDAO andao = new AnimalsDAO();
 				PlayersDAO pdao = new PlayersDAO();
 				int animalsQty = andao.countAnimalsByPlayer(player.getId());
-				System.out.println("animalsQty " +animalsQty);
-				int visitorsQty = satisfaction*(animalsQty/2);
+				int visitorsQty = (int) Math.round((satisfaction/10)*(animalsQty/25));
 				
-				
-				//Creation des visiteurs
-				for(int count = 0; count <= visitorsQty; count++){
-					
-					VisitorBean visitor = new VisitorBean();
-					visitor.setCoins(5000);
-					visitor.setPlayer_id(player.getId());
-					visitor.setSatisfaction_gauge(satisfaction);
-					vdao.createVisitor(visitor);
+				if(visitorsQty < 1){
+					visitorsQty = 1;
 				}
-				//Mise a joueur dans la JSP
-				session.setAttribute("visitors", visitorsQty);
 				
+				int count = 0;
+				//Creation des visiteurs
+				VisitorBean visitor = new VisitorBean();
+				visitor.setCoins(5000);
+				visitor.setPlayer_id(player.getId());
+				visitor.setSatisfaction_gauge(satisfaction);
+				
+				for(count = 0; count < visitorsQty; count++){		
+					vdao.createVisitor(visitor);	
+				}
 				//Entrer d'argent pour le joueur
 				long money= player.getMoney();
-				player.setMoney(money + visitorsQty*100);
+				player.setMoney(money + visitorsQty*10000);
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
 				
+				money= player.getMoney();
+				
+				System.out.println("player "+player);
+				int visitors = vdao.countVisitors(player.getId());
+				
+				int visitorsA= visitors*100;
+				//MAJ visiteurs dans la JSP
+				session.setAttribute("visitors", visitorsA);
+				
+				String responseJson = "{\"visitors\":" + visitorsA+",";
+				responseJson += "\"money\":" + money+"}";
+				
+				response.getWriter().append(responseJson);
+			} else if ((statDV != null) && statDV.equals("okDV")) {
+				System.out.println("journée visiteurs");
+			} else if ((statNV != null) && statNV.equals("okNV")) {
+				System.out.println("delete visiteurs");	
+				vdao.deleteVisitor(player.getId());
+				
+				int visitorsA= 0;
+				//MAJ visiteurs dans la JSP
+				session.setAttribute("visitors", visitorsA);
+				
+				String responseJson = "{\"visitors\":" + visitorsA+"}";
+				response.getWriter().append(responseJson);
 			}
 		}
 	}
