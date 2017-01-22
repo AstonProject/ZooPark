@@ -101,6 +101,7 @@ public class VisitorsManagement extends HttpServlet {
 				globalS = globalS / visitors.size();
 			
 				e0.setCapacity(globalS);
+				edao.updateEnclosure(e0);
 				session.setAttribute("satisfaction", globalS);
 				
 				
