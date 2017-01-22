@@ -173,7 +173,7 @@ public class AnimalsDAO {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id AND enclosure.player_id = player_id");
+					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id WHERE enclosure.player_id=?");
 			preparedStatement.setInt(1, player_id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -188,6 +188,24 @@ public class AnimalsDAO {
 				animal.setEnclosure_id(rs.getInt("enclosure_id"));
 
 				animals.add(animal);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return animals;
+		}
+	
+	public int countAnimalsByPlayer(int player_id) {
+		int animals = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id WHERE enclosure.player_id =?");
+			preparedStatement.setInt(1, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				animals++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

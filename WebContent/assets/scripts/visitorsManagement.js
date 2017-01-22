@@ -41,8 +41,7 @@
 				getSpeedT(speedT);
 			} else {
 				clearInterval(speed);
-			}
-			
+			}			
 		});
 	}
 	
