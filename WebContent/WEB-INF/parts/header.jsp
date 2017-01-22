@@ -20,6 +20,15 @@
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/employeesManagement.css" />
 </c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/financeManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/financeManagement.css" />
+</c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/consumableManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
+</c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/notifications.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/notifs.css" />
+</c:if>
 </head>
 
 <body>

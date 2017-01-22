@@ -26,6 +26,15 @@
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/employeesManagement.js"></script>
 	</c:if>
+	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/financeManagement.jsp' }">
+	<script src="${pageContext.request.contextPath}/assets/scripts/financeManagement.js"></script>
+	</c:if>
+	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/consumableManagement.jsp' }">
+	<script src="${pageContext.request.contextPath}/assets/scripts/consumableManagement.js"></script>
+	</c:if>
+	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/notifications.jsp' }">
+	<script src="${pageContext.request.contextPath}/assets/scripts/notifs.js"></script>
+	</c:if>
 </body>
 
 </html>
