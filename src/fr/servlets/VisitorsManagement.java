@@ -26,13 +26,19 @@ public class VisitorsManagement extends HttpServlet {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 
 		if (session != null && player != null) {
-			String statGST = request.getParameter("statusGST");
+			String statGV = request.getParameter("statusGV");
 			
-			System.out.println("statGST "+statGST);
-			if ((statGST != null) && statGST.equals("okGST")) {
-				VisitorsDAO vdao = new VisitorsDAO();
-				int visitorsQty = vdao.countVisitors(player.getId());
-				System.out.println("visitorsQty"+ visitorsQty);
+			VisitorsDAO vdao = new VisitorsDAO();
+			//Recuperation de la satisfaction global
+			int satisfaction= (int) session.getAttribute("satisfaction");
+			System.out.println("satisfaction "+satisfaction);
+			if ((statGV != null) && statGV.equals("okGV")) {
+				
+				
+				System.out.println("je cree des visiteurs");
+				
+				
+				
 			}
 		}
 	}

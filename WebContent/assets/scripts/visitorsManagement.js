@@ -4,31 +4,38 @@
 	"use strict";
 	var speed = null;
 	var speedT = null;
-	
+	var hourT = null;
 	speedT = sessionStorage.getItem("speedS");
 	console.log("speedT 1er chargement " +speedT)
 	
+	hourT = sessionStorage.getItem("hour");
+	console.log("hourT 1er chargement " +hourT)
+	
 	function getSpeedT(millis) {
-		
+		var object ={};
 			speed = setInterval(function(){ 
-				var statusGST = "okGST";
+				hourT = sessionStorage.getItem("hour");
+				var statusGV = "okGV";
 				console.log("function gerer des visiteurs");
-				var callback = function(donnees) {
+				console.log("hourT 1er chargement " +hourT);
+				if(hourT == 1){
+					var callback = function(donnees) {
+						
+					};
 					
-				};
-				
-				var object = {
-					"statusGST" : statusGST
-				};
-					 server.monAjax(object, "visitorsManagement", callback, 'POST');
-			}, millis);
-		
+					object = {"statusGV" : statusGV};
+					server.monAjax(object, "visitorsManagement", callback, 'POST');
+				}
+					
+			}, millis);	
 	}
 
 	function setSpeedT($speedButton){
 		$($speedButton).on("click", function(){
 			speedT = sessionStorage.getItem("speedS"); 
-			console.log("speedT de rappel " +speedT)
+			hourT = sessionStorage.getItem("hour");
+			console.log("speedT de rappel " +speedT);
+			console.log("hourT de rappel " +hourT);
 		
 			if (speedT != 0) {
 				getSpeedT(speedT);

@@ -13,6 +13,8 @@
 		}
 		tick = setInterval(function(){
 			hour++;
+			console.log("hour++"+ hour);
+			sessionStorage.setItem("hour", hour);
 			let callback=function(donnees){
 			}
 			if(hour == 10){
@@ -33,6 +35,7 @@
 			$jour.empty();
 			$heure.append(hour);
 			$jour.append(day);
+			
 		}, millis);
 	}
 
@@ -42,6 +45,7 @@
 		
 		let callback = function(donnees){
 			hour = parseInt(donnees.hour);
+			sessionStorage.setItem("hour", hour);
 			day = parseInt(donnees.day);
 			if(hour >= 5) {
 				phase = "night";

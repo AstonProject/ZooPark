@@ -50,13 +50,13 @@ public class Home extends HttpServlet {
 			//Recuperation des visiteurs presents dans le parck
 			VisitorsDAO vdao = new VisitorsDAO();
 			int visitorsQty = vdao.countVisitors(user.getId());
-			System.out.println("visitorsQty"+ visitorsQty);
+	
 			session.setAttribute("visitors", visitorsQty);
 			
 			//Recuperation de la satisfaction
 			
 			int satisfaction = edao.getSatisfaction(user.getId());
-			System.out.println("satisfaction"+ satisfaction);
+			
 			session.setAttribute("satisfaction", satisfaction);
 			
 		}

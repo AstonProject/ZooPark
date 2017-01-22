@@ -193,8 +193,6 @@ public class VisitorsDAO {
 			while (rs.next()) {
 				count = rs.getInt(1);
 			    }
-			
-			System.out.println("countDAO " +count);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
