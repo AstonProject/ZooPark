@@ -195,4 +195,31 @@ public class AnimalsDAO {
 		return animals;
 		}
 	
+	public List<AnimalBean> getWeakestAnimals(int enclosure_id){
+		List<AnimalBean> animals = new ArrayList<AnimalBean>();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM animal WHERE enclosure_id=? ORDER BY health_gauge ASC LIMIT 3");
+			preparedStatement.setInt(1, enclosure_id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				AnimalBean animal = new AnimalBean();
+				animal.setId(rs.getInt("id"));
+				animal.setName(rs.getString("name"));
+				animal.setHungry_gauge(rs.getInt("hungry_gauge"));
+				animal.setHealth_gauge(rs.getInt("health_gauge"));
+				animal.setDescription(rs.getString("description"));
+				animal.setSpecie_id(rs.getInt("specie_id"));
+				animal.setEnclosure_id(rs.getInt("enclosure_id"));
+
+				animals.add(animal);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return animals;
+	}
+	
 }
