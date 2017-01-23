@@ -173,7 +173,7 @@ public class AnimalsDAO {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id AND enclosure.player_id = player_id");
+					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id WHERE enclosure.player_id=?");
 			preparedStatement.setInt(1, player_id);
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -195,7 +195,25 @@ public class AnimalsDAO {
 		return animals;
 		}
 	
-	public List<AnimalBean> getWeakestAnimals(int enclosure_id){
+	public int countAnimalsByPlayer(int player_id) {
+		int animals = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement("SELECT * FROM animal INNER JOIN enclosure ON animal.enclosure_id = enclosure.id WHERE enclosure.player_id =?");
+			preparedStatement.setInt(1, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				animals++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return animals;
+		}
+	
+		public List<AnimalBean> getWeakestAnimals(int enclosure_id){
 		List<AnimalBean> animals = new ArrayList<AnimalBean>();
 
 		try {

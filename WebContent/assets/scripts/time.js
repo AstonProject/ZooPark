@@ -13,6 +13,8 @@
 		}
 		tick = setInterval(function(){
 			hour++;
+			console.log("hour++"+ hour);
+			sessionStorage.setItem("hour", hour);
 			let callback=function(donnees){
 			}
 			if(hour == 10){
@@ -20,9 +22,11 @@
 				$("#body").css("background-color","lightblue");
 				day++;
 				phase = "day";
+				sessionStorage.setItem("phase", phase);
 			}
-			else if(hour == 5){
+			else if(hour == 7){
 				phase = "night";
+				sessionStorage.setItem("phase", phase);
 				$("#body").css("background-color","darkblue");
 			}
 			let updatePlayer = {"newTime": hour+","+day};
@@ -31,15 +35,19 @@
 			$jour.empty();
 			$heure.append(hour);
 			$jour.append(day);
+			
 		}, millis);
 	}
 
 	$(document).ready(function() {
 		let obj = {};
+		let speed = sessionStorage.getItem("speedS");
+		
 		let callback = function(donnees){
 			hour = parseInt(donnees.hour);
+			sessionStorage.setItem("hour", hour);
 			day = parseInt(donnees.day);
-			if(hour >= 5) {
+			if(hour >= 7) {
 				phase = "night";
 				$("body, #body").css("background-color","darkblue");
 			}
@@ -49,16 +57,33 @@
 			}
 		};
 		server.monAjax(obj, "newturn", callback, 'GET');
+		
+		if (speed == 10000) {
+			time(10000);
+		}else if(speed == 3000) {
+			time(2000);
+		}else if (speed == 0) {
+			clearInterval(tick);
+		}
+		
 		$("#play").on("click", function(){
-			time(60000);
+			time(10000);
+			 sessionStorage.setItem("speedS", 10000);
 		});
 		$("#speedup").on("click", function(){
-			time(10000);
+			time(2000);
+			 sessionStorage.setItem("speedS", 3000);
 		});
 		$("#pause").on("click", function(){
 			if(tick != null){
 				clearInterval(tick);
+				sessionStorage.setItem("speedS", 0);
 			}
 		});
+		$("#disconnect").on("click", function(){
+			clearInterval(tick);
+			sessionStorage.setItem("speedS", 0);
+		});
+		
 	})
 })(jQuery);

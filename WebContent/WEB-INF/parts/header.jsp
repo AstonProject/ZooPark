@@ -20,6 +20,12 @@
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/employeesManagement.css" />
 </c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/consumableManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
+</c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/financeManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/financeManagement.css" />
+</c:if>
 </head>
 
 <body>
@@ -29,14 +35,14 @@
 				<header id="main-header">
 					<div id="page-header">
 						Welcome, ${ sessionScope.user.pseudo }<br>
-						<a href="user?action=disconnect">Disconnect</a>
+						<a href="user?action=disconnect" id="disconnect">Disconnect</a>
 					</div>
 					<div id="top-menu">
 						<nav>
 							<ul>
-								<li>Money : ${ sessionScope.user.money } Z</li>
-								<li>Visitors : 0</li>
-								<li><a href="#">Satisfaction</a></li>
+								<li id="money">Money : ${ sessionScope.user.money } Z</li>
+								<li id="visitors">Visitors : ${ sessionScope.visitors }</li>
+								<li id="satisfaction">Satisfaction: ${ sessionScope.satisfaction }</li>
 								<li><a href="#">Messages</a></li>
 								<li>
 									<img id="play" src="/zoopark/assets/images/play-button.png"> | <img id="speedup" src="/zoopark/assets/images/fast-forward.png"> | <img id="pause" src="/zoopark/assets/images/pause.png"> 

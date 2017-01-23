@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import fr.beans.FinanceBean;
-import fr.beans.PlayerBean;
 import fr.beans.VisitorBean;
 import fr.utility.ConnectionDB;
 
@@ -91,22 +91,22 @@ public class VisitorsDAO {
 		return visitor;
 	}
 	
-	public VisitorBean getVisitorByPlayerId (int player_id) {
+	public List<VisitorBean> getVisitorsByPlayerId (int player_id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;		
-		VisitorBean visitor = new VisitorBean();
-		
+	
+		List<VisitorBean> visitors = new ArrayList<VisitorBean>();
 		try {
 			st = connection.prepareStatement("SELECT * FROM visitor WHERE player_id=?");
 			st.setInt(1, player_id);
 			rs = st.executeQuery();
-
-			if (rs.next()) {
+			while (rs.next()) {
+				VisitorBean visitor = new VisitorBean();
 				visitor.setId(rs.getInt("id"));
 				visitor.setSatisfaction_gauge(rs.getInt("satisfaction_gauge"));
 				visitor.setCoins(rs.getInt("coins"));
 				visitor.setPlayer_id(rs.getInt("player_id"));
-				
+				visitors.add(visitor);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class VisitorsDAO {
 			}
 		}
 		
-		return visitor;
+		return visitors;
 	}
 	
 	public void updateVisitor (VisitorBean visitor) {
@@ -157,11 +157,11 @@ public class VisitorsDAO {
 		}
 	}
 
-	public void deleteVisitor(int player_id) {
+	public void deleteVisitors(int player_id) {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("DELETE FROM visitor WHERE id=?");
+			st = connection.prepareStatement("DELETE  FROM visitor WHERE player_id=?");
 			st.setInt(1, player_id);
 
 			st.executeUpdate();
@@ -180,5 +180,21 @@ public class VisitorsDAO {
 		}
 	}
 
+	public int countVisitors(int player_id) {
+		int count = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(visitor.id) FROM visitor WHERE player_id=?");
+			preparedStatement.setInt(1, player_id);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+		
+	}
 	
 }

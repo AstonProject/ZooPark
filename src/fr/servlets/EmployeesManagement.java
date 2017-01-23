@@ -96,6 +96,7 @@ public class EmployeesManagement extends HttpServlet {
 						}
 					}	
 				}
+				
 				//Mettre au format Json
 				String reponseJson = "{\"countHealer_e0\":" + countHealer_e0 + ",";
 				reponseJson += "\"countCleaner_e0\":" + countCleaner_e0 + ",";
@@ -152,8 +153,6 @@ public class EmployeesManagement extends HttpServlet {
 				player.setMoney(money + priceEmED);
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
-				System.out.println("money: "+ money);
-				System.out.println("playerAUP: "+ player);
 				
 				//MAJ de enclosure_id des employees si licenciement
 				if(healerQty < 0 || cleanerQty < 0 || securityQty < 0){
@@ -167,7 +166,6 @@ public class EmployeesManagement extends HttpServlet {
 							
 							if(countHl < ((healerQty)*(-1))){
 								epdao.deleteEmployee(employee0.getId());
-								System.out.println("employeeHealerID " + employee0.getId() +"a ete delete");
 							}
 							countHl++;
 						}
@@ -175,7 +173,6 @@ public class EmployeesManagement extends HttpServlet {
 							
 							if(countCl < ((cleanerQty)*(-1))){
 								epdao.deleteEmployee(employee0.getId());
-								System.out.println("employeeCleanerID " + employee0.getId() +"a ete delete");
 							}
 							countCl++;
 						} 
@@ -183,22 +180,20 @@ public class EmployeesManagement extends HttpServlet {
 							
 							if(countSe < ((securityQty)*(-1))){
 								epdao.deleteEmployee(employee0.getId());
-								System.out.println("employeeSecurityID " + employee0.getId() +"a ete delete");
 							}
 							countSe++;
 						} 
-						
-						if(countHl==healerQty && countCl==cleanerQty && countSe == securityQty){
+						if(countHl==(healerQty*(-1)) && countCl==(cleanerQty*(-1)) && countSe == (securityQty*(-1))){
 							isDeleted= true;
 						}	
 					}
+					
 					e0 =ecdao.getEnclosureByLocation(0, 0, player.getId());
 					int eQty = e0.getEmployee_quantity();
 					//Si les employees ont ete delete, MAJ de l'enclos(0,0)
 					if(isDeleted == true){
-						e0.setEmployee_quantity(eQty - quantity);
+						e0.setEmployee_quantity(eQty + quantity);
 						ecdao.updateEnclosure(e0);
-						System.out.println("e0 MAJ");
 					}
 				} 
 				if(healerQty > 0 || cleanerQty > 0 || securityQty > 0){
@@ -218,7 +213,6 @@ public class EmployeesManagement extends HttpServlet {
 							emp.setPlayer_id(player.getId());
 							epdao.createEmployee(emp);
 							quantityE++;
-							System.out.println("employeeHealer ADD ");
 						}
 					}
 					
@@ -232,7 +226,6 @@ public class EmployeesManagement extends HttpServlet {
 							emp.setPlayer_id(player.getId());
 							epdao.createEmployee(emp);
 							quantityE++;
-							System.out.println("employeeCleaner ADD ");
 						}
 					}
 					
@@ -246,7 +239,6 @@ public class EmployeesManagement extends HttpServlet {
 							emp.setPlayer_id(player.getId());
 							epdao.createEmployee(emp);
 							quantityE++;
-							System.out.println("employeeSecurity ADD ");
 						}
 					}
 					
@@ -259,7 +251,6 @@ public class EmployeesManagement extends HttpServlet {
 					if(isCreate == true){
 						e0.setEmployee_quantity(QtyE + quantityE);
 						ecdao.updateEnclosure(e0);
-						System.out.println("e0 MAJ");
 					}
 				}
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)

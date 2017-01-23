@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
 import fr.dao.EnclosuresDAO;
+import fr.dao.VisitorsDAO;
 
 
 @WebServlet("/home")
@@ -45,6 +46,22 @@ public class Home extends HttpServlet {
 			//Les enclos recuperes de la bdd sont enregistres en session 
 			//pour etre utilises dans la jsp Home
 			session.setAttribute("construction", constructions);
+			
+			//Recuperation des visiteurs presents dans le parck
+			VisitorsDAO vdao = new VisitorsDAO();
+			int visitorsQty = vdao.countVisitors(user.getId());
+	
+			int visitorsA = visitorsQty*100;
+			//MAJ visiteurs dans la JSP
+			session.setAttribute("visitors", visitorsA);
+			
+			
+			//Recuperation de la satisfaction
+			
+			int satisfaction = edao.getSatisfaction(user.getId());
+			
+			session.setAttribute("satisfaction", satisfaction);
+			
 		}
 		this.getServletContext()
 			.getRequestDispatcher("/WEB-INF/home.jsp")
