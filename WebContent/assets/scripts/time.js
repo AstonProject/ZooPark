@@ -49,12 +49,10 @@
 			day = parseInt(donnees.day);
 			if(hour >= 7) {
 				phase = "night";
-				sessionStorage.setItem("phase", phase);
 				$("body, #body").css("background-color","darkblue");
 			}
 			else {
 				phase = "day";
-				sessionStorage.setItem("phase", phase);
 				$("body, #body").css("background-color","lightblue");
 			}
 		};
@@ -62,7 +60,7 @@
 		
 		if (speed == 10000) {
 			time(10000);
-		}else if(speed == 2000) {
+		}else if(speed == 3000) {
 			time(2000);
 		}else if (speed == 0) {
 			clearInterval(tick);
@@ -74,7 +72,7 @@
 		});
 		$("#speedup").on("click", function(){
 			time(2000);
-			 sessionStorage.setItem("speedS", 2000);
+			 sessionStorage.setItem("speedS", 3000);
 		});
 		$("#pause").on("click", function(){
 			if(tick != null){

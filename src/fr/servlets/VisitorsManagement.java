@@ -98,13 +98,12 @@ public class VisitorsManagement extends HttpServlet {
 					vdao.updateVisitor(visitor);
 				}
 				//Maj de la satisfaction globale
-				globalS = globalS / visitors.size();
-			
-				e0.setCapacity(globalS);
-				edao.updateEnclosure(e0);
-				session.setAttribute("satisfaction", globalS);
-				
-				
+				if(visitors.size()>0){
+					globalS = globalS / visitors.size();
+					e0.setCapacity(globalS);
+					edao.updateEnclosure(e0);
+					session.setAttribute("satisfaction", globalS);
+				}
 				
 				//Depenses des visiteurs dans le zoo
 				player.setMoney(player.getMoney() + coins);
