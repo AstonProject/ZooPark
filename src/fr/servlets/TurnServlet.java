@@ -45,17 +45,17 @@ public class TurnServlet extends HttpServlet {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 		if(player != null){
 			int player_id = player.getId();
-			int locate_x = (int) session.getAttribute("current_locate_x");
-			int locate_y = (int) session.getAttribute("current_locate_y");
-			System.out.println("coords : "+locate_x+" "+locate_y);
 			PlayersDAO pdao = new PlayersDAO();
+			String enclosureM = request.getParameter("enclosureM");
 			if(!request.getParameter("newTime").equals(null)){
 				player.setTurn(request.getParameter("newTime"));
 				session.setAttribute("user", player);
 				pdao.updatePlayer(player);
 			}
-			if(request.getParameter("enclosureM").equals("ok")){
+			/*if(enclosureM != null && enclosureM.equals("ok")){
 				EnclosuresDAO edao = new EnclosuresDAO();
+				int locate_x = (int) session.getAttribute("current_locate_x");
+				int locate_y = (int) session.getAttribute("current_locate_y");
 				EnclosureBean enclosure = edao.getEnclosureByLocation(locate_x, locate_y, player_id);
 				EmployeesDAO emdao = new EmployeesDAO();
 				List<EmployeeBean> employees = emdao.getEmployeesByEnclosure(enclosure.getId());
@@ -103,7 +103,7 @@ public class TurnServlet extends HttpServlet {
 				}
 				String reponseJson = "{\"clean\":"+cleanGauge+", \"hungry\":"+moyHungry+", \"health\":"+moyHealth+"}";
 				response.getWriter().append(reponseJson);
-			}
+			}*/
 		}
 		
 	}
