@@ -4,7 +4,7 @@ var server = {};
 
 	server.monAjax = function(dataObj, url, callback, method) {
 		var objAjax = {
-			url : "http://localhost:8081/zoopark/" + url, 
+			url : "http://localhost:8080/zoopark/" + url, 
 			data : dataObj, 
 			type : method || 'post', 
 			dataType : 'json',
