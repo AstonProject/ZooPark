@@ -47,9 +47,10 @@ public class TurnServlet extends HttpServlet {
 			int player_id = player.getId();
 			PlayersDAO pdao = new PlayersDAO();
 			String enclosureM = request.getParameter("enclosureM");
+			String newTime = request.getParameter("newTime");
 			System.out.println(enclosureM);
-			if(!request.getParameter("newTime").equals(null)){
-				player.setTurn(request.getParameter("newTime"));
+			if(newTime != null){
+				player.setTurn(newTime);
 				session.setAttribute("user", player);
 				pdao.updatePlayer(player);
 			}
@@ -61,6 +62,7 @@ public class TurnServlet extends HttpServlet {
 				EmployeesDAO emdao = new EmployeesDAO();
 				List<EmployeeBean> employees = emdao.getEmployeesByEnclosure(enclosure.getId());
 				AnimalsDAO adao = new AnimalsDAO();
+				List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
 				List<AnimalBean> weakAnimals = adao.getWeakestAnimals(enclosure.getId());
 				for(EmployeeBean employee: employees){
 					if(employee.getType().equals("healer")){
@@ -86,10 +88,10 @@ public class TurnServlet extends HttpServlet {
 					animal.setHungry_gauge(animal.getHungry_gauge()+1);
 					adao.updateAnimal(animal);
 				}
-				enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-1);
+				enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
 				edao.updateEnclosure(enclosure);
 				int cleanGauge = enclosure.getCleanliness_gauge();
-				List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
+				
 				int totalHealth = 0;
 				int totalHungry = 0;
 				int moyHungry = 0;

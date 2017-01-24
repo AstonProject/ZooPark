@@ -3,8 +3,9 @@
 	let tickEnclosure = null;
 	
 	var time = function(millis){
+		let enclosureOk = "ok";
 		if(tickEnclosure != null){
-			clearInterval(tick);
+			clearInterval(tickEnclosure);
 		}
 		tickEnclosure = setInterval(function(){
 			let callback=function(donnees){
@@ -20,7 +21,7 @@
 				$(".cleanness_gauge").prepend(donnees.clean);
 			}
 			let enclosureObj = {
-				"enclosureM": "ok"
+				"enclosureM": enclosureOk
 			};
 			console.log(enclosureObj);
 			server.monAjax(enclosureObj, "newturn", callback, 'POST');
@@ -30,11 +31,11 @@
 	$(document).ready(function() {
 		let speedT = sessionStorage.getItem("speedS");
 		if (speedT == 10000) {
-			getSpeedT(10000);
+			time(10000);
 		}else if(speedT == 3000) {
-			getSpeedT(2000);
+			time(2000);
 		}else if (speedT == 0) {
-			clearInterval(speed);
+			clearInterval(tickEnclosure);
 		}
 		
 		$("#play").on("click", function(){
