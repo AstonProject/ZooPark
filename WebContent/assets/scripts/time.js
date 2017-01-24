@@ -34,7 +34,7 @@
 				
 				$("#body").css("background-color","darkblue");
 			}
-			let updatePlayer = {"newTime": hour+","+day};
+			let updatePlayer = {"newTime": hour+","+day+","+month};
 			server.monAjax(updatePlayer, "newturn", callback, 'POST');
 			$heure.empty();
 			$jour.empty();

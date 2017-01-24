@@ -1,18 +1,12 @@
 (function($) {
 	"use strict";
-	let tick = null;
-	let phase = "day";
-	let hour = 0;
-	let day = 1;
+	let tickEnclosure = null;
 	
 	var time = function(millis){
-		let $heure = $(".heure");
-		let $jour = $(".jour");
-		if(tick != null){
+		if(tickEnclosure != null){
 			clearInterval(tick);
 		}
-		tick = setInterval(function(){
-			hour++;
+		tickEnclosure = setInterval(function(){
 			let callback=function(donnees){
 				$(".hungry").attr("value", donnees.hungry);
 				$(".health").attr("value", donnees.health);
@@ -25,53 +19,41 @@
 				$(".health_gauge").prepend(donnees.health);
 				$(".cleanness_gauge").prepend(donnees.clean);
 			}
-			if(hour == 10){
-				hour = 0;
-				$("#body").css("background-color","lightblue");
-				day++;
-				phase = "day";
-			}
-			else if(hour == 5){
-				phase = "night";
-				$("#body").css("background-color","darkblue");
-			}
-			let updatePlayer = {
-				"newTime": hour+","+day,
+			let enclosureObj = {
 				"enclosureM": "ok"
 			};
-			server.monAjax(updatePlayer, "newturn", callback, 'POST');
-			$heure.empty();
-			$jour.empty();
-			$heure.append(hour);
-			$jour.append(day);
+			console.log(enclosureObj);
+			server.monAjax(enclosureObj, "newturn", callback, 'POST');
 		}, millis);
 	}
 
 	$(document).ready(function() {
-		let obj = {};
-		let callback = function(donnees){
-			hour = parseInt(donnees.hour);
-			day = parseInt(donnees.day);
-			if(hour >= 5) {
-				phase = "night";
-				$("body, #body").css("background-color","darkblue");
-			}
-			else {
-				phase = "day";
-				$("body, #body").css("background-color","lightblue");
-			}
-		};
-		server.monAjax(obj, "newturn", callback, 'GET');
+		let speedT = sessionStorage.getItem("speedS");
+		if (speedT == 10000) {
+			getSpeedT(10000);
+		}else if(speedT == 3000) {
+			getSpeedT(2000);
+		}else if (speedT == 0) {
+			clearInterval(speed);
+		}
+		
 		$("#play").on("click", function(){
-			time(60000);
+			time(10000);
+			 sessionStorage.setItem("speedS", 10000);
 		});
 		$("#speedup").on("click", function(){
-			time(10000);
+			time(2000);
+			 sessionStorage.setItem("speedS", 3000);
 		});
 		$("#pause").on("click", function(){
-			if(tick != null){
-				clearInterval(tick);
+			if(tickEnclosure != null){
+				clearInterval(tickEnclosure);
+				sessionStorage.setItem("speedS", 0);
 			}
+		});
+		$("#disconnect").on("click", function(){
+			clearInterval(tickEnclosure);
+			sessionStorage.setItem("speedS", 0);
 		});
 	})
 })(jQuery);

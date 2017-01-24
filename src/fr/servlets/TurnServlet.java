@@ -34,7 +34,7 @@ public class TurnServlet extends HttpServlet {
 		if(player != null){
 			String[] turn = new String[2];
 			turn = player.getTurn().split(",");
-			String reponseJson = "{\"hour\": "+turn[0]+", \"day\": "+turn[1]+"}";
+			String reponseJson = "{\"hour\": "+turn[0]+", \"day\": "+turn[1]+", \"month\": "+turn[2]+"}";
 			response.getWriter().append(reponseJson);
 		}
 	}
@@ -47,12 +47,13 @@ public class TurnServlet extends HttpServlet {
 			int player_id = player.getId();
 			PlayersDAO pdao = new PlayersDAO();
 			String enclosureM = request.getParameter("enclosureM");
+			System.out.println(enclosureM);
 			if(!request.getParameter("newTime").equals(null)){
 				player.setTurn(request.getParameter("newTime"));
 				session.setAttribute("user", player);
 				pdao.updatePlayer(player);
 			}
-			/*if(enclosureM != null && enclosureM.equals("ok")){
+			if(enclosureM != null && enclosureM.equals("ok")){
 				EnclosuresDAO edao = new EnclosuresDAO();
 				int locate_x = (int) session.getAttribute("current_locate_x");
 				int locate_y = (int) session.getAttribute("current_locate_y");
@@ -103,7 +104,7 @@ public class TurnServlet extends HttpServlet {
 				}
 				String reponseJson = "{\"clean\":"+cleanGauge+", \"hungry\":"+moyHungry+", \"health\":"+moyHealth+"}";
 				response.getWriter().append(reponseJson);
-			}*/
+			}
 		}
 		
 	}
