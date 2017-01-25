@@ -1,3 +1,7 @@
+
+	
+
+
 .validate_img{
 background-image: url(../images/validate.png);
 background-position:  0px 0px;
@@ -5,7 +9,7 @@ background-repeat: no-repeat;
 width: 53px;
 height: 33px;
 border: none;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }
@@ -24,7 +28,7 @@ input[type="number"].mod::-webkit-inner-spin-button {
     -webkit-appearance: none;
     background: transparent url("../images/increase_decrease.png") no-repeat center center;
     width: 16px;
-    height: 100%;
+    height: 80%;
     opacity: 1; /* shows Spin Buttons per default (Chrome >= 39) */
     position: absolute;
     top: 0;
@@ -37,15 +41,15 @@ input[type="number"].mod::-moz-inner-spin-button:active {
 }
 
 #transactions-list {
-	width: 400px;
-	height: 400px;
+	width: 500px;
+	height: 300px;
 	padding-top: 10px;
 	padding-left: 10px;
-	background: orange;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	display: inline-block;
 	margin-left: 100px;
-	overflow-y: auto;
+	overflow: scroll;
 }

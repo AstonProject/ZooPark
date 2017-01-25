@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/parts/header.jsp" %>
 <c:if test="${ !empty sessionScope.user }">
 	<div id="main-content">
-		<h1>ZooPark</h1>
+		
 		<div id="zoo-container">
 			<%-- Parcours abscisse i + ordonnée j --%>
 			<c:forEach var="i" begin="1" end="5">
@@ -18,9 +18,10 @@
 <%-- Si pas de joueur en session --%>
 <c:if test="${ empty sessionScope.user }">
 	<div id="main-content">
-		<h1>ZooPark</h1>
-		<div id="zoo-container">
-			<div id="register">
+	
+		<div id="zoo-container" class="container">
+		<div class="row">
+			<div id="register" class="col-md-6">
 				<h2>Inscription</h2>
 				<form method="post" id="register_form" action="user?action=register">
 					<ul>
@@ -41,11 +42,11 @@
 						<li><input type="text" name="reg_email" id="reg_email">
 						<br><span>${valid.erreurs['email']}</span></li>
 		
-						<li><input type="submit" value="inscription"></li>
+						<br><li><input type="submit" value="inscription"></li>
 					</ul>
 				</form>
 			</div>
-			<div id="connect">
+			<div id="connect" class="col-md-6">
 				<h2>Connexion</h2>
 				<form method="post" id="connection_form" action="user?action=connect">
 					<ul>
@@ -54,9 +55,10 @@
 						<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
 						<li><label for="con_password">Password :</label></li>
 						<li><input type="text" name="con_password" id="con_password"></li>
-						<li><input type="submit" value="connexion"></li>
+						<br><li><input type="submit" value="connexion"></li>
 					</ul>
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

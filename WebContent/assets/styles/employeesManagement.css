@@ -1,22 +1,10 @@
-.ec1{
-	margin-left: 195px;
-}
-
-.ec2{
-	margin-left: 50px;	
-}
-
-.ec3{
-	margin-left: 200px;
-}
-
 .img_container{
 	display: inline-block;
 }
 
 #employees_container > span{
-	width: 50px;
-  	height: 50px;
+	width: 100px;
+  	height: 100px;
 }
 
 .ec1 > span {
@@ -29,26 +17,24 @@
 	text-align: center;
 	display: inline-block;;
 	position: relative;
-	background: orange;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
-}
 
-.ec3 > span {
-	margin-right:145px;
 }
 
 
 input[type="number"] {
-    height: 30px;
-    width: 50px;
+    height: 36px;
+    width: 54px;
     font-size: 18px;
     position: relative;
     background-color: transparent;
-    border: none;
     -moz-appearance: textfield;
+    
 }   
+
 input[type="number"].mod::-webkit-outer-spin-button,
 input[type="number"].mod::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -63,13 +49,13 @@ input[type="number"].mod::-webkit-inner-spin-button {
 }
 input[type="number"].mod::-moz-inner-spin-button:hover,
 input[type="number"].mod::-moz-inner-spin-button:active{
-    border: none;
+
 }
 
 .showPrice {
 	width: 100px;
 	height: 30px;
-	background: orange;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -87,7 +73,7 @@ background-repeat: no-repeat;
 width: 53px;
 height: 33px;
 border: none;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }
@@ -100,7 +86,7 @@ width: 53px;
 height: 40px;
 border: none;
 background-size: 30%;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }

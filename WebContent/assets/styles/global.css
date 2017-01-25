@@ -9,10 +9,10 @@ html {
 }
 
 h1 {
-	font-family: fantasy;
-	margin-bottom: 30px;
-	margin-top: 30px;
+	font-color: green;
 }
+
+
 
 body, #body {
 	background: #6adaff;
@@ -28,7 +28,7 @@ body, #body {
 	border-radius: 40px 40px 40px 40px;
 	-moz-border-radius: 40px 40px 40px 40px;
 	-webkit-border-radius: 40px 40px 40px 40px;
-	background: #aaa;
+	background-color: #c8ffd1;
 	min-height: 400px;
 	width: 85%;
 	display: inline-block;
@@ -39,19 +39,18 @@ body, #body {
 #main-header {
 	background: #ff8100;
 	border: 1px solid grey;
-	min-height: 130px;
+	height: 130px;
+	font-size: x-large;
 	border-radius: 40px 40px 0px 0px;
 	-moz-border-radius: 40px 40px 0px 0px;
 	-webkit-border-radius: 40px 40px 0px 0px;
 }
 
-#page-header {
-	min-height: 100px;
-}
 
 #main-content {
 	background: #c8ffd1;
-	min-height: 500px;
+	height: 480px;
+	font-size: 20px;
 	padding: 3px;
 }
 
@@ -87,8 +86,8 @@ body, #body {
 
 .zoo-site {
 	border: 3px solid black;
-	min-width: 100px;
-	min-height: 100px;
+	min-width: 80px;
+	min-height: 80px;
 	display: inline-block;
 	margin: 2px;
 }
@@ -97,8 +96,3 @@ form ul{
 	list-style: none;
 }
 
-#register{
-	position: relative;
-	float: left;
-	margin-left: 150px;
-}

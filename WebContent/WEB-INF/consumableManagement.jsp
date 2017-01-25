@@ -1,15 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
-		<title>Consumable_management</title>
-	</head>
-	
-	<body>
+<%@ include file="/WEB-INF/parts/header.jsp" %>
+	<div id="main-content">
 		<div id="finance_status">
 			<h1>Consumable menu</h1><br>
 			<div>
@@ -38,10 +28,5 @@
 				</div>
 			</form>
 		</div>
-	</body>
-	
-	<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/scripts/consumableManagement.js"></script>
-
-</html>
+	</div>
+<%@ include file="/WEB-INF/parts/footer.jsp" %>

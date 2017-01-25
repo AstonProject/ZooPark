@@ -2,11 +2,18 @@
 <div id="main-content">
 	<h1>Building menu</h1>
 	<br>
+	<div id="zoo-container" class="container">
+		<div class="row">
+		<div class="col-md-6">
 	<div class="enclosureChoice">
 		<form action="createEnclosure" method="post" id="FormCreateEnclosure">
 			<h3>Enclosure type</h3>
 			<br>
-
+			</div>
+			
+		
+		<div class="row">
+	
 			<div id="radio1">
 				<input type="radio" name="enclosureType" value="Elephant"
 					id="radio_elephant"> <img
@@ -19,6 +26,7 @@
 					type="radio" name="enclosureType" value="Camel" id="radio_camel">
 				<img src="${pageContext.request.contextPath}/assets/images/Contruction_menu_camel.png" alt="logo" />
 			</div>
+			
 			<br>
 
 			<h3 class="Enclosure-Description-Title">Description</h3>
@@ -50,6 +58,8 @@
 				<div class="error"></div>
 			</div>
 		</form>
+	</div>
+	
 	</div>
 </div>
 <%@ include file="/WEB-INF/parts/footer.jsp" %>

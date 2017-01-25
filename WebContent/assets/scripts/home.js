@@ -59,10 +59,17 @@
 		});
 	}
 	
+	function showconsmables() {
+		$('#consumables').on('click', function() {
+			window.location.replace("consumableManagement");
+		});
+	}
+	
 	
 	$(document).ready(function() {
 		showEnclosures();
 		showEmployeeMangement();
 		showFinances();
+		showConsumables();
 	})
 })(jQuery);
