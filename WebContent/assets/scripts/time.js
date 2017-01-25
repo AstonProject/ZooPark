@@ -26,6 +26,8 @@
 				if(day == 30){
 					day = 1;
 					month++;
+					let paySalaries = {"newMonth": newMonth};
+					server.monAjax(paySalaries, "newturn", callback, 'POST');
 				}
 				phase = "day";
 			}

@@ -48,11 +48,24 @@ public class TurnServlet extends HttpServlet {
 			PlayersDAO pdao = new PlayersDAO();
 			String enclosureM = request.getParameter("enclosureM");
 			String newTime = request.getParameter("newTime");
+			String newMonth = request.getParameter("newMonth");
 			System.out.println(enclosureM);
+			
+			if(newMonth != null && newMonth.equals("ok")){
+				EmployeesDAO emdao = new EmployeesDAO();
+				List<EmployeeBean> employees = emdao.getEmployeesByPlayer(player_id);
+				int totalSalaries = employees.size()*100;
+				player.setMoney(player.getMoney()-totalSalaries);
+				pdao.updatePlayer(player);
+			}
 			if(newTime != null){
 				player.setTurn(newTime);
 				session.setAttribute("user", player);
 				pdao.updatePlayer(player);
+				if(player.getMoney() <= -50000){
+					request.setAttribute("perdu", "ok");
+					response.sendRedirect("home");
+				}
 			}
 			if(enclosureM != null && enclosureM.equals("ok")){
 				EnclosuresDAO edao = new EnclosuresDAO();
@@ -108,7 +121,6 @@ public class TurnServlet extends HttpServlet {
 				response.getWriter().append(reponseJson);
 			}
 		}
-		
 		
 	}
 
