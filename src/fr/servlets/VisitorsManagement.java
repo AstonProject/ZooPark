@@ -90,11 +90,18 @@ public class VisitorsManagement extends HttpServlet {
 					totalS= (int) (satisfactionG + (satisfactionG*variation/100));
 					globalS +=totalS;
 					visitor.setSatisfaction_gauge(totalS);
-					//si la satisfaction est seprieure 50, le visiteur depense de l'argent
-					if(totalS > 50 && visitor.getCoins()>0){
+					//si la satisfaction est suffisante, le visiteur depense de l'argent
+					if(totalS > 90 && visitor.getCoins()>999){
 						visitor.setCoins(visitor.getCoins() - 1000);
 						coins +=1000;
-					}		
+					} else if(totalS > 50 && visitor.getCoins()>499){
+						visitor.setCoins(visitor.getCoins() - 1000);
+						coins +=500;
+						
+					}	else if(totalS > 25 && visitor.getCoins()>249){
+						visitor.setCoins(visitor.getCoins() - 1000);
+						coins +=250;
+					}			
 					vdao.updateVisitor(visitor);
 				}
 				//Maj de la satisfaction globale
