@@ -65,7 +65,7 @@ public class Home extends HttpServlet {
 			//Cas PERDU
 			String perdu = (String) request.getAttribute("perdu");
 			if(perdu != null && perdu.equals("ok")){
-				//cas perdu que faire ?
+				request.setAttribute("perdu","ok");
 			}
 		}
 		this.getServletContext()
