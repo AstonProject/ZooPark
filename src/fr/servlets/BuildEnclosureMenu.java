@@ -13,9 +13,12 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 
 import fr.beans.EnclosureBean;
+import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
+import fr.beans.SpecieBean;
 import fr.dao.CostsDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.FinancesDAO;
 import fr.dao.PlayersDAO;
 import fr.dao.SpeciesDAO;
 
@@ -139,8 +142,6 @@ public class BuildEnclosureMenu extends HttpServlet {
 				player.setMoney(money - finalPrice);
 
 				pdao.updatePlayer(player);
-
-				money = player.getMoney();
 				
 				// Modification des donnees de l'enclo achete
 				enclosure.setCapacity(enclosureCapacity);
@@ -151,6 +152,30 @@ public class BuildEnclosureMenu extends HttpServlet {
 				// mise a jour des donnees du joeur en session
 				session.setAttribute("user", player);
 
+				// envoi de la transaction dans la bdd finance
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+				
+				if (finalPrice > 0) {
+					
+					// recuperation du nom de l'espece
+					int specie_id = enclosure.getSpecie_id();
+					SpeciesDAO spdao= new SpeciesDAO();
+					SpecieBean specie= spdao.getSpecieById(specie_id);
+					String name= specie.getName();
+					
+					finance.setType_action("purchase");
+					finance.setSomme(finalPrice);
+					finance.setLibelle("enclosure of " + name);
+					finance.setTurn(player.getTurn());
+					finance.setAnimals_number(0);
+					finance.setPlayer_id(player.getId());
+					finance.setEnclosure_id(enclosure.getId());
+					finance.setPayMonthly(0);
+				
+					fdao.createFinance(finance);
+				}
+				
 				// Puis redirection vers la servlet home via le callback de
 				// getForm()
 

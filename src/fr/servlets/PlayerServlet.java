@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.beans.ConsumablesBean;
 import fr.beans.EnclosureBean;
 import fr.beans.PlayerBean;
+import fr.dao.ConsumableDAO;
 import fr.dao.EnclosuresDAO;
 import fr.dao.PlayersDAO;
 import fr.utility.ValidationDonnees;
@@ -66,9 +68,25 @@ public class PlayerServlet extends HttpServlet {
 					player = objPlayer.getByPassword(player.getPseudo(), player.getPassword());
 					int player_id = player.getId();
 					
+					EnclosuresDAO objEnclos = new EnclosuresDAO();
+					
+					// creation de l'enclos 0
+					EnclosureBean e0 = new EnclosureBean();
+					e0.setLocate_x(0);
+					e0.setLocate_y(0);
+					e0.setCapacity(50);
+					e0.setAnimal_quantity(0);
+					e0.setCleanliness_gauge(100);
+					e0.setEmployee_slot(100);
+					e0.setEmployee_quantity(0);
+					e0.setSpecie_id(1);
+					e0.setPlayer_id(player_id);
+					
+					objEnclos.addEnclosure(e0);
+					
+					// creation des 25 enclos
 					EnclosureBean enclosure = new EnclosureBean();
 					enclosure.setPlayer_id(player_id);
-					EnclosuresDAO objEnclos = new EnclosuresDAO();
 					
 					for (int x=1; x<6; x++) {
 						for (int y=1; y<6; y++) {
@@ -79,6 +97,25 @@ public class PlayerServlet extends HttpServlet {
 							objEnclos.initEnclosure(enclosure);
 						}
 					}
+					
+					// creation des stocks consumables
+					ConsumableDAO cdao = new ConsumableDAO();
+					ConsumablesBean consumable = new ConsumablesBean();
+						
+						// creation du stock de viande
+						consumable.setName("meat");
+						consumable.setQuantity(0);
+						consumable.setPlayer_id(player_id);
+						consumable.setType("food");
+						cdao.createConsumable(consumable);
+						
+						// creation du stock de poisson
+						consumable.setName("fish");
+						cdao.createConsumable(consumable);
+						
+						// creation du stock de foin
+						consumable.setName("straw_bale");
+						cdao.createConsumable(consumable);
 				
 				} catch (SQLException e) {
 					e.printStackTrace();

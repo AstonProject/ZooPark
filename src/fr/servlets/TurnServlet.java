@@ -23,22 +23,28 @@ public class TurnServlet extends HttpServlet {
 		// Recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
-		String[] turn = new String[2];
+		if (session != null && player != null) {
+			String[] turn = new String[2];
 		turn = player.getTurn().split(",");
 		String reponseJson = "{\"hour\": "+turn[0]+", \"day\": "+turn[1]+"}";
 		response.getWriter().append(reponseJson);
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Recuperation de la session actuelle et du joueur connecte
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
-		PlayersDAO pdao = new PlayersDAO();
-		if(!request.getParameter("newTime").equals(null)){
-			player.setTurn(request.getParameter("newTime"));
-			session.setAttribute("user", player);
-			pdao.updatePlayer(player);
+		if (session != null && player != null) {
+			PlayersDAO pdao = new PlayersDAO();
+			if (!request.getParameter("newTime").equals(null)) {
+				player.setTurn(request.getParameter("newTime"));
+				session.setAttribute("user", player);
+				pdao.updatePlayer(player);
+			}
 		}
+		
 		
 	}
 

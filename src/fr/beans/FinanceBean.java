@@ -5,10 +5,10 @@ public class FinanceBean {
 	private int id;
 	private int player_id;
 	private String type_action; // achat, vente ou emprunt
-	private int somme; // positive ou négative suivant type_action
+	private long somme; // positive ou negative suivant type_action
 	private String libelle; // enclos ou animal
 	private String turn; // tour de jeu
-	private int payMonthly; // mensualité de pret à rembourser
+	private int payMonthly; // mensualite de pret a rembourser
 	private int animals_number;
 	private int enclosure_id;
 	
@@ -39,11 +39,11 @@ public class FinanceBean {
 		this.type_action = type_action;
 	}
 
-	public int getSomme() {
+	public long getSomme() {
 		return somme;
 	}
 
-	public void setSomme(int somme) {
+	public void setSomme(long somme) {
 		this.somme = somme;
 	}
 

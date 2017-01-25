@@ -31,6 +31,14 @@
 
 	}
 
+	// fonction pour l'affichage du total des prets en cours
+	function showTotalLoans() {
+		
+		
+		
+	}
+	
+	
 	// fonction pour le remboursement
 	function refund() {
 		
