@@ -24,8 +24,11 @@
 				$("#body").css("background-color","lightblue");
 				day++;
 				if(day == 30){
+					let newMonth = "ok";
 					day = 1;
 					month++;
+					let paySalaries = {"newMonth": newMonth};
+					server.monAjax(paySalaries, "newturn", callback, 'POST');
 				}
 				phase = "day";
 			}

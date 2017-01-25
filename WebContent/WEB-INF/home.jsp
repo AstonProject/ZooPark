@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/parts/header.jsp" %>
-<c:if test="${ !empty sessionScope.user }">
+<c:if test="${ !empty sessionScope.user && empty perdu }">
 	<div id="main-content">
 		<h1>ZooPark</h1>
 		<div id="zoo-container">
@@ -13,6 +13,13 @@
 				<br>
 			</c:forEach>
 		</div>
+	</div>
+</c:if>
+<c:if test="${ !empty sessionScope.user && !empty perdu }">
+	<div id="main-content">
+		Vous avez perdu trop d'argent, le parc a été fermé.<br><br>
+		Cordialement,<br>
+		Les investisseurs.
 	</div>
 </c:if>
 <%-- Si pas de joueur en session --%>

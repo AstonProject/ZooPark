@@ -62,6 +62,11 @@ public class Home extends HttpServlet {
 			
 			session.setAttribute("satisfaction", satisfaction);
 			
+			//Cas PERDU
+			String perdu = (String) request.getAttribute("perdu");
+			if(perdu != null && perdu.equals("ok")){
+				//cas perdu que faire ?
+			}
 		}
 		this.getServletContext()
 			.getRequestDispatcher("/WEB-INF/home.jsp")
