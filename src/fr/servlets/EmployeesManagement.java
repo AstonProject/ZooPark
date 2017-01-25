@@ -15,10 +15,12 @@ import org.json.simple.JSONObject;
 
 import fr.beans.EmployeeBean;
 import fr.beans.EnclosureBean;
+import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.FinancesDAO;
 import fr.dao.PlayersDAO;
 
 /**
@@ -195,7 +197,9 @@ public class EmployeesManagement extends HttpServlet {
 						e0.setEmployee_quantity(eQty + quantity);
 						ecdao.updateEnclosure(e0);
 					}
-				} 
+				}
+				
+				// Si achat d'employes
 				if(healerQty > 0 || cleanerQty > 0 || securityQty > 0){
 					int hl=0;
 					int cl=0;
@@ -253,6 +257,27 @@ public class EmployeesManagement extends HttpServlet {
 						ecdao.updateEnclosure(e0);
 					}
 				}
+				
+				// preparation et envoi de la transaction
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+
+				if (priceEmED < 0) {
+					
+					finance.setType_action("recruitment");
+					finance.setSomme(priceEmED);
+					finance.setLibelle(type);
+					finance.setTurn(player.getTurn());
+					finance.setAnimals_number(animal_quantity);
+					finance.setPlayer_id(player.getId());
+					finance.setEnclosure_id(enclosure.getId());
+					finance.setPayMonthly(0);
+				
+					fdao.createFinance(finance);
+				}
+				
+				
+				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}

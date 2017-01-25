@@ -391,7 +391,7 @@ public class EnclosureManagment extends HttpServlet {
 				String name= specie.getName();
 				long unit_price= (long) prices.get(name+"Costs");
 				
-				// preparatiion de la transaction
+				// preparation de la transaction
 				FinancesDAO fdao = new FinancesDAO();
 				FinanceBean finance = new FinanceBean();
 				String action = "";
@@ -454,8 +454,6 @@ public class EnclosureManagment extends HttpServlet {
 				}
 				
 				// envoi de la transaction dans la bdd finance
-
-				
 				if (finalPrice != 0) {
 					
 					finance.setType_action(action);
@@ -475,9 +473,15 @@ public class EnclosureManagment extends HttpServlet {
 			}
 			/**permettre la revente d'un enclos et de tous ses animaux**/
 			else if ((statRE != null) && statRE.equals("okRE")) {
+				// recuperation du nom de l'espece et du nombre d'animaux
+				int specie_id = enclosure.getSpecie_id();
+				int animal_quantity = enclosure.getAnimal_quantity();
+				SpeciesDAO spdao= new SpeciesDAO();
+				SpecieBean specie= spdao.getSpecieById(specie_id);
+				String name= specie.getName();
+				
 				//MAJ du solde du player dans la BDD et en session
 				PlayersDAO pdao = new PlayersDAO();
-				
 				long total_priceEAP = (long) session.getAttribute("total_priceEAP");
 				long money = player.getMoney();
 				
@@ -520,7 +524,26 @@ public class EnclosureManagment extends HttpServlet {
 				for (AnimalBean animal : animals) {
 					//Recuperation de l'id des animaux a delete
 					andao.deleteAnimal(animal.getId());	
-				}				
+				}
+				
+				// preparation et envoi de la transaction
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+
+				if (total_priceEAP != 0) {
+					
+					finance.setType_action("sale");
+					finance.setSomme(total_priceEAP);
+					finance.setLibelle("enclosure of " + name);
+					finance.setTurn(player.getTurn());
+					finance.setAnimals_number(animal_quantity);
+					finance.setPlayer_id(player.getId());
+					finance.setEnclosure_id(enclosure.getId());
+					finance.setPayMonthly(0);
+				
+					fdao.createFinance(finance);
+				}
+				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
 			}
@@ -528,6 +551,12 @@ public class EnclosureManagment extends HttpServlet {
 			else if ((statUE != null) && statUE.equals("okUE")) {
 				long upgradeE_price = (long) session.getAttribute("upgrade_price");
 
+				// recuperation du nom de l'espece
+				int specie_id = enclosure.getSpecie_id();
+				SpeciesDAO spdao= new SpeciesDAO();
+				SpecieBean specie= spdao.getSpecieById(specie_id);
+				String name= specie.getName();
+				
 				//MAJ du solde du player dans la BDD et en session
 				PlayersDAO pdao = new PlayersDAO();
 				long money = player.getMoney();
@@ -544,6 +573,24 @@ public class EnclosureManagment extends HttpServlet {
 				}
 				ecdao.updateEnclosure(enclosure);
 				ecdao.updateEnclosure(enclosure);
+				
+				// preparation et envoi de la transaction
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+
+				if (upgradeE_price != 0) {
+					
+					finance.setType_action("upgrade");
+					finance.setSomme(upgradeE_price);
+					finance.setLibelle("enclosure of " + name);
+					finance.setTurn(player.getTurn());
+					finance.setAnimals_number(0);
+					finance.setPlayer_id(player.getId());
+					finance.setEnclosure_id(enclosure.getId());
+					finance.setPayMonthly(0);
+				
+					fdao.createFinance(finance);
+				}
 				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");
