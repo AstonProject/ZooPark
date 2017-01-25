@@ -43,6 +43,10 @@
 			$jour.append(day);
 			$mois.append(month);
 			
+			//relier les fonctions visiteurs/gauges
+			visitors();
+			refreshGauges();
+			
 		}, millis);
 	}
 

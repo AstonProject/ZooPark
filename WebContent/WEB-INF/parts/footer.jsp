@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/time.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/visitorsManagement.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/scripts/enclosureMTime.js"></script>
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/home.jsp' }">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/scripts/home.js"></script>
 	</c:if>
@@ -23,7 +24,6 @@
 	</c:if>
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/enclosureManagement.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/managementEnclosure.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/scripts/enclosureMTime.js"></script>
 	</c:if>
 	<c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
 	<script src="${pageContext.request.contextPath}/assets/scripts/employeesManagement.js"></script>
