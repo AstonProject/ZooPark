@@ -16,12 +16,14 @@ import org.json.simple.JSONObject;
 import fr.beans.AnimalBean;
 import fr.beans.EmployeeBean;
 import fr.beans.EnclosureBean;
+import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
 import fr.beans.SpecieBean;
 import fr.dao.AnimalsDAO;
 import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.FinancesDAO;
 import fr.dao.PlayersDAO;
 import fr.dao.SpeciesDAO;
 
@@ -389,13 +391,23 @@ public class EnclosureManagment extends HttpServlet {
 				String name= specie.getName();
 				long unit_price= (long) prices.get(name+"Costs");
 				
+				// preparatiion de la transaction
+				FinancesDAO fdao = new FinancesDAO();
+				FinanceBean finance = new FinanceBean();
+				String action = "";
+				long sum = 0;
+				
 				//MAJ du solde du player dans la BDD et en session
 				long finalPrice= unit_price*quantity;
 				long money = player.getMoney();
 				
 				if(quantity < 0){
-				player.setMoney((long) (money - (finalPrice)*(0.75)));
+					action = "sale";
+					sum = (long)(finalPrice * 0.75);
+					player.setMoney((long) (money - (finalPrice)*(0.75)));
 				}else{
+					action = "purchase";
+					sum = (long)(finalPrice);
 					player.setMoney(money - finalPrice);
 				}
 				pdao.updatePlayer(player);
@@ -439,6 +451,23 @@ public class EnclosureManagment extends HttpServlet {
 							break;
 						}
 					}
+				}
+				
+				// envoi de la transaction dans la bdd finance
+
+				
+				if (finalPrice != 0) {
+					
+					finance.setType_action(action);
+					finance.setSomme(sum);
+					finance.setLibelle(name);
+					finance.setTurn(player.getTurn());
+					finance.setAnimals_number(Math.abs(quantity));
+					finance.setPlayer_id(player.getId());
+					finance.setEnclosure_id(enclosure.getId());
+					finance.setPayMonthly(0);
+				
+					fdao.createFinance(finance);
 				}
 				
 				//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)

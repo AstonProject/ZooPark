@@ -26,7 +26,7 @@ public class FinancesDAO {
 		try {
 			st = connection.prepareStatement("INSERT INTO finance (type_action, somme, libelle, turn, animals_number, player_id, enclosure_id, payMonthly) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, finance.getType_action());
-			st.setInt(2, finance.getSomme());
+			st.setLong(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
 			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
@@ -68,7 +68,7 @@ public class FinancesDAO {
 			if (rs.next()) {
 				finance = new FinanceBean();
 				finance.setType_action(rs.getString("type_action"));
-				finance.setSomme(rs.getInt("somme"));
+				finance.setSomme(rs.getLong("somme"));
 				finance.setLibelle(rs.getString("libelle"));
 				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
@@ -116,7 +116,7 @@ public class FinancesDAO {
 				// creation de la transaction
 				finance.setId(rs.getInt("id"));
 				finance.setType_action(rs.getString("type_action"));
-				finance.setSomme(rs.getInt("somme"));
+				finance.setSomme(rs.getLong("somme"));
 				finance.setLibelle(rs.getString("libelle"));
 				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
@@ -166,7 +166,7 @@ public class FinancesDAO {
 
 				finance.setId(rs.getInt("id"));
 				finance.setType_action(rs.getString("type_action"));
-				finance.setSomme(rs.getInt("somme"));
+				finance.setSomme(rs.getLong("somme"));
 				finance.setLibelle(rs.getString("libelle"));
 				finance.setTurn(rs.getString("turn"));
 				finance.setAnimals_number(rs.getInt("animals_number"));
@@ -200,12 +200,54 @@ public class FinancesDAO {
 		return finances;
 	}
 	
+	// recuperation des prets du joueur
+	public List<FinanceBean> getLoansByPlayer (int player_id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		List<FinanceBean> loans = new ArrayList<>();
+		
+		try {
+			st = connection.prepareStatement("SELECT * FROM finance WHERE type_action=loan AND player_id=?");
+			st.setInt(1, player_id);
+			rs = st.executeQuery();
+			
+			while (rs.next()) {
+				FinanceBean loan = new FinanceBean();
+				// creation de la transaction
+				loan.setId(rs.getInt("id"));
+				loan.setType_action(rs.getString("type_action"));
+				loan.setSomme(rs.getLong("somme"));
+				loan.setLibelle(rs.getString("libelle"));
+				loan.setTurn(rs.getString("turn"));
+				loan.setAnimals_number(rs.getInt("animals_number"));
+				loan.setPlayer_id(rs.getInt("player_id"));
+				loan.setPayMonthly(rs.getInt("payMonthly"));
+				loan.setEnclosure_id(rs.getInt("enclosure_id"));
+				
+				// sauvegarde du pret dans la liste
+				loans.add(loan);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			
+			if (st != null) {
+				try {
+					st.close(); 
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return loans;
+	}
+	
 	public void refundLoan (FinanceBean finance) {
 		PreparedStatement st = null;
 		
 		try {
 			st = connection.prepareStatement("UPDATE finance SET somme=? WHERE id=?");
-			st.setInt(1, finance.getSomme());
+			st.setLong(1, finance.getSomme());
 			st.setInt(2, finance.getId());
 			
 			st.executeUpdate();
@@ -253,7 +295,7 @@ public class FinancesDAO {
 		try {
 			st = connection.prepareStatement("UPDATE finance SET type_action=?, somme=?, libelle=?, date=?, animals_number=?, player_id=?, enclosure_id=?, payMonthly=? WHERE id=?");
 			st.setString(1, finance.getType_action());
-			st.setInt(2, finance.getSomme());
+			st.setLong(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());
 			st.setString(4, finance.getTurn());
 			st.setInt(5, finance.getAnimals_number());
