@@ -1,15 +1,7 @@
 
-			
-(function($) {
-	"use strict";
-	var speed = null;
-	var hourT = null;
-
-	
-	function getSpeedT(millis) {
-		var object ={};
-			speed = setInterval(function(){ 
-				
+	function visitors() {
+		let object ={};
+		let hourT = null;
 				hourT = sessionStorage.getItem("hour");
 				
 					//Generer des visiteurs a l'heure 1
@@ -50,45 +42,5 @@
 							
 							object = {"statusNV" : statusNV};
 							server.monAjax(object, "visitorsManagement", callback, 'POST');
-					 }
-				
-				
-					
-			}, millis);	
-	}
-	
-	
-	$(document).ready(function() {
-		
-		let speedT = sessionStorage.getItem("speedS");
-		
-		if (speedT == 10000) {
-			getSpeedT(10000);
-		}else if(speedT == 3000) {
-			getSpeedT(2000);
-		}else if (speedT == 0) {
-			clearInterval(speed);
-		}
-		
-		$("#play").on("click", function(){
-			clearInterval(speed);
-			getSpeedT(10000);
-			 sessionStorage.setItem("speedS", 10000);
-		});
-		$("#speedup").on("click", function(){
-			clearInterval(speed);
-			getSpeedT(2000);
-			 sessionStorage.setItem("speedS", 3000);
-		});
-		$("#pause").on("click", function(){
-			if(speed != null){
-				clearInterval(speed);
-				sessionStorage.setItem("speedS", 0);
-			}
-		});
-		$("#disconnect").on("click", function(){
-			clearInterval(speed);
-			sessionStorage.setItem("speedS", 0);
-		});
-	})
-})(jQuery);
+					 }			
+			}	
