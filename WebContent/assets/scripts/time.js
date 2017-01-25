@@ -5,6 +5,7 @@
 	let hour = 0;
 	let day = 1;
 	let month = 1;
+	let newMonth = "ok";
 	
 	var time = function(millis){
 		let $heure = $(".heure");
@@ -18,6 +19,8 @@
 			console.log("hour++"+ hour);
 			sessionStorage.setItem("hour", hour);
 			let callback=function(donnees){
+				$('#money').empty();
+				$('#money').append("Money : " + donnees.money + " Z");
 			}
 			if(hour == 10){
 				hour = 0;
@@ -47,8 +50,10 @@
 			
 			//relier les fonctions visiteurs/gauges
 			visitors();
-			refreshGauges();
-			
+			if (document.location.href.indexOf('enclosureManagment') > -1){ 
+				refreshGaugesOnEnclosure();
+			}
+			else refreshGauges();
 		}, millis);
 	}
 
