@@ -125,9 +125,9 @@ public class BuildEnclosureUtil {
 			SpecieBean specie= spdao.getSpecieById(specie_id);
 			String name= specie.getName();
 			
-			finance.setType_action("purchase");
+			finance.setType_action("construction");
 			finance.setSomme(finalPrice);
-			finance.setLibelle("enclosure of " + name);
+			finance.setLibelle(name + "s enclosure");
 			finance.setTurn(player.getTurn());
 			finance.setAnimals_number(0);
 			finance.setPlayer_id(player.getId());

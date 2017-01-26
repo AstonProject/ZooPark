@@ -432,7 +432,7 @@ public class EnclosureManagementUtil {
 		
 		if(quantity < 0){
 			action = "sale";
-			sum = (long)(finalPrice * 0.75);
+			sum = (long)(finalPrice*(-0.75));
 			player.setMoney((long) (money - (finalPrice)*(0.75)));
 		}else{
 			action = "purchase";
@@ -512,6 +512,13 @@ public class EnclosureManagementUtil {
 		EnclosureBean enclosure = new EnclosureBean();
 		enclosure = ecdao.getEnclosureByLocation(locate_x, locate_y, player_id);
 		
+		// recuperation du nom de l'espece et du nombre d'animaux
+		int specie_id = enclosure.getSpecie_id();
+		int animal_quantity = enclosure.getAnimal_quantity();
+		SpeciesDAO spdao= new SpeciesDAO();
+		SpecieBean specie= spdao.getSpecieById(specie_id);
+		String name= specie.getName();
+		
 		//MAJ du solde du player dans la BDD et en session
 		PlayersDAO pdao = new PlayersDAO();
 		
@@ -557,7 +564,26 @@ public class EnclosureManagementUtil {
 		for (AnimalBean animal : animals) {
 			//Recuperation de l'id des animaux a delete
 			andao.deleteAnimal(animal.getId());	
-		}				
+		}
+
+		// preparation et envoi de la transaction
+		FinancesDAO fdao = new FinancesDAO();
+		FinanceBean finance = new FinanceBean();
+
+		if (total_priceEAP != 0) {
+			
+			finance.setType_action("destruction");
+			finance.setSomme(total_priceEAP);
+			finance.setLibelle(name + "s enclosure");
+			finance.setTurn(player.getTurn());
+			finance.setAnimals_number(animal_quantity);
+			finance.setPlayer_id(player.getId());
+			finance.setEnclosure_id(enclosure.getId());
+			finance.setPayMonthly(0);
+		
+			fdao.createFinance(finance);
+		}
+		
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 		response.getWriter().append("{\"code\" : \"OK\"}");
 	}
@@ -575,6 +601,12 @@ public class EnclosureManagementUtil {
 		
 		long upgradeE_price = (long) session.getAttribute("upgrade_price");
 
+		// recuperation du nom de l'espece
+		int specie_id = enclosure.getSpecie_id();
+		SpeciesDAO spdao= new SpeciesDAO();
+		SpecieBean specie= spdao.getSpecieById(specie_id);
+		String name= specie.getName();
+		
 		//MAJ du solde du player dans la BDD et en session
 		PlayersDAO pdao = new PlayersDAO();
 		long money = player.getMoney();
@@ -591,6 +623,24 @@ public class EnclosureManagementUtil {
 		}
 		ecdao.updateEnclosure(enclosure);
 		ecdao.updateEnclosure(enclosure);
+		
+		// preparation et envoi de la transaction
+		FinancesDAO fdao = new FinancesDAO();
+		FinanceBean finance = new FinanceBean();
+
+		if (upgradeE_price != 0) {
+			
+			finance.setType_action("upgrade");
+			finance.setSomme(upgradeE_price);
+			finance.setLibelle(name + "s enclosure");
+			finance.setTurn(player.getTurn());
+			finance.setAnimals_number(0);
+			finance.setPlayer_id(player.getId());
+			finance.setEnclosure_id(enclosure.getId());
+			finance.setPayMonthly(0);
+		
+			fdao.createFinance(finance);
+		}
 		
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 		response.getWriter().append("{\"code\" : \"OK\"}");

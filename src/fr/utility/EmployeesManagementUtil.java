@@ -12,10 +12,12 @@ import org.json.simple.JSONObject;
 
 import fr.beans.EmployeeBean;
 import fr.beans.EnclosureBean;
+import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
 import fr.dao.CostsDAO;
 import fr.dao.EmployeesDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.FinancesDAO;
 import fr.dao.PlayersDAO;
 
 public class EmployeesManagementUtil {
@@ -228,6 +230,23 @@ public class EmployeesManagementUtil {
 			if(isCreate == true){
 				e0.setEmployee_quantity(QtyE + quantityE);
 				ecdao.updateEnclosure(e0);
+			}
+			// preparation et envoi de la transaction
+			FinancesDAO fdao = new FinancesDAO();
+			FinanceBean finance = new FinanceBean();
+
+			if (priceEmED < 0) {
+				
+				finance.setType_action("recruitment");
+				finance.setSomme(priceEmED*(-1));
+				finance.setLibelle("employee");
+				finance.setTurn(player.getTurn());
+				finance.setAnimals_number(quantityE);
+				finance.setPlayer_id(player.getId());
+				finance.setEnclosure_id(e0.getId());
+				finance.setPayMonthly(0);
+				
+				fdao.createFinance(finance);
 			}
 		}
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
