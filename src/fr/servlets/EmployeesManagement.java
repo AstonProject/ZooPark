@@ -234,7 +234,7 @@ public class EmployeesManagement extends HttpServlet {
 					}
 					
 					if(securityQty > 0){
-						for (se=0 ; se < cleanerQty; se++){
+						for (se=0 ; se < securityQty; se++){
 							EmployeeBean emp= new EmployeeBean();
 							emp.setType("security");
 							emp.setHealth_gauge(100);
@@ -256,27 +256,26 @@ public class EmployeesManagement extends HttpServlet {
 						e0.setEmployee_quantity(QtyE + quantityE);
 						ecdao.updateEnclosure(e0);
 					}
-				}
-				
-				// preparation et envoi de la transaction
-				FinancesDAO fdao = new FinancesDAO();
-				FinanceBean finance = new FinanceBean();
-
-				if (priceEmED < 0) {
 					
-					finance.setType_action("recruitment");
-					finance.setSomme(priceEmED);
-					finance.setLibelle(type);
-					finance.setTurn(player.getTurn());
-					finance.setAnimals_number(animal_quantity);
-					finance.setPlayer_id(player.getId());
-					finance.setEnclosure_id(enclosure.getId());
-					finance.setPayMonthly(0);
-				
-					fdao.createFinance(finance);
+					// preparation et envoi de la transaction
+					FinancesDAO fdao = new FinancesDAO();
+					FinanceBean finance = new FinanceBean();
+
+					if (priceEmED < 0) {
+						
+						finance.setType_action("recruitment");
+						finance.setSomme(priceEmED*(-1));
+						finance.setLibelle("employee");
+						finance.setTurn(player.getTurn());
+						finance.setAnimals_number(quantityE);
+						finance.setPlayer_id(player.getId());
+						finance.setEnclosure_id(e0.getId());
+						finance.setPayMonthly(0);
+						
+						fdao.createFinance(finance);
+					}
+					
 				}
-				
-				
 				
 				//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
 				response.getWriter().append("{\"code\" : \"OK\"}");

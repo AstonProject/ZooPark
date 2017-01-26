@@ -4,6 +4,7 @@
 	// fonction pour recuperer les transactions de la bdd
 	function getTransactions() {
 		var statusGT = "okGT";
+		var transaction = "";
 		
 		var callback = function(donnees) {
 			console.log(donnees)
@@ -13,8 +14,45 @@
 			if (donnees.data) {
 				for (let finance of donnees.data) {
 					console.log(finance);
+					
+					switch(finance.type_action) {
+						
+					// cas d'une destruction d'enclos
+					case "destruction":
+						switch(finance.animals_number) {
+						
+							// destruction d'un enclos vide
+							case "0":
+								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " (value : " + finance.somme + " Z).</div>";
+								break;
+						
+							// destruction d'un enclos non vide
+							default:
+								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " and sale of " + finance.animals_number + " " + finance.animals + " (value : " + finance.somme + " Z).</div><div>";
+						}
+						break;
+					// autres cas
+					default:
+						switch(finance.animals_number) {
+						
+							// cas des transactions sans unite (construction, upgrade, loan, refund, gain)
+							case "0":
+								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " (value : " + finance.somme + " Z).</div>";
+								break;
+						
+							// cas des transactions avec 1 unite (purchase, sale, recruitment)
+							case "1":
+								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.animals_number + " " + finance.libelle + " (value : " + finance.somme + " Z).</div>";
+								break;
+						
+							// cas des transactions avec plusieurs unites (purchase, sale, recruitment)
+							default:
+								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.animals_number + " " + finance.libelle + "s (value : " + finance.somme + " Z).</div>";
+						}
+					}
+					
 					// affichage : append (en dernier), prepend (en premier)
-					$blockMessages.prepend("<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " (value : " + finance.somme + " Z).</div>");
+					$blockMessages.prepend(transaction);
 				}
 			}
 		};

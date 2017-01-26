@@ -54,6 +54,8 @@ public class FinanceManagement extends HttpServlet {
 					reponseJson += "{\"turn\":\"" + finance.getTurn() + "\",";
 					reponseJson += "\"type_action\":\"" + finance.getType_action() + "\",";
 					reponseJson += "\"libelle\":\"" + finance.getLibelle() + "\",";
+					reponseJson += "\"animals\":\"" + finance.getLibelle().split(" ")[0] + "\",";
+					reponseJson += "\"animals_number\":\"" + finance.getAnimals_number() + "\",";
 					reponseJson += "\"somme\":\"" + finance.getSomme() + "\"}";
 					count++;
 					

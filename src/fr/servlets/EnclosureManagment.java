@@ -403,7 +403,7 @@ public class EnclosureManagment extends HttpServlet {
 				
 				if(quantity < 0){
 					action = "sale";
-					sum = (long)(finalPrice * 0.75);
+					sum = (long)(finalPrice*(-0.75));
 					player.setMoney((long) (money - (finalPrice)*(0.75)));
 				}else{
 					action = "purchase";
@@ -532,9 +532,9 @@ public class EnclosureManagment extends HttpServlet {
 
 				if (total_priceEAP != 0) {
 					
-					finance.setType_action("sale");
+					finance.setType_action("destruction");
 					finance.setSomme(total_priceEAP);
-					finance.setLibelle("enclosure of " + name);
+					finance.setLibelle(name + "s enclosure");
 					finance.setTurn(player.getTurn());
 					finance.setAnimals_number(animal_quantity);
 					finance.setPlayer_id(player.getId());
@@ -582,7 +582,7 @@ public class EnclosureManagment extends HttpServlet {
 					
 					finance.setType_action("upgrade");
 					finance.setSomme(upgradeE_price);
-					finance.setLibelle("enclosure of " + name);
+					finance.setLibelle(name + "s enclosure");
 					finance.setTurn(player.getTurn());
 					finance.setAnimals_number(0);
 					finance.setPlayer_id(player.getId());
