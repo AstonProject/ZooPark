@@ -124,7 +124,7 @@ public class TurnServlet extends HttpServlet {
 						if(employee.getType().equals("cleaner")){
 							int count = 0;
 							if(enclosure.getCleanliness_gauge() < 99){
-								enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()+2);
+								enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()+3);
 							}
 						}
 					}
