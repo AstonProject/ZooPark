@@ -15,7 +15,7 @@ outline: 0;
 }
 
 input[type="number"] {
-    height: 30px;
+    height: 40px;
     width: 85px;
     font-size: 18px;
     position: relative;
@@ -41,15 +41,14 @@ input[type="number"].mod::-moz-inner-spin-button:active {
 }
 
 #transactions-list {
-	width: 500px;
+	width: 600px;
 	height: 300px;
 	padding-top: 10px;
-	padding-left: 10px;
+	font-size: 12px;
 	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	display: inline-block;
-	margin-left: 100px;
 	overflow: scroll;
 }

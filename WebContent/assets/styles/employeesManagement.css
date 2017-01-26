@@ -55,6 +55,7 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 .showPrice {
 	width: 100px;
 	height: 30px;
+	margin-left: 240px;
 	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -63,7 +64,8 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 
 .emp_price {
 	text-align: center;
-	padding: 7px;
+	
+
 }
 
 .validate_img{
