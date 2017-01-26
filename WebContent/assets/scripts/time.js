@@ -24,7 +24,7 @@
 			}
 			if(hour == 10){
 				hour = 0;
-				$("#body").css("background-color","lightblue");
+				$("#body").css("background-color","6adaff");
 				day++;
 				if(day == 30){
 					day = 1;
@@ -36,8 +36,7 @@
 			}
 			else if(hour == 7){
 				phase = "night";
-				
-				$("#body").css("background-color","darkblue");
+				$("#body").css("background-color","00465d");
 			}
 			let updatePlayer = {"newTime": hour+","+day+","+month};
 			server.monAjax(updatePlayer, "newturn", callback, 'POST');
@@ -67,11 +66,11 @@
 			day = parseInt(donnees.day);
 			if(hour >= 7) {
 				phase = "night";
-				$("body, #body").css("background-color","darkblue");
+				$("body, #body").css("background-color","00465d");
 			}
 			else {
 				phase = "day";
-				$("body, #body").css("background-color","lightblue");
+				$("body, #body").css("background-color","6adaff");
 			}
 		};
 		server.monAjax(obj, "newturn", callback, 'GET');

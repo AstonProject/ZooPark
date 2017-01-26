@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 .cc1{
 	margin-left: 195px;
+=======
+.validate_img{
+background-image: url(../images/validate.png);
+background-position:  0px 0px;
+background-repeat: no-repeat;
+width: 53px;
+height: 33px;
+border: none;
+background-color: #c8ffd1;
+cursor: pointer;
+outline: 0;
+>>>>>>> feature/Mad20170120
 }
 
 .cc2{

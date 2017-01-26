@@ -1,13 +1,13 @@
 .enclosureDescription {
-	width: 400px;
-	height: 400px;
+	width: 600px;
+	height: 200px;
 	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	display: inline-block;
 	margin-left: 100px;
-	overflow: auto;
+	overflow: scroll;
 }
 
 .Enclosure-Description-Title {
@@ -33,7 +33,7 @@
 
 .showPrice {
 	width: 100px;
-	height: 30px;
+	height: 100px;
 	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -68,7 +68,7 @@ background-repeat: no-repeat;
 width: 53px;
 height: 33px;
 border: none;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }

@@ -1,19 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
-		<title>ConsumablesManagement</title>
-	</head>
-
-	<body>
-		<h2>Your Consumables</h2>
-		<div id="consumables_container" class="cc1">
-			<span class="img_container"><img src="${pageContext.request.contextPath}/assets/images/meat.png" alt="logo" /></span>
-			<span class="img_container"><img src="${pageContext.request.contextPath}/assets/images/fish.png" alt="logo" /></span>
-			<span class="img_container"><img src="${pageContext.request.contextPath}/assets/images/straw_bale.png" alt="logo" /></span>
-		</div>
+<%@ include file="/WEB-INF/parts/header.jsp" %>
+	<div id="main-content">
+		<div id="finance_status">
+			<h1>Consumable menu</h1><br>
+			<div>
+				<h2>Current stock :</h2><br>
+				<span class="meat"><img src="${pageContext.request.contextPath}/assets/images/meat.png" alt="logo" /></span>
+				<span class="currentMeatStock"><!-- quantite en stock --></span>
+			</div>
 
 		<div id="consumables_container" class="cc2">
 			<p>Current Stock</p>
@@ -43,10 +36,5 @@
 				<div class="error"></div>
 			</div>
 		</form>
-
-		<script src="${pageContext.request.contextPath}/assets/vendors/jquery-3.1.1.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/scripts/zoo.js"></script>
-		<script src="${pageContext.request.contextPath}/assets/scripts/consumableManagement.js"></script>
-	</body>
-
-</html>
+	</div>
+<%@ include file="/WEB-INF/parts/footer.jsp" %>

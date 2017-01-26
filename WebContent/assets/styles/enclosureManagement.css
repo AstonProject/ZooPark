@@ -5,20 +5,20 @@ background-repeat: no-repeat;
 width: 53px;
 height: 33px;
 border: none;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }
 
 .validate_img2{
 background-image: url(../images/validate.png);
-background-position: 0px 25px;
+background-position: 0px 0px;
 background-repeat: no-repeat;
 width: 53px;
 height: 40px;
 border: none;
 background-size: 30%;
-background-color: white !important;
+background-color: #c8ffd1;
 cursor: pointer;
 outline: 0;
 }
@@ -71,7 +71,7 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 .showPrice {
 	width: 100px;
 	height: 30px;
-	background: orange;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;

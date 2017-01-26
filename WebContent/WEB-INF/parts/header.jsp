@@ -20,11 +20,11 @@
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/employeesManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/employeesManagement.css" />
 </c:if>
-<c:if test="${ pageContext.request.servletPath == '/WEB-INF/consumableManagement.jsp' }">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
-</c:if>
 <c:if test="${ pageContext.request.servletPath == '/WEB-INF/financeManagement.jsp' }">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/financeManagement.css" />
+</c:if>
+<c:if test="${ pageContext.request.servletPath == '/WEB-INF/consumableManagement.jsp' }">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/styles/consumableManagement.css" />
 </c:if>
 </head>
 
@@ -33,9 +33,17 @@
 		<div id="main-wrapper">
 			<c:if test="${ !empty sessionScope.user }">
 				<header id="main-header">
-					<div id="page-header">
+				
+					<div id="page-header" class="container">
+					<div class="row">
+					<div class="col-md-3">
+					<h1>ZOOPARK</h1>
+					</div>
+					<div class="col-md-9">
 						Welcome, ${ sessionScope.user.pseudo }<br>
 						<a href="user?action=disconnect" id="disconnect">Disconnect</a>
+					</div>
+					</div>
 					</div>
 					<div id="top-menu">
 						<nav>
@@ -58,6 +66,9 @@
 			</c:if>
 			<c:if test="${ empty sessionScope.user }">
 				<header id="main-header">
-					<div id="page-header"></div>
+					<div id="page-header container">
+					<h1>ZOOPARK</h1>
+						
+					</div>
 				</header>
 			</c:if>

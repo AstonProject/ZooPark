@@ -2,10 +2,13 @@
 <div id="main-content">
 	<h1>Enclosure Management</h1>
 	<br>
+	<div id="zoo-container" class="container">
+		<div class="row">
+			<div id="register" class="col-md-6">
 	<h2>Status</h2>
 	<br>
 
-	<div id="animal_status">
+	<div id="animal_status" >
 		<span class="animal">test image animal</span> <span
 			class="currentQuantity">test quantity</span> <span
 			class="maxQuantity">test capacity</span>
@@ -28,10 +31,12 @@
 				 	
 				</select>
 			</span>
+		</div>
 		
 	</div>
 	<br>
-
+	
+		
 	<div id="food_status">
 		<span class="food_img"><img
 			src="${pageContext.request.contextPath}/assets/images/meat.png"
@@ -59,8 +64,10 @@
 			class="cleanness"></meter>
 		<span class="cleanness_gauge"></span>
 	</div>
+	
+	
 	<br>
-
+<div id="register" class="col-md-6">
 	<h2>Purchase / Resale</h2>
 	<form action="enclosureManagement" method="post"
 		id="FormPurchaseAnimals">
@@ -76,6 +83,7 @@
 		</div>
 		<div id="enclosure_upgrade">
 			Upgrade enclosure? <input type="checkbox" name="ecl_upgrade" id="upgrade_ecl">
+		</div>
 		</div>
 		<br>
 		<h3>Price</h3>
