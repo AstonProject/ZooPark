@@ -101,62 +101,9 @@ public class TurnServlet extends HttpServlet {
 			}
 			if(enclosureM != null && enclosureM.equals("ok")){
 				EnclosuresDAO edao = new EnclosuresDAO();
-				if(onEnclosure == null){
-					List<EnclosureBean> enclosures = edao.getAllEnclosures(player_id);
-					for(EnclosureBean enclosure: enclosures){
-						enclosure = edao.getEnclosureById(player_id);
-						EmployeesDAO emdao = new EmployeesDAO();
-						List<EmployeeBean> employees = emdao.getEmployeesByEnclosure(enclosure.getId());
-						AnimalsDAO adao = new AnimalsDAO();
-						List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
-						List<AnimalBean> weakAnimals = adao.getWeakestAnimals(enclosure.getId());
-						for(EmployeeBean employee: employees){
-							if(employee.getType().equals("healer")){
-								int count = 0;
-								for(AnimalBean animal: weakAnimals){
-									if(animal.getHealth_gauge() < 99){
-										animal.setHealth_gauge(animal.getHealth_gauge()+2);
-									}
-									if(animal.getHungry_gauge() > 1){
-										animal.setHungry_gauge(animal.getHungry_gauge()-2);
-									}
-								}
-							}
-							if(employee.getType().equals("cleaner")){
-								int count = 0;
-								if(enclosure.getCleanliness_gauge() < 99){
-									enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()+2);
-								}
-							}
-						}
-						for(AnimalBean animal: weakAnimals){
-							animal.setHealth_gauge(animal.getHealth_gauge()-1);
-							animal.setHungry_gauge(animal.getHungry_gauge()+1);
-							adao.updateAnimal(animal);
-						}
-						enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
-						edao.updateEnclosure(enclosure);
-						int cleanGauge = enclosure.getCleanliness_gauge();
-						
-						int totalHealth = 0;
-						int totalHungry = 0;
-						int moyHungry = 0;
-						int moyHealth = 0;
-						if(animals.size() != 0){
-							for(AnimalBean animal: animals){
-								totalHealth += animal.getHealth_gauge();
-								totalHungry += animal.getHungry_gauge();
-							}
-							moyHealth = totalHealth/animals.size();
-							moyHungry = totalHungry/animals.size();
-						}
-					}
-				}
-				else if(onEnclosure != null && onEnclosure.equals("ok")){
-					int current_locate_x = (int) session.getAttribute("current_locate_x");
-					int current_locate_y = (int) session.getAttribute("current_locate_y");
-					System.out.println("X="+current_locate_x+" Y="+current_locate_y);
-					EnclosureBean enclosure = edao.getEnclosureByLocation(current_locate_x, current_locate_y, player_id);
+				List<EnclosureBean> enclosures = edao.getAllEnclosures(player_id);
+				
+				for(EnclosureBean enclosure: enclosures){
 					EmployeesDAO emdao = new EmployeesDAO();
 					List<EmployeeBean> employees = emdao.getEmployeesByEnclosure(enclosure.getId());
 					AnimalsDAO adao = new AnimalsDAO();
@@ -188,8 +135,17 @@ public class TurnServlet extends HttpServlet {
 					}
 					enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
 					edao.updateEnclosure(enclosure);
-					int cleanGauge = enclosure.getCleanliness_gauge();
+				}
+
+				if(onEnclosure != null && onEnclosure.equals("ok")){
+					int current_locate_x = (int) session.getAttribute("current_locate_x");
+					int current_locate_y = (int) session.getAttribute("current_locate_y");
+					System.out.println("X="+current_locate_x+" Y="+current_locate_y);
+					EnclosureBean enclosure = edao.getEnclosureByLocation(current_locate_x, current_locate_y, player_id);
+					AnimalsDAO adao = new AnimalsDAO();
+					List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
 					
+					int cleanGauge = enclosure.getCleanliness_gauge();
 					int totalHealth = 0;
 					int totalHungry = 0;
 					int moyHungry = 0;
