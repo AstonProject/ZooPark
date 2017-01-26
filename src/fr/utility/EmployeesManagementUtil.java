@@ -207,7 +207,7 @@ public class EmployeesManagementUtil {
 			}
 			
 			if(securityQty > 0){
-				for (se=0 ; se < cleanerQty; se++){
+				for (se=0 ; se < securityQty; se++){
 					EmployeeBean emp= new EmployeeBean();
 					emp.setType("security");
 					emp.setHealth_gauge(100);
