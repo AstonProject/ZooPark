@@ -109,9 +109,9 @@ public class TurnServlet extends HttpServlet {
 					AnimalsDAO adao = new AnimalsDAO();
 					List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
 					List<AnimalBean> weakAnimals = adao.getWeakestAnimals(enclosure.getId());
+					int countCleaner = 0;
 					for(EmployeeBean employee: employees){
 						if(employee.getType().equals("healer")){
-							int count = 0;
 							for(AnimalBean animal: weakAnimals){
 								if(animal.getHealth_gauge() < 99){
 									animal.setHealth_gauge(animal.getHealth_gauge()+2);
@@ -122,18 +122,20 @@ public class TurnServlet extends HttpServlet {
 							}
 						}
 						if(employee.getType().equals("cleaner")){
-							int count = 0;
-							if(enclosure.getCleanliness_gauge() < 99){
+							countCleaner++;
+							if(enclosure.getCleanliness_gauge() < 98){
 								enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()+3);
 							}
 						}
 					}
-					for(AnimalBean animal: weakAnimals){
+					for(AnimalBean animal: animals){
 						animal.setHealth_gauge(animal.getHealth_gauge()-1);
 						animal.setHungry_gauge(animal.getHungry_gauge()+1);
 						adao.updateAnimal(animal);
 					}
-					enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
+					if(countCleaner == 0 && enclosure.getCleanliness_gauge() >= (Math.round(animals.size() / 2))){
+						enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
+					}
 					edao.updateEnclosure(enclosure);
 				}
 
