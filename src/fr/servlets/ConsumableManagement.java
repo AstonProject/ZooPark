@@ -74,9 +74,9 @@ public class ConsumableManagement extends HttpServlet {
 				for (ConsumablesBean consumable : consumables) {
 					if(consumable.getName().equals("meat")) {
 						countMeat_stock = consumable.getQuantity();
-					} else if(consumable.getName().equals("fish")) {
+					} else if (consumable.getName().equals("fish")) {
 						countFish_stock = consumable.getQuantity();
-					}else if(consumable.getName().equals("straw_bale")) {
+					} else if (consumable.getName().equals("straw_bale")) {
 						countStrawBale_stock = consumable.getQuantity();
 					}
 				}
@@ -161,7 +161,7 @@ public class ConsumableManagement extends HttpServlet {
 					sum = priceConsumable;
 				} else if  (priceConsumable > 0) {
 					action = "sale";
-					sum = (long)(priceConsumable * (-0.75));
+					sum = (long)(priceConsumable * (-1));
 				}
 				
 				player.setMoney(money + sum);
@@ -177,10 +177,10 @@ public class ConsumableManagement extends HttpServlet {
 				if (priceConsumable != 0) {
 					
 					finance.setType_action(action);
-					finance.setSomme(sum);
+					finance.setSomme(Math.abs(sum));
 					finance.setLibelle("consumable");
 					finance.setTurn(player.getTurn());
-					finance.setAnimals_number(quantityConsumable);
+					finance.setAnimals_number(Math.abs(quantityConsumable));
 					finance.setPlayer_id(player.getId());
 					finance.setEnclosure_id(e0.getId());
 					finance.setPayMonthly(0);

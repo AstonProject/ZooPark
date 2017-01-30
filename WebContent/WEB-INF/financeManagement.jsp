@@ -20,7 +20,7 @@
 			<div>
 				<h2>Current loan :</h2><br>
 				<span class="money"><img src="${pageContext.request.contextPath}/assets/images/coins.png" alt="logo" /></span>
-				<span class="currentLoan"><!-- current loan -->Z</span>
+				<span class="currentLoan"></span>
 			</div>
 			
 			<form action="financeManagement" method="post" id="FormFinanceValidation">

@@ -35,7 +35,7 @@
 					default:
 						switch(finance.animals_number) {
 						
-							// cas des transactions sans unite (construction, upgrade, loan, refund, gain)
+							// cas des transactions sans unite (construction, upgrade, loan, refund, income)
 							case "0":
 								transaction = "<div> Turn " + finance.turn + " : " + finance.type_action + " of " + finance.libelle + " (value : " + finance.somme + " Z).</div>";
 								break;
@@ -70,27 +70,24 @@
 	}
 
 	// fonction pour l'affichage du total des prets en cours
-	function showTotalLoans() {
+	function showCurrentLoans() {
+		var statusSCL = "okSCL";
 		
+		var $blockMessages = $('.currentLoan');
 		
+		var callback = function(donnees) {
+			
+			console.log("current_loans_value : " + donnees.currentLoansValue);
+			
+			$blockMessages.empty();
+			$blockMessages.prepend(donnees.currentLoansValue + " Z");
+		};
 		
-	}
+		var monObj = {
+			"statusSCL" : statusSCL
+		};
 	
-	
-	// fonction pour le remboursement
-	function refund() {
-		
-		// faire un retrait de la somme(payMonthly) tous les mois
-		// mettre a jour chaque pret tous les mois
-		// supprimer les prets quand ils sont rembourses
-		
-	}
-	
-	// fonction pour vider la bdd finance tous les mois
-	function clearFinance() {
-		
-		// supprimer toutes les lignes SAUF les emprunts non rembourses
-		
+		server.monAjax(monObj, "financeManagement", callback, 'POST');
 	}
 	
 	// fonction pour valider le pret + mise a jour compte + insertion bdd
@@ -114,10 +111,10 @@
 			var payMonthly = somme/10;
 			
 			// redirection sur le controller home
-			var callback=function(donnees){
-				if(donnees.code == "OK"){
+			var callback=function(donnees) {
+				if (donnees.code == "OK") {
 					 window.location.href = "home";
-				}else if (donnees.code == "ERROR"){
+				} else if (donnees.code == "ERROR") {
 					failed();
 				}
 			};
@@ -138,8 +135,26 @@
 		});
 	}
 	
+	// fonction pour le remboursement
+	function refundLoanMonthly() {
+		var statusRLM = "okRLM";
+		
+		var callback = function(donnees) {
+			
+		}
+		
+		var monObj = {
+				"statusRLM" : statusRLM
+			};
+		
+			server.monAjax(monObj, "financeManagement", callback, 'POST');
+		
+	}
+	
 	$(document).ready(function() {
 		// fonctions à appeler
+		showCurrentLoans();
+		refundLoanMonthly()
 		getTransactions();
 		getFinanceForm();
 	})
