@@ -1,8 +1,22 @@
 <c:if test="${ !empty sessionScope.user }">
 	<footer id="bottom-menu">
-		<button name="gestion_personnel" id="employeesManagement">Staff</button>
-		<button name="consommables" id="consommables">Consumables</button>
-		<button name="finances" id="finances">Finances</button>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<button name="gestion_personnel" id="employeesManagement">Staff</button>
+				</div>
+		
+		
+				<div class="col-md-4">
+					<button name="consommables" id="consommables">Consumables</button>
+				</div>
+		
+			
+				<div class="col-md-4">
+					<button name="finances" id="finances">Finances</button>
+				</div>
+			</div>
+		</div>
 	</footer>
 </c:if>
 <c:if test="${ empty sessionScope.user }">

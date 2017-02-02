@@ -79,7 +79,7 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 
 .ae_price {
 	text-align: center;
-	padding: 7px;
+
 }
 
 .style meter::-webkit-meter-bar {

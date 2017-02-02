@@ -50,6 +50,7 @@
 						</div>
 					</div>
 				</div>
+				<br>
 		
 		
 				<div class="row">
@@ -66,12 +67,14 @@
 						</div>
 					</div>
 				</div>
+				<br>
 			</div>
 		
 			
 		<div class="row">
 			<div class="col-md-6">
 				<h2>Engage / Dismiss</h2>
+				<br>
 					
 						<div class="row">
 							<div class="col-md-4">

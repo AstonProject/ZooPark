@@ -15,7 +15,7 @@
 
 					if(donnees[thisData].capacity == 0) {
 						$blockEnclosure.empty();
-						$blockEnclosure.prepend("<a href=\"createEnclosure?x="+(i+1)+"&y="+(j+1)+"\"> <img src=/zoopark/assets/images/crane.png alt=\"logo\" /> </a>");
+						$blockEnclosure.prepend("<a href=\"createEnclosure?x="+(i+1)+"&y="+(j+1)+"\"> <img src=/zoopark/assets/images/crane.png alt=\"logo\" class=\"img_enclos\"/> </a>");
 					} else if (donnees[thisData].capacity > 0) {
 						$blockEnclosure.empty();
 						var img="<img src=/zoopark/assets/images/";
@@ -30,11 +30,11 @@
 						}
 						
 						if(donnees[thisData].capacity == 5){
-							img += ".png alt=\"logo\" /> </a>";
+							img += ".png alt=\"logo\" class=\"img_enclos\" /> </a>";
 						}else if(donnees[thisData].capacity == 10){
-							img += "2.png alt=\"logo\" /> </a>";
+							img += "2.png alt=\"logo\" class=\"img_enclos\" /> </a>";
 						}else if(donnees[thisData].capacity == 15){
-							img += "3.png alt=\"logo\" /> </a>";
+							img += "3.png alt=\"logo\" class=\"img_enclos\" /> </a>";
 						}
 						
 						$blockEnclosure.prepend("<a href=\"enclosureManagment?x="+(i+1)+"&y="+(j+1)+"\">"+ img+ "</a>");
