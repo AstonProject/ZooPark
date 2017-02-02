@@ -329,7 +329,7 @@ function mooveEmployees(){
 				server.monAjax(object, "enclosureManagment", callback, 'POST');
 			}// Si il faut revendre ou acheter des animaux
 			else {
-
+				console.log("REVENTE OK");
 				quantity = $('input[name=quantity]').val();
 
 				var callback = function(donnees) {

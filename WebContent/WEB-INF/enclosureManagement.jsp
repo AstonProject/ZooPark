@@ -57,7 +57,7 @@
 							<span class="animal"></span>
 							<span class="buyingQuantity"><input type="number" max="15" min="-15" value="0" name="quantity" class="mod" id="a_quantity" /></span>
 						</div>
-					</form>
+					
 						<br>
 						<div id="enclosure_resale"> Resale enclosure? <input type="checkbox" name="ecl_resale" id="resale_all">
 						</div>
@@ -81,8 +81,10 @@
 					</div>
 					</div>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
+
 <%@ include file="/WEB-INF/parts/footer.jsp" %>

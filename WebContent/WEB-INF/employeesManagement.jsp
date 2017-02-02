@@ -100,7 +100,7 @@
 									<span><input type="number" max="0" min="0" value="0" name="quantitySecurity" class="mod" id="secu_quantity" /></span>
 								</div>
 							</div>
-					</form>
+					
 			<br><br>
 			<h3>Price</h3>
 			<br>
@@ -123,7 +123,8 @@
 						</div>
 						</div>
 					</div>	
-				</div>	
+				</div>
+					</form>
 			</div>
 		</div>
 	</div>
