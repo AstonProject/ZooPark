@@ -37,11 +37,11 @@
 						<br><span>${valid.erreurs['pseudo']}</span></li>
 
 						<li><label for="reg_password">Password :</label></li>
-						<li><input type="text" name="reg_password" id="reg_password">
+						<li><input type="password" name="reg_password" id="reg_password">
 						<br><span>${valid.erreurs['password']}</span></li>
 
 						<li><label for="reg_confirmation">Confirm password :</label></li>
-						<li><input type="text" name="reg_confirmation" id="reg_confirmation">
+						<li><input type="password" name="reg_confirmation" id="reg_confirmation">
 						<br><span>${valid.erreurs['confirmation']}</span></li>
 		
 						<li><label for="reg_email">Email :</label></li>
@@ -60,7 +60,7 @@
 						<li><label for="con_pseudo">Pseudo :</label></li>
 						<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
 						<li><label for="con_password">Password :</label></li>
-						<li><input type="text" name="con_password" id="con_password"></li>
+						<li><input type="password" name="con_password" id="con_password"></li>
 						<li><input type="submit" value="connexion"></li>
 					</ul>
 				</form>

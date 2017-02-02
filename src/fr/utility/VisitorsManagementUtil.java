@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.beans.EnclosureBean;
+import fr.beans.FinanceBean;
 import fr.beans.PlayerBean;
 import fr.beans.VisitorBean;
 import fr.dao.AnimalsDAO;
 import fr.dao.EnclosuresDAO;
+import fr.dao.FinancesDAO;
 import fr.dao.PlayersDAO;
 import fr.dao.VisitorsDAO;
 
@@ -23,6 +25,9 @@ public class VisitorsManagementUtil {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 		VisitorsDAO vdao = new VisitorsDAO();
 		EnclosuresDAO edao = new EnclosuresDAO();
+		EnclosureBean e0 = edao.getEnclosureByLocation(0, 0, player.getId());
+		FinancesDAO fdao = new FinancesDAO();
+		FinanceBean income = new FinanceBean();
 		PlayersDAO pdao = new PlayersDAO();
 		int satisfaction = edao.getSatisfaction(player.getId());
 		
@@ -43,6 +48,23 @@ public class VisitorsManagementUtil {
 		}
 		//Entrer d'argent pour le joueur
 		long money= player.getMoney();
+		
+		// envoi des recttes dans la bdd
+		if (visitorsQty > 0) {
+			
+			income.setType_action("income");
+			income.setSomme(visitorsQty*10000);
+			income.setLibelle("entries");
+			income.setTurn(player.getTurn());
+			income.setAnimals_number(0);
+			income.setPlayer_id(player.getId());
+			income.setEnclosure_id(e0.getId());
+			income.setPayMonthly(0);
+			
+			System.out.println("Recettes : " + visitorsQty*10000);
+			fdao.createFinance(income);
+		}
+		
 		player.setMoney(money + visitorsQty*10000);
 		pdao.updatePlayer(player);
 		session.setAttribute("user", player);
@@ -66,9 +88,11 @@ public class VisitorsManagementUtil {
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 		VisitorsDAO vdao = new VisitorsDAO();
 		EnclosuresDAO edao = new EnclosuresDAO();
+		EnclosureBean e0 = edao.getEnclosureByLocation(0, 0, player.getId());
+		FinancesDAO fdao = new FinancesDAO();
+		FinanceBean visitSpending = new FinanceBean();
 		PlayersDAO pdao = new PlayersDAO();
 		
-		EnclosureBean e0 =edao.getEnclosureByLocation(0, 0, player.getId());
 		//MAJ satisfaction des visiteurs
 		double satisfactionG =  CalculateSatisfaction.calcSatisfaction(request);	
 		int totalS=0;
@@ -103,6 +127,22 @@ public class VisitorsManagementUtil {
 		}
 		
 		//Depenses des visiteurs dans le zoo
+		// envoi des recttes dans la bdd
+		if (coins > 0) {
+			
+			visitSpending.setType_action("spending");
+			visitSpending.setSomme(coins);
+			visitSpending.setLibelle("visitors");
+			visitSpending.setTurn(player.getTurn());
+			visitSpending.setAnimals_number(0);
+			visitSpending.setPlayer_id(player.getId());
+			visitSpending.setEnclosure_id(e0.getId());
+			visitSpending.setPayMonthly(0);
+			
+			System.out.println("Deoenses des visiteurs : " + coins);
+			fdao.createFinance(visitSpending);
+		}
+		
 		player.setMoney(player.getMoney() + coins);
 		pdao.updatePlayer(player);
 		session.setAttribute("user", player);	
