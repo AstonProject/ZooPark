@@ -133,8 +133,8 @@ public class TurnServlet extends HttpServlet {
 						animal.setHungry_gauge(animal.getHungry_gauge()+1);
 						adao.updateAnimal(animal);
 					}
-					if(countCleaner == 0 && enclosure.getCleanliness_gauge() >= (Math.round(animals.size() / 2))){
-						enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size() / 2)));
+					if(countCleaner == 0 && enclosure.getCleanliness_gauge() >= (Math.round(animals.size()))){
+						enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size())));
 					}
 					edao.updateEnclosure(enclosure);
 				}
