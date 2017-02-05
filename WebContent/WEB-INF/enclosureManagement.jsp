@@ -76,7 +76,7 @@
 				
 					<div class="col-md-4">
 					<div class="decision_menu">
-					<span id="decision"> <input type="submit" value="" class="validate_img"><a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a></span>
+					<span id="decision"> <input type="submit" value="" class="validate_img"><a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" class="cancel"/></a></span>
 					<div class="error"></div>
 					</div>
 					</div>

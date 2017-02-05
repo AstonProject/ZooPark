@@ -1,19 +1,15 @@
 .enclosureDescription {
-	width: 600px;
-	height: 200px;
+	width: 700px;
+	height: 150px;
 	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	display: inline-block;
-	margin-left: 100px;
-	overflow: scroll;
+	font-size: 18px;
+	margin-bottom: 20px;
 }
 
-.Enclosure-Description-Title {
-	margin-top: 100px;
-	;
-}
 
 .char-block {
 	text-align: justify;
@@ -33,7 +29,7 @@
 
 .showPrice {
 	width: 100px;
-	height: 100px;
+	height: 30px;
 	background: #ff8100;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -73,3 +69,8 @@ cursor: pointer;
 outline: 0;
 }
 
+
+.cancel{
+	vertical-align: top;
+	
+}

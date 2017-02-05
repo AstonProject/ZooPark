@@ -19,7 +19,6 @@
 				</div>
 				<br>
 		
-		
 				<div class="row">
 					<div class="col-md-4">
 						<div id="employees_container"><p>Assigned</p><span class="assigned_healer"></span>
@@ -75,7 +74,6 @@
 			<div class="col-md-6">
 				<h2>Engage / Dismiss</h2>
 				<br>
-					
 						<div class="row">
 							<div class="col-md-4">
 								<span class="img_container"><img src="${pageContext.request.contextPath}/assets/images/healer.png" alt="logo" /></span>
@@ -110,14 +108,12 @@
 						<div class="emp_price">0</div>
 						</div>
 					</div>
-				
-				<br>
-				
+								
 					<div class="col-md-6">
 						<div class="decision_menu">
 							<span id="decision"> 
 							<input type="submit" value="" class="validate_img">
-							<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>
+							<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" class="cancel" /></a>
 							</span>
 						<div class="error">
 						</div>
