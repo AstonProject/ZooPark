@@ -12,5 +12,8 @@
   "securityCosts": 3000,
   "salaryCosts_healer": 3000,
   "salaryCosts_cleaner": 1500,
-  "salaryCosts_security": 2000
+  "salaryCosts_security": 2000,
+  "meatCosts": 100,
+  "fishCosts": 100,
+  "strawBaleCosts": 100
 }

@@ -22,11 +22,33 @@ var server = {};
 		};
 		$.ajax(objAjax);
 	}
+	
+	function showEmployeeMangement(){
+		$('#employeesManagement').on('click', function(){
+			window.location.replace("employeesManagement");
+		});
+	}
+	
+	function showFinances() {
+		$('#finances').on('click', function() {
+			window.location.replace("financeManagement");
+		});
+	}
+	
+	function showConsumables() {
+		$('#consommables').on('click', function() {
+			window.location.replace("consumableManagement");
+		});
+	}
 
 	$(document).ready(function() {
 		var $constructionButton = $("#construction");
 		$constructionButton.on("click", function(){
 			window.location.replace("createEnclosure");
 		});
+		
+		showEmployeeMangement();
+		showFinances();
+		showConsumables();
 	});
 })(jQuery);

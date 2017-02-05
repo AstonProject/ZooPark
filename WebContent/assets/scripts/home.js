@@ -70,6 +70,5 @@
 		showEmployeeMangement();
 		showFinances();
 		showConsumables();
-
 	})
 })(jQuery);

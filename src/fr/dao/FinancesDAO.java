@@ -207,7 +207,7 @@ public class FinancesDAO {
 		List<FinanceBean> loans = new ArrayList<>();
 		
 		try {
-			st = connection.prepareStatement("SELECT * FROM finance WHERE type_action=loan AND player_id=?");
+			st = connection.prepareStatement("SELECT * FROM finance WHERE type_action='loan' AND player_id=?");
 			st.setInt(1, player_id);
 			rs = st.executeQuery();
 			
@@ -242,30 +242,6 @@ public class FinancesDAO {
 		return loans;
 	}
 	
-	public void refundLoan (FinanceBean finance) {
-		PreparedStatement st = null;
-		
-		try {
-			st = connection.prepareStatement("UPDATE finance SET somme=? WHERE id=?");
-			st.setLong(1, finance.getSomme());
-			st.setInt(2, finance.getId());
-			
-			st.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally { 
-			
-			if (st != null) {
-				try {
-					st.close(); 
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
 	public void deleteLoan (int id) {
 		PreparedStatement st = null;
 		
@@ -293,7 +269,7 @@ public class FinancesDAO {
 		PreparedStatement st = null;
 		
 		try {
-			st = connection.prepareStatement("UPDATE finance SET type_action=?, somme=?, libelle=?, date=?, animals_number=?, player_id=?, enclosure_id=?, payMonthly=? WHERE id=?");
+			st = connection.prepareStatement("UPDATE finance SET type_action=?, somme=?, libelle=?, turn=?, animals_number=?, player_id=?, enclosure_id=?, payMonthly=? WHERE id=?");
 			st.setString(1, finance.getType_action());
 			st.setLong(2, finance.getSomme());
 			st.setString(3, finance.getLibelle());

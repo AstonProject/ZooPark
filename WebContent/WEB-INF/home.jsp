@@ -1,7 +1,6 @@
 <%@ include file="/WEB-INF/parts/header.jsp" %>
 <c:if test="${ !empty sessionScope.user && empty perdu }">
 	<div id="main-content">
-		
 		<div id="zoo-container">
 			<%-- Parcours abscisse i + ordonnée j --%>
 			<c:forEach var="i" begin="1" end="5">
@@ -38,17 +37,16 @@
 						<br><span>${valid.erreurs['pseudo']}</span></li>
 
 						<li><label for="reg_password">Password :</label></li>
-						<li><input type="text" name="reg_password" id="reg_password">
+						<li><input type="password" name="reg_password" id="reg_password">
 						<br><span>${valid.erreurs['password']}</span></li>
 
 						<li><label for="reg_confirmation">Confirm password :</label></li>
-						<li><input type="text" name="reg_confirmation" id="reg_confirmation">
+						<li><input type="password" name="reg_confirmation" id="reg_confirmation">
 						<br><span>${valid.erreurs['confirmation']}</span></li>
 		
 						<li><label for="reg_email">Email :</label></li>
 						<li><input type="text" name="reg_email" id="reg_email">
 						<br><span>${valid.erreurs['email']}</span></li>
-		
 						<br><li><input type="submit" value="inscription"></li>
 					</ul>
 				</form>

@@ -1,26 +1,49 @@
 (function($) {
 	"use strict";
 	
-	// fonction pour afficher les stocks
+	// fonction pour afficher les stocks et initialiser les maximums de revente
 	function showConsumableStock() {
 		var statusSCS = "okSCS";
+		
+		var $inputMeat = $('#meat_quantity');
+		var $inputFish = $('#fish_quantity');
+		var $inputStrawBale = $('#straw_bale_quantity');
+		
+		var countMeatStock = 0;
+		var countFishStock = 0;
+		var countStrawBaleStock = 0; 
+		
+		var meatQuantity = 0;
+		var fishQuantity = 0;
+		var strawBaleQuantity = 0;
 		
 		var callback = function(donnees) {
 			
 			console.log(donnees);
 			
-			$('.meat_stock').prepend(donnees.countMeatStock);
-			$('.fish_stock').prepend(donnees.countFishStock);
-			$('.straw_bale_stock').prepend(donnees.countStrawBaleStock);
+			// enregistrement des stocks en local
+			countMeatStock = donnees.countMeatStock;
+			countFishStock = donnees.countFishStock;
+			countStrawBaleStock = donnees.countStrawBaleStock; 
 			
-			sessionStorage.setItem("countMtS", donnees.countMeatStock);
-			sessionStorage.setItem("countFhS", donnees.countFishStock);
-			sessionStorage.setItem("countSBS", donnees.countStrawBaleStock);
+			console.log("stock meat", countMeatStock);
+			console.log("stock fish", countFishStock);
+			console.log("stock bale", countStrawBaleStock);
 			
-			console.log("countMtS", donnees.countMeatStock);
-			console.log("countFhS", donnees.countFishStock);
-			console.log("countSBS", donnees.countStrawBaleStock);
+			// affichage des stocks sur la jsp
+			$('.meat_stock').prepend(countMeatStock);
+			$('.fish_stock').prepend(countFishStock);
+			$('.straw_bale_stock').prepend(countStrawBaleStock);
 			
+			// recuperation de la valeur des input
+			meatQuantity = $('input[name=quantityMeat]').val();
+			fishQuantity = $('input[name=quantityFish]').val();
+			strawBaleQuantity = $('input[name=quantityStrawBale]').val();
+			
+			// setting des maximums de revente
+			$inputMeat.attr("min", (countMeatStock * (-1)));
+			$inputFish.attr("min", (countFishStock * (-1)));
+			$inputStrawBale.attr("min", (countStrawBaleStock * (-1)));
 		};
 		
 		var monObj = {
@@ -28,57 +51,6 @@
 		};
 		
 		server.monAjax(monObj, "consumableManagement", callback, 'POST');
-	}
-	
-	// fonction pour afficher la quantite de food pouvant etre revendue (min)
-	function setRestMinConsumableQuantity($selectedConsumableQuantity) {
-		var statusSCQ = "okSCQ";
-		
-		var $inputQuantity = $(".mod");
-		var $inputMeat = $('#meat_quantity');
-		var $inputFish = $('#fish_quantity');
-		var $inputStrawBale = $('#straw_bale_quantity');
-		var countMtS = 0;
-		var countFhS = 0;
-		var countSBS = 0; 
-		
-		var meatQuantity = 0;
-		var fishQuantity = 0;
-		var strawBaleQuantity = 0;
-		
-		// recuperation de la valeur des input
-		meatQuantity = $('input[name=quantityMeat]').val();
-		fishQuantity = $('input[name=quantityFish]').val();
-		strawBaleQuantity = $('input[name=quantityStrawBale]').val();
-		
-		try {
-			countMtS = sessionStorage.getItem("countMtS");
-			countFhS = sessionStorage.getItem("countFhS");
-			countSBS = sessionStorage.getItem("countSBS");
-			
-		} catch (error) {
-			console.log(error);
-		}
-		
-		var callback = function(donnees) {
-			$inputMeat.attr("min", (countMtS * (-1)));
-			$inputFish.attr("min", (countFhS * (-1)));
-			$inputStrawBale.attr("min", (countSBS * (-1)));
-		};
-		
-		var monObj = {
-			"statusSCQ": statusSCQ
-		};
-		
-		server.monAjax(monObj, "consumableManagement", callback, 'POST');
-		
-	}
-	
-	// fonction pour rafraichir l'affichage
-	function refreshRestMinConsumableQuantity($selectedConsumableQuantity){
-		$($selectedConsumableQuantity).on('click', function() {
-			setRestMinConsumableQuantity($selectedConsumableQuantity);
-		});
 	}
 	
 	// fonction pour afficher le prix
@@ -112,6 +84,15 @@
 			}
 			if (strawBaleQuantity > 0) {
 				consumables_price += (donnees.strawBaleCosts * strawBaleQuantity);
+			}
+			if (meatQuantity < 0) {
+				consumables_price += (donnees.meatCosts * meatQuantity * 0.75);
+			}
+			if (fishQuantity < 0) {
+				consumables_price += (donnees.fishCosts * fishQuantity * 0.75);
+			}
+			if (strawBaleQuantity < 0) {
+				consumables_price += (donnees.strawBaleCosts * strawBaleQuantity * 0.75);
 			}
 			
 			consumables_price *= (-1);
@@ -153,6 +134,10 @@
 			fishQuantity = $('input[name=quantityFish]').val();
 			strawBaleQuantity = $('input[name=quantityStrawBale]').val();
 
+			console.log("add meat", meatQuantity);
+			console.log("add fish", fishQuantity);
+			console.log("add bale", strawBaleQuantity);
+			
 			priceConsumable = sessionStorage.getItem("consumables_price");
 			console.log(priceConsumable);
 			
@@ -203,19 +188,11 @@
 		// attention cet ordre est important
 		showConsumableStock();
 		
-		//refreshConsumablePriceOnChange($meat_button);
-		//refreshConsumablePriceOnChange($fish_button);
-		//refreshConsumablePriceOnChange($straw_bale_button);
+		refreshConsumablePriceOnChange($meat_button);
+		refreshConsumablePriceOnChange($fish_button);
+		refreshConsumablePriceOnChange($straw_bale_button);
 		
-		//setRestMinConsumableQuantity($meat_button);
-		//setRestMinConsumableQuantity($fish_button);
-		//setRestMinConsumableQuantity($straw_bale_button);
-		
-		//getConsumableForm();
-		
-		//refreshRestMinConsumableQuantity($meat_button);
-		//refreshRestMinConsumableQuantity($fish_button);
-		//refreshRestMinConsumableQuantity($straw_bale_button);
+		getConsumableForm();
 		
 	})
 	

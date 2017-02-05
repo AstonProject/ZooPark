@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.beans.ConsumablesBean;
-import fr.beans.FinanceBean;
 import fr.utility.ConnectionDB;
 
 public class ConsumableDAO {
@@ -189,35 +188,7 @@ public class ConsumableDAO {
 		return consumables;
 	}
 	
-	public void updateConsumables(ConsumablesBean consumable) {
-		PreparedStatement st = null;
-		
-		try {
-			st = connection.prepareStatement("UPDATE consumables SET name=?, quantity=?, player_id=?, type=? WHERE id=?");
-			st.setString(1, consumable.getName());
-			st.setInt(2, consumable.getQuantity());
-			st.setInt(3, consumable.getPlayer_id());
-			st.setString(4, consumable.getType());
-			st.setInt(5, consumable.getId());
-
-			st.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally { 
-			
-			if (st != null) {
-				try {
-					st.close(); 
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	public void updateQuantityByNameAndPlayer(ConsumablesBean consumable) {
-		
+	public void updateConsumable(ConsumablesBean consumable) {
 		PreparedStatement st = null;
 		
 		try {
