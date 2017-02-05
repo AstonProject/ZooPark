@@ -46,29 +46,8 @@
 		var monObjet = {};
 		server.monAjax(monObjet, "home", callback, 'POST');
 	}
-
-	function showEmployeeMangement(){
-		$('#employeesManagement').on('click', function(){
-			window.location.replace("employeesManagement");
-		});
-	}
-	
-	function showFinances() {
-		$('#finances').on('click', function() {
-			window.location.replace("financeManagement");
-		});
-	}
-	
-	function showConsumables() {
-		$('#consommables').on('click', function() {
-			window.location.replace("consumableManagement");
-		});
-	}
 	
 	$(document).ready(function() {
 		showEnclosures();
-		showEmployeeMangement();
-		showFinances();
-		showConsumables();
 	})
 })(jQuery);
