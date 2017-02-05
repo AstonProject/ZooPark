@@ -76,14 +76,10 @@ public class TurnServlet extends HttpServlet {
 						countSecurity++;
 					}
 				}
-				System.out.println("countCleaner="+countCleaner);
-				System.out.println("countHealer="+countHealer);
-				System.out.println("countSecurity="+countSecurity);
 				long totalCleanerSalaries = countCleaner*cleanerSalary;
 				long totalHealerSalaries = countHealer*healerSalary;
 				long totalSecuritySalaries = countSecurity*securitySalary;
 				long totalSalaries = totalCleanerSalaries + totalHealerSalaries + totalSecuritySalaries;
-				System.out.println(totalSalaries);
 				player.setMoney(player.getMoney()-totalSalaries);
 				pdao.updatePlayer(player);
 				session.setAttribute("user", player);
@@ -110,15 +106,20 @@ public class TurnServlet extends HttpServlet {
 					List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
 					List<AnimalBean> weakAnimals = adao.getWeakestAnimals(enclosure.getId());
 					int countCleaner = 0;
+					int countHealer = 0;
 					for(EmployeeBean employee: employees){
 						if(employee.getType().equals("healer")){
+							countHealer++;
 							for(AnimalBean animal: weakAnimals){
-								if(animal.getHealth_gauge() < 99){
-									animal.setHealth_gauge(animal.getHealth_gauge()+2);
+								if(animal.getHealth_gauge() < 96){
+									int i = animal.getHealth_gauge()+5;
+									animal.setHealth_gauge(i);
 								}
-								if(animal.getHungry_gauge() > 1){
-									animal.setHungry_gauge(animal.getHungry_gauge()-2);
+								if(animal.getHungry_gauge() > 4){
+									int i = animal.getHungry_gauge()-5;
+									animal.setHungry_gauge(i);
 								}
+								adao.updateAnimal(animal);
 							}
 						}
 						if(employee.getType().equals("cleaner")){
@@ -128,13 +129,19 @@ public class TurnServlet extends HttpServlet {
 							}
 						}
 					}
-					for(AnimalBean animal: animals){
-						animal.setHealth_gauge(animal.getHealth_gauge()-1);
-						animal.setHungry_gauge(animal.getHungry_gauge()+1);
-						adao.updateAnimal(animal);
+					if(countHealer == 0){
+						for(AnimalBean animal: animals){
+							int i = animal.getHealth_gauge()-1;
+							animal.setHealth_gauge(i);
+							int j = animal.getHungry_gauge()+1;
+							animal.setHungry_gauge(j);
+							adao.updateAnimal(animal);
+						}
 					}
+					
 					if(countCleaner == 0 && enclosure.getCleanliness_gauge() >= (Math.round(animals.size()))){
-						enclosure.setCleanliness_gauge(enclosure.getCleanliness_gauge()-(Math.round(animals.size())));
+						int i = enclosure.getCleanliness_gauge()-(Math.round(animals.size()));
+						enclosure.setCleanliness_gauge(i);
 					}
 					edao.updateEnclosure(enclosure);
 				}
@@ -142,7 +149,6 @@ public class TurnServlet extends HttpServlet {
 				if(onEnclosure != null && onEnclosure.equals("ok")){
 					int current_locate_x = (int) session.getAttribute("current_locate_x");
 					int current_locate_y = (int) session.getAttribute("current_locate_y");
-					System.out.println("X="+current_locate_x+" Y="+current_locate_y);
 					EnclosureBean enclosure = edao.getEnclosureByLocation(current_locate_x, current_locate_y, player_id);
 					AnimalsDAO adao = new AnimalsDAO();
 					List<AnimalBean> animals = adao.getAnimalsByEnclosure(enclosure.getId());
