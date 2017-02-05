@@ -58,7 +58,7 @@
 			window.location.replace("financeManagement");
 		});
 	}
-	
+
 	function showConsumables() {
 		$('#consommables').on('click', function() {
 			window.location.replace("consumableManagement");
@@ -70,5 +70,6 @@
 		showEmployeeMangement();
 		showFinances();
 		showConsumables();
+
 	})
 })(jQuery);
