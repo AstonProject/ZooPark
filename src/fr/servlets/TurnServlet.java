@@ -35,7 +35,7 @@ public class TurnServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		PlayerBean player = (PlayerBean) session.getAttribute("user");
 		if(player != null){
-			String[] turn = new String[2];
+			String[] turn = new String[4];
 			turn = player.getTurn().split(",");
 			String reponseJson = "{\"hour\": "+turn[0]+", \"day\": "+turn[1]+", \"month\": "+turn[2]+"}";
 			response.getWriter().append(reponseJson);
