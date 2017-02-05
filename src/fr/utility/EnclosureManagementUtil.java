@@ -498,7 +498,7 @@ public class EnclosureManagementUtil {
 		}
 		
 		//Permettre la retiraction sur \home via Ajax (purshaseAnimals() en JS)
-		response.getWriter().append("{\"code\" : \"OK\"}");
+		response.getWriter().append("{\"code\" : \"OK2\"}");
 	}
 	
 	/**permettre la revente d'un enclos et de tous ses animaux**/
@@ -585,7 +585,7 @@ public class EnclosureManagementUtil {
 		}
 		
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
-		response.getWriter().append("{\"code\" : \"OK2\"}");
+		response.getWriter().append("{\"code\" : \"OK\"}");
 	}
 	
 	/**Executer un resize**/

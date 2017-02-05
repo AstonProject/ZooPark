@@ -320,7 +320,9 @@ function mooveEmployees(){
 				var callback = function(donnees) {
 					if (donnees.code == "OK") {
 						window.location.href = "home";
-					} else {
+					}else if(donnees.code == "OK2"){
+						window.location.href = "enclosureManagment";
+					}else {
 						failed();
 					}
 				};
@@ -337,10 +339,14 @@ function mooveEmployees(){
 
 				var callback = function(donnees) {
 					if (donnees.code == "OK") {
+						window.location.href = "home";
+					}
+					else if(donnees.code == "OK2"){
 						window.location.href = "enclosureManagment";
-					} else {
+					}else {
 						failed();
 					}
+					
 				};
 
 				var object = {
