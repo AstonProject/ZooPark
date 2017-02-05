@@ -585,7 +585,7 @@ public class EnclosureManagementUtil {
 		}
 		
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
-		response.getWriter().append("{\"code\" : \"OK\"}");
+		response.getWriter().append("{\"code\" : \"OK2\"}");
 	}
 	
 	/**Executer un resize**/
@@ -643,6 +643,6 @@ public class EnclosureManagementUtil {
 		}
 		
 		//Permettre la redirection sur 'home' via Ajax (purshaseAnimals() en JS)
-		response.getWriter().append("{\"code\" : \"OK\"}");
+		response.getWriter().append("{\"code\" : \"OK2\"}");
 	}
 }

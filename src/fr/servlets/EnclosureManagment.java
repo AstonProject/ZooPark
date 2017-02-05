@@ -29,8 +29,16 @@ public class EnclosureManagment extends HttpServlet {
 			// Recuperation des coordonneees de l'enclos a construire depuis la
 			// Home.jsp
 			// et enregistrement dans la session
-			int locate_x = Integer.parseInt(request.getParameter("x"));
-			int locate_y = Integer.parseInt(request.getParameter("y"));
+			int locate_x = -1;
+			int locate_y = -1;
+			if(request.getParameter("x") != null && request.getParameter("y") != null){
+				locate_x = Integer.parseInt(request.getParameter("x"));
+				locate_y = Integer.parseInt(request.getParameter("y"));
+			}
+			else if(request.getParameter("x") == null && request.getParameter("y") == null){
+				locate_x = (int) session.getAttribute("current_locate_x");
+				locate_y = (int) session.getAttribute("current_locate_y");
+			}
 
 			session.setAttribute("current_locate_x", locate_x);
 			session.setAttribute("current_locate_y", locate_y);

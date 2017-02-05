@@ -10,9 +10,9 @@ public class ConnectionDB {
 	private static Connection connection;
 
 	static String driver = "com.mysql.jdbc.Driver";
-	static String url = "jdbc:mysql://localhost:3307/zoopark?user=root&password=";
+	static String url = "jdbc:mysql://localhost:3306/zoopark?user=root&password=root";
 	static String user = "root";
-	static String password = "";
+	static String password = "root";
 
 	static {
 		try {
