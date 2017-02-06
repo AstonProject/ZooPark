@@ -131,10 +131,14 @@ public class TurnServlet extends HttpServlet {
 					}
 					if(countHealer == 0){
 						for(AnimalBean animal: animals){
-							int i = animal.getHealth_gauge()-1;
-							animal.setHealth_gauge(i);
-							int j = animal.getHungry_gauge()+1;
-							animal.setHungry_gauge(j);
+							if(animal.getHealth_gauge() > 0){
+								int i = animal.getHealth_gauge()-1;
+								animal.setHealth_gauge(i);
+							}
+							if(animal.getHungry_gauge() < 99){
+								int j = animal.getHungry_gauge()+1;
+								animal.setHungry_gauge(j);
+							}
 							adao.updateAnimal(animal);
 						}
 					}

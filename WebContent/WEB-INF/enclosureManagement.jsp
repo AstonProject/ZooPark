@@ -8,9 +8,9 @@
 				<div class="row">
 					<div class="col-md-6">
 					<div id="animal_status" >
-					<span class="animal">test image animal</span>
-					<span class="currentQuantity">test quantity</span>
-					<span class="maxQuantity">test capacity</span>
+					<span class="animal"></span>
+					<span class="currentQuantity"></span>
+					<span class="maxQuantity"></span>
 					</div>
 					</div>
 				

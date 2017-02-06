@@ -29,6 +29,8 @@
 				if(day == 30){
 					day = 1;
 					month++;
+					let payLoans = {"statusRLM" : "okRLM"};
+					server.monAjax(payLoans, "financeManagement", callback, 'POST');
 					let paySalaries = {"newMonth": newMonth};
 					server.monAjax(paySalaries, "newturn", callback, 'POST');
 				}
