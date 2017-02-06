@@ -59,7 +59,7 @@
 						<li><label for="con_pseudo">Pseudo :</label></li>
 						<li><input type="text" name="con_pseudo" id="con_pseudo"></li>
 						<li><label for="con_password">Password :</label></li>
-						<li><input type="text" name="con_password" id="con_password"></li>
+						<li><input type="password" name="con_password" id="con_password"></li>
 						<br><li><input type="submit" value="connexion"></li>
 					</ul>
 				</form>

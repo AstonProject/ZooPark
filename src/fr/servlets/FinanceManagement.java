@@ -168,7 +168,7 @@ public class FinanceManagement extends HttpServlet {
 				// preparation de la somme totale a afficher
 				int current_payMonthly = 0;
 				int count = 0;
-			
+				
 				for (FinanceBean finance : finances) {
 					current_payMonthly += finance.getPayMonthly();
 					count++;
@@ -176,56 +176,52 @@ public class FinanceManagement extends HttpServlet {
 				
 				System.out.println("number of loans : " + count + " ,mensualite : " + current_payMonthly);
 				
-				// recuperation du jour
-				String jour = player.getTurn().split(",")[1];
 				
-				// verification du jour
-				if (jour.equals("1")) {
-					// prelevement le premier du mois
-					long money = player.getMoney();
-					player.setMoney(money - current_payMonthly);
+				// prelevement le premier du mois
+				long money = player.getMoney();
+				player.setMoney(money - current_payMonthly);
+				
+				// mise à jour de la bdd
+				for (FinanceBean finance : finances) {
 					
-					// mise à jour de la bdd
-					for (FinanceBean finance : finances) {
+					System.out.println("avant remboursement : " + finance);
+					
+					long emprunt = finance.getSomme();
+					long mensualite = finance.getPayMonthly();
+					finance.setSomme(emprunt - mensualite);
+					
+					fdao.updateFinances(finance);
+					System.out.println("apres remboursement : " + finance);
+					
+					// suppression de l'emprunt si remboursement integral
+					if (finance.getSomme() == 0) {
+						int ligne = finance.getId();
 						
-						System.out.println("avant remboursement : " + finance);
-						
-						long emprunt = finance.getSomme();
-						long mensualite = finance.getPayMonthly();
-						finance.setSomme(emprunt - mensualite);
-						
-						fdao.updateFinances(finance);
-						System.out.println("apres remboursement : " + finance);
-						
-						// suppression de l'emprunt si remboursement integral
-						if (finance.getSomme() == 0) {
-							int ligne = finance.getId();
-							
-							fdao.deleteLoan(ligne);
-						}
+						fdao.deleteLoan(ligne);
 					}
-						
-					// envoi de la transaction dans la bdd 
-					FinanceBean transaction = new FinanceBean();
-					transaction.setType_action("refund");
-					transaction.setSomme(current_payMonthly);
-					transaction.setLibelle("loan");
-					transaction.setTurn(turn);
-					transaction.setAnimals_number(count);
-					transaction.setPlayer_id(player_id);
-					transaction.setEnclosure_id(enclos0.getId());
-					transaction.setPayMonthly(0);
-						
-					fdao.createFinance(transaction);
+				}
 					
-					System.out.println("remboursements : " + transaction);
+				// envoi de la transaction dans la bdd 
+				FinanceBean transaction = new FinanceBean();
+				transaction.setType_action("refund");
+				transaction.setSomme(current_payMonthly);
+				transaction.setLibelle("loan");
+				transaction.setTurn(turn);
+				transaction.setAnimals_number(count);
+				transaction.setPlayer_id(player_id);
+				transaction.setEnclosure_id(enclos0.getId());
+				transaction.setPayMonthly(0);
+					
+				fdao.createFinance(transaction);
 				
+				System.out.println("remboursements : " + transaction);
+			
 				// mise a jour de la session joueur
 				session.setAttribute("user", player);
 				PlayersDAO pdao = new PlayersDAO();
 				pdao.updatePlayer(player);
-				
-				}
+				String responseJson = "{ \"money\":"+player.getMoney()+"}";
+				response.getWriter().append(responseJson);
 			}
 		}
 	}

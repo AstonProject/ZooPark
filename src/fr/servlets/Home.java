@@ -63,8 +63,7 @@ public class Home extends HttpServlet {
 			session.setAttribute("satisfaction", satisfaction);
 			
 			//Cas PERDU
-			String perdu = (String) request.getAttribute("perdu");
-			if(perdu != null && perdu.equals("ok")){
+			if(user.getMoney() <= -1000000){
 				request.setAttribute("perdu","ok");
 			}
 		}
