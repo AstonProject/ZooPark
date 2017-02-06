@@ -161,7 +161,7 @@
 			
 			var callback = function(donnees) {
 				if (donnees.code == "OK") {
-					window.location.href = "home";
+					window.location.href = "employeesManagement";
 				} else {
 					failed();
 				}

@@ -91,8 +91,8 @@ public class TurnServlet extends HttpServlet {
 				session.setAttribute("user", player);
 				pdao.updatePlayer(player);
 				if(player.getMoney() <= -1000000){
-					response.sendRedirect("home");
 					request.setAttribute("perdu", "ok");
+					response.sendRedirect("home");
 				}
 			}
 			if(enclosureM != null && enclosureM.equals("ok")){
