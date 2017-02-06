@@ -36,7 +36,7 @@
 					<div class= "decision_menu">
 						<span id="decision">
 							<input type="submit" value="" class="validate_img">
-							<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" /></a>
+							<a href="home"><img src="${pageContext.request.contextPath}/assets/images/cancel.png" alt="logo" class="cancel"/></a>
 						</span>
 					</div>
 					<div class="error">

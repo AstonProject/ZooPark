@@ -51,7 +51,7 @@ body, #body {
 	background: #c8ffd1;
 	height: 480px;
 	font-size: 20px;
-	padding: 3px;
+
 }
 
 #bottom-menu {
@@ -62,6 +62,7 @@ body, #body {
 	background: #ff8100;
 	min-height: 100px;
 	height: 135px;
+	font-size: 14px;
 }
 
 #bottom-menu button {

@@ -1,18 +1,21 @@
-<<<<<<< HEAD
 .cc1{
 	margin-left: 195px;
-=======
+}
 .validate_img{
-background-image: url(../images/validate.png);
-background-position:  0px 0px;
-background-repeat: no-repeat;
-width: 53px;
-height: 33px;
-border: none;
-background-color: #c8ffd1;
-cursor: pointer;
-outline: 0;
->>>>>>> feature/Mad20170120
+	background-image: url(../images/validate.png);
+	background-position:  0px 0px;
+	background-repeat: no-repeat;
+	width: 53px;
+	height: 33px;
+	border: none;
+	background-color: #c8ffd1;
+	cursor: pointer;
+	outline: 0;
+}
+
+.cancel{
+	vertical-align: top;
+	
 }
 
 .cc2{
@@ -20,7 +23,7 @@ outline: 0;
 }
 
 .cc3{
-	margin-left: 200px;
+	margin-left: 100px;
 }
 
 .img_container{
@@ -30,6 +33,10 @@ outline: 0;
 #consumables_container > span{
 	width: 50px;
   	height: 50px;
+}
+
+#consumables_container input{
+	width: 80px;
 }
 
 .cc1 > span {
@@ -42,7 +49,7 @@ outline: 0;
 	text-align: center;
 	display: inline-block;;
 	position: relative;
-	background: orange;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -50,6 +57,7 @@ outline: 0;
 
 .cc3 > span {
 	margin-right:145px;
+
 }
 
 
@@ -82,7 +90,8 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 .showPrice {
 	width: 100px;
 	height: 30px;
-	background: orange;
+	margin-left: 240px;
+	background: #ff8c01;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -90,17 +99,5 @@ input[type="number"].mod::-moz-inner-spin-button:active{
 
 .cons_price {
 	text-align: center;
-	padding: 7px;
-}
 
-.validate_img{
-background-image: url(../images/validate.png);
-background-position:  0px 0px;
-background-repeat: no-repeat;
-width: 53px;
-height: 33px;
-border: none;
-background-color: white !important;
-cursor: pointer;
-outline: 0;
 }

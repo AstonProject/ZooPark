@@ -10,17 +10,10 @@ cursor: pointer;
 outline: 0;
 }
 
-.validate_img2{
-background-image: url(../images/validate.png);
-background-position: 0px 0px;
-background-repeat: no-repeat;
-width: 53px;
-height: 40px;
-border: none;
-background-size: 30%;
-background-color: #c8ffd1;
-cursor: pointer;
-outline: 0;
+
+.cancel{
+	vertical-align: top;
+	
 }
 
 #slotE{
