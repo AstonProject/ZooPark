@@ -156,7 +156,7 @@
 			// redirection sur le controller home
 			var callback = function(donnees){
 				if (donnees.code == "OK") {
-					 window.location.href = "home";
+					 window.location.href = "consumableManagement";
 				}else if (donnees.code == "ERROR"){
 					failed();
 				}
